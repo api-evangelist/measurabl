@@ -1,0 +1,104 @@
+generated: '2026-08-01'
+method: searched
+source: https://api.measurabl.com/release_notes
+url: https://api.measurabl.com/release_notes
+summary: >-
+  Measurabl publishes a dated, paginated release-notes feed for the Core API on the API host
+  itself. It is the only public change record for the API surface: the ESGx Buildings, ESGx
+  Securities, ESGx Securities Compliance Files and Partner APIs have no entries of their own.
+  Twelve entries are published, all Core API, spanning 2022-11-22 to 2023-12-18. Nothing has been
+  published since 2023-12-18, so the feed is stale relative to the live specs.
+scheme:
+  versioning: uri-path (v0)
+  entry_style: dated release notes, no semantic version numbers
+  breaking_change_labelling: none
+  feed: none (HTML pages only, no RSS/Atom/JSON feed found)
+current_version: v0
+entries_published: 12
+latest_entry: '2023-12-18'
+entries:
+- date: '2023-12-18'
+  title: Core API Rate Limiting
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2023-12-18
+  api: Core
+  type: limits
+  breaking: false
+  highlights:
+  - GET limit raised to 1000 per endpoint per 5 minutes (from 500)
+  - Energy & Water Meter and Waste Meter POST/PATCH/DELETE raised to 200 per endpoint per 5 minutes (from 100)
+  - All other POST/PATCH/DELETE raised to 100 per endpoint per 5 minutes (from 25)
+- date: '2023-06-20'
+  title: Space Ratings endpoint & GET method
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2023-06-20
+  api: Core
+  type: addition
+  breaking: false
+- date: '2023-05-18'
+  title: Ratings DELETE & Certifications PATCH/DELETE methods
+  url: https://api.measurabl.com/release_notes/release-notes-2023-05-18
+  api: Core
+  type: addition
+  breaking: false
+- date: '2023-04-20'
+  title: Certifications Spaces endpoint & methods
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2023-04-20
+  api: Core
+  type: addition
+  breaking: false
+- date: '2023-03-21'
+  title: Certifications, Waste Meters, Energy & Water Meters endpoints
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2023-03-20
+  api: Core
+  type: addition
+  breaking: false
+- date: '2023-02-17'
+  title: Spaces PATCH & POST methods
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2023-02-17
+  api: Core
+  type: addition
+  breaking: false
+- date: '2023-01-23'
+  title: Buildings attributes, Energy/Water Meter Bills, Funds Buildings
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2023-01-23
+  api: Core
+  type: addition
+  breaking: false
+- date: '2023-01-10'
+  title: Waste Meters, Waste Meter Readings, Buildings and Ratings PATCH/DELETE and filtering
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2023-01-10
+  api: Core
+  type: addition
+  breaking: false
+- date: '2022-12-16'
+  title: Energy & Water Meters DELETE, new RSQL filtering options
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2022-12-16
+  api: Core
+  type: addition
+  breaking: false
+- date: '2022-12-06'
+  title: Waste Meter Readings and Certifications - RSQL filtering and attribute name changes
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2022-12-06
+  api: Core
+  type: change
+  breaking: unclear
+  note: Attribute name changes are described but not explicitly labelled breaking.
+- date: '2022-11-30'
+  title: Ratings endpoint & GET methods
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2022-11-30
+  api: Core
+  type: addition
+  breaking: false
+- date: '2022-11-22'
+  title: Certification Types endpoint & Energy and Water Meter Spaces PATCH method
+  url: https://api.measurabl.com/release_notes/core-api-release-notes-2022-11-22
+  api: Core
+  type: addition
+  breaking: false
+gaps:
+- No release notes for the ESGx Buildings, ESGx Securities, ESGx Securities Compliance Files or Partner APIs.
+- No machine-readable feed (RSS/Atom/JSON).
+- No entries published since 2023-12-18.
+- No breaking-change labelling convention.
+cross_links:
+  lifecycle: lifecycle/measurabl-lifecycle.yml
+  rate_limits: rate-limits/measurabl-rate-limits.yml

@@ -1,0 +1,168 @@
+generated: '2026-08-01'
+method: derived
+source: >-
+  openapi/_original/*.json - derived from the literal path hierarchy and path-parameter names of
+  the five Measurabl OpenAPI 3.0.1 documents (86 paths / 110 operations). Every entity and every
+  relationship below is grounded in a path that exists verbatim in a published spec.
+model_note: >-
+  All five APIs are JSON:API, so entities are JSON:API resource objects (type + id + attributes +
+  relationships) and the "relationships" surface is itself addressable: the Core API exposes
+  explicit /relationships sub-resources for certifications, funds and meters. Ids are opaque
+  strings; Measurabl uses no visible id prefixes.
+identifiers:
+  style: opaque
+  prefixes: none_published
+  external_ids:
+  - {field: buildingCustomId, note: customer-supplied building identifier, used as an ESGx query parameter}
+  - {field: msrBuildingId, note: Measurabl building identifier, used as an ESGx query parameter}
+entities:
+- name: Portfolio
+  api: core
+  root: true
+  path: /core/v0/portfolios
+  description: The top-level tenancy object. Every Core API path is rooted at a portfolio_id.
+  operations: ['GET /core/v0/portfolios', 'GET /core/v0/portfolios/{portfolio_id}']
+- name: Building
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings
+  description: A physical asset inside a portfolio; the anchor for meters, spaces, certifications and ratings.
+- name: Space
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces
+  description: A subdivision of a building (tenant space / suite) that can carry its own certifications and ratings.
+- name: Fund
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/funds
+  description: An investment grouping of buildings within a portfolio.
+- name: Meter
+  api: core
+  label: Energy and Water Meter
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters
+  description: An energy or water meter attached to a building; also listable portfolio-wide.
+- name: MeterReading
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings
+  description: A consumption reading on an energy/water meter; may carry a linked utility bill.
+- name: MeterReadingBill
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}/bill
+  description: The bill document backing a meter reading; served via a 303 redirect to its location.
+- name: WasteMeter
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters
+  description: A waste stream meter attached to a building; also listable portfolio-wide.
+- name: WasteMeterReading
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings
+  description: A reading on a waste meter.
+- name: Certification
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications
+  description: A green building certification held by a building or a space.
+- name: CertificationType
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/certification_types
+  description: The reference list of certification types available to a portfolio.
+- name: Rating
+  api: core
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings
+  description: A performance rating on a building or a space; also listable portfolio-wide.
+- name: InsightsBuilding
+  api: esgx-buildings
+  path: /insights/v0/buildings
+  description: A building submitted to the ESGx Insights surface by coordinates, address or Measurabl building id.
+- name: EnergyEstimate
+  api: esgx-buildings
+  path: /insights/v0/energy_estimates
+  description: A modeled energy estimate for a building, returning absoluteEstimates and intensityEstimates once status reaches JOB_SUCCESS.
+- name: CarbonEstimate
+  api: esgx-buildings
+  path: /insights/v0/carbon_estimates
+  description: A modeled carbon estimate for a building.
+- name: CertificationLookup
+  api: esgx-buildings
+  path: /insights/v0/certification_lookups
+  description: A lookup of known green building certifications for a submitted building.
+- name: OrdinanceLookup
+  api: esgx-buildings
+  path: /insights/v0/ordinance_lookups
+  description: A lookup of local building performance ordinances applicable to a submitted building.
+- name: CrremLookup
+  api: esgx-buildings
+  path: /insights/v0/crrem_lookups
+  description: A CRREM transition-risk lookup for a submitted building.
+- name: Ordinance
+  api: esgx-buildings
+  path: /insights/v0/ordinances
+  description: The reference catalog of local building performance ordinances.
+- name: Batch
+  api: esgx-buildings
+  abstract: true
+  variants:
+  - {name: EnergyEstimateBatch, path: /insights/v0/energy_estimate_batches}
+  - {name: CarbonEstimateBatch, path: /insights/v0/carbon_estimate_batches}
+  - {name: CertificationLookupBatch, path: /insights/v0/certification_lookup_batches}
+  - {name: OrdinanceLookupBatch, path: /insights/v0/ordinance_lookup_batches}
+  - {name: CrremLookupBatch, path: /insights/v0/crrem_lookup_batches}
+  description: >-
+    The asynchronous job wrapper. Each batch type supports create, GET by id, /upload (CSV),
+    /export, and a child collection of its result records.
+- name: Export
+  api: esgx-buildings
+  path: /insights/v0/exports
+  description: A generated export file; downloaded via /insights/v0/exports/{id}/download which 302-redirects to a pre-signed URL.
+- name: ListedRealEstateReport
+  api: esgx-securities
+  path: /insights/v0/listed_real_estate_reports
+  description: A listed real estate ESG report, exposing company_level and building_level data sets.
+- name: ListedRealEstateDataSet
+  api: esgx-securities
+  path: /insights/v0/listed_real_estate_reports/{id}/{level}/{data_set}
+  description: A named data set within a report at company or building level; /download 302-redirects to a pre-signed URL.
+- name: ComplianceFile
+  api: esgx-securities-compliance-files
+  path: /insights/v0/listed_real_estate/compliance_files
+  description: A compliance file published alongside the ESGx Securities datasets; /download 302-redirects to a pre-signed URL.
+relationships:
+- {from: Portfolio, to: Building, kind: has_many, via: 'path: /portfolios/{portfolio_id}/buildings'}
+- {from: Portfolio, to: Fund, kind: has_many, via: 'path: /portfolios/{portfolio_id}/funds'}
+- {from: Portfolio, to: CertificationType, kind: has_many, via: 'path: /portfolios/{portfolio_id}/certification_types'}
+- {from: Portfolio, to: Certification, kind: has_many, via: 'path: /portfolios/{portfolio_id}/certifications (portfolio-wide roll-up)'}
+- {from: Portfolio, to: Meter, kind: has_many, via: 'path: /portfolios/{portfolio_id}/meters (portfolio-wide roll-up)'}
+- {from: Portfolio, to: WasteMeter, kind: has_many, via: 'path: /portfolios/{portfolio_id}/waste_meters (portfolio-wide roll-up)'}
+- {from: Portfolio, to: Rating, kind: has_many, via: 'path: /portfolios/{portfolio_id}/ratings (portfolio-wide roll-up)'}
+- {from: Building, to: Portfolio, kind: belongs_to, via: portfolio_id}
+- {from: Building, to: Space, kind: has_many, via: 'path: /buildings/{building_id}/spaces'}
+- {from: Building, to: Meter, kind: has_many, via: 'path: /buildings/{building_id}/meters'}
+- {from: Building, to: WasteMeter, kind: has_many, via: 'path: /buildings/{building_id}/waste_meters'}
+- {from: Building, to: Certification, kind: has_many, via: 'path: /buildings/{building_id}/certifications'}
+- {from: Building, to: Rating, kind: has_many, via: 'path: /buildings/{building_id}/ratings'}
+- {from: Fund, to: Building, kind: has_many, via: 'path: /funds/{fund_id}/relationships (JSON:API relationship resource)'}
+- {from: Space, to: Building, kind: belongs_to, via: building_id}
+- {from: Space, to: Certification, kind: has_many, via: 'path: /spaces/{space_id}/certifications'}
+- {from: Space, to: Rating, kind: has_many, via: 'path: /spaces/{space_id}/ratings'}
+- {from: Meter, to: Building, kind: belongs_to, via: building_id}
+- {from: Meter, to: MeterReading, kind: has_many, via: 'path: /meters/{meter_id}/readings'}
+- {from: Meter, to: Space, kind: has_many, via: 'path: /meters/{meter_id}/spaces'}
+- {from: Meter, to: Space, kind: has_many, via: 'path: /meters/{meter_id}/relationships (JSON:API relationship resource)'}
+- {from: MeterReading, to: MeterReadingBill, kind: has_one, via: 'path: /readings/{meter_reading_id}/bill'}
+- {from: WasteMeter, to: WasteMeterReading, kind: has_many, via: 'path: /waste_meters/{waste_meter_id}/readings'}
+- {from: Certification, to: CertificationType, kind: belongs_to, via: 'path: /certifications/{certification_id}/relationships'}
+- {from: Batch, to: EnergyEstimate, kind: has_many, via: 'path: /energy_estimate_batches/{id}/energy_estimates'}
+- {from: Batch, to: CarbonEstimate, kind: has_many, via: 'path: /carbon_estimate_batches/{id}/carbon_estimates'}
+- {from: Batch, to: CertificationLookup, kind: has_many, via: 'path: /certification_lookup_batches/{id}/certification_lookups'}
+- {from: Batch, to: OrdinanceLookup, kind: has_many, via: 'path: /ordinance_lookup_batches/{id}/ordinance_lookups'}
+- {from: Batch, to: CrremLookup, kind: has_many, via: 'path: /crrem_lookup_batches/{id}/crrem_lookups'}
+- {from: Batch, to: Export, kind: has_many, via: 'path: /{batch_type}/export'}
+- {from: ListedRealEstateReport, to: ListedRealEstateDataSet, kind: has_many, via: 'path: /listed_real_estate_reports/{id}/{company_level|building_level}'}
+partner_projection:
+  note: >-
+    The Partner API is a narrow read-only projection of the same core entities, not a separate model.
+  entities:
+  - {name: Portfolio, path: /partners/v0/portfolios}
+  - {name: Building, path: '/partners/v0/portfolios/{portfolio_id}/buildings'}
+  - {name: MonthlyUtilityData, path: '/partners/v0/buildings/{building_id}/monthly_utility_data', note: read-only monthly roll-up of meter data}
+cross_links:
+  openapi: openapi/
+  conventions: conventions/measurabl-conventions.yml
+  errors: errors/measurabl-problem-types.yml

@@ -1,0 +1,220 @@
+generated: '2026-08-01'
+method: derived
+source: openapi/_original/*.json (5 Measurabl OpenAPI 3.0.1 documents, 110 operations)
+format: jsonapi-errors
+format_note: 'Measurabl does NOT use RFC 9457 application/problem+json. Errors are JSON:API error objects returned
+  as application/vnd.api+json: a top-level "errors" array whose members carry id, links, status, code, title, detail,
+  source.pointer, source.parameter and meta. The failure envelope is components.schemas.failure; the member shape
+  is components.schemas.error.'
+envelope:
+  media_type: application/vnd.api+json
+  root_field: errors
+  array: true
+  member_fields:
+  - id
+  - links
+  - status
+  - code
+  - title
+  - detail
+  - source.pointer
+  - source.parameter
+  - meta
+  schema: openapi/measurabl-core-openapi.yml#/components/schemas/failure
+coverage_note: Every one of the 57 Core API operations declares the full 400/401/403/404/408/429/500/502/503 set.
+  The ESGx APIs declare a narrower, per-operation set. No operation declares a machine-readable error CODE registry
+  - the JSON:API "code" member is present in the schema but no catalog of its values is published, so the codes
+  below are HTTP statuses, not application codes.
+problems:
+- status: 400
+  title: Bad Request
+  occurrences: 62
+  variants:
+  - Bad Request
+  - invalid time period
+  - missing file upload
+  - passing endDate param without startDate param
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  - esgx-buildings
+  - partners
+  remediation: Validate the request body against the JSON:API document shape and re-check query parameter syntax
+    (filter uses field==value / field=ge=value).
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 401
+  title: Unauthorized Request
+  occurrences: 57
+  variants:
+  - Unauthorized Request
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  remediation: Re-run the OAuth 2.0 client-credentials grant against https://api.measurabl.com/token and resend
+    with a fresh bearer token.
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 403
+  title: unauthorized request
+  occurrences: 102
+  variants:
+  - unauthorized request
+  - when authenticated but not authorized
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  - esgx-buildings
+  - esgx-securities
+  - esgx-securities-compliance-files
+  - partners
+  remediation: The token authenticated but the client is not entitled to this portfolio, building or dataset. Confirm
+    the credential is scoped to the account that owns the resource.
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 404
+  title: Not Found
+  occurrences: 89
+  variants:
+  - Not Found
+  - when requesting an overflow page
+  - Account not found
+  - ID is not found
+  - Listed Instance Slug is not found
+  - Data Set does not exist
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  - esgx-buildings
+  - esgx-securities
+  - esgx-securities-compliance-files
+  - partners
+  remediation: Confirm the path ids exist. Also returned when requesting a page beyond the last page of a paginated
+    collection - clamp page to the last link in the JSON:API links object.
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 408
+  title: Request Timeout
+  occurrences: 57
+  variants:
+  - Request Timeout
+  - Request timeout
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  remediation: Request timed out server-side. Retry with a smaller page size or a narrower filter.
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 413
+  title: too many estimates in request
+  occurrences: 4
+  variants:
+  - too many estimates in request
+  - too many certification lookups in request
+  - too many ordinance lookups in request
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - esgx-buildings
+  remediation: The batch payload exceeded the per-request record cap. Split the estimates/lookups across multiple
+    batch requests.
+  source_operations:
+  - openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/carbon_estimates
+  - openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/certification_lookups
+  - openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/energy_estimates
+- status: 422
+  title: Export record has batch records with different time periods
+  occurrences: 1
+  variants:
+  - Export record has batch records with different time periods
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - esgx-buildings
+  remediation: The batch records are not internally consistent (for example an export whose batch records span different
+    time periods). Normalize the batch before exporting.
+  source_operations:
+  - openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/exports/{id}
+- status: 429
+  title: Too many requests
+  occurrences: 60
+  variants:
+  - Too many requests
+  - Too Many Requests
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  - partners
+  remediation: Rate limit exceeded. Back off and retry; limits are per endpoint per 5 minutes (see rate-limits/measurabl-rate-limits.yml).
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 500
+  title: Internal Error
+  occurrences: 57
+  variants:
+  - Internal Error
+  - An internal error has occurred
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  remediation: Server error. Retry with backoff; if persistent, open a ticket at https://support.measurabl.com/hc/en-us/requests/new.
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 502
+  title: Internal Error
+  occurrences: 59
+  variants:
+  - Internal Error
+  - Bad Gateway
+  - Internal server error
+  - when the upstream wizard request fails
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  - esgx-buildings
+  - partners
+  remediation: Upstream/gateway error. Retry with backoff.
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- status: 503
+  title: Service Unavailable
+  occurrences: 50
+  variants:
+  - Service Unavailable
+  media_types:
+  - application/vnd.api+json
+  specs:
+  - core
+  remediation: Service unavailable. Retry with backoff.
+  source_operations:
+  - openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+  - openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+cross_links:
+  conventions: conventions/measurabl-conventions.yml
+  rate_limits: rate-limits/measurabl-rate-limits.yml
+  authentication: authentication/measurabl-authentication.yml

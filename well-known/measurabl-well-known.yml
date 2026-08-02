@@ -1,0 +1,67 @@
+generated: '2026-08-01'
+method: probed
+source: live HTTPS probes of every Measurabl host in apis.yml and the OpenAPI OAuth token host
+summary: >-
+  No /.well-known/ discovery document is published on any Measurabl host. api.measurabl.com,
+  www.measurabl.com, measurabl.com and support.measurabl.com return 404 for every probed path.
+  app.measurabl.com is a single-page application whose catch-all route answers HTTP 200 with the
+  same 6,335-byte HTML shell for EVERY path — including /.well-known/agent-card.json and paths that
+  do not exist at all — so none of its 200s are real documents. They are recorded here as
+  false_positive so a later run does not mistake them for discovery hits.
+hosts:
+- host: https://api.measurabl.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+  - {path: /robots.txt, status: 200, content_type: text/plain, note: not a discovery document; not saved}
+- host: https://www.measurabl.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+- host: https://measurabl.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+- host: https://support.measurabl.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+- host: https://app.measurabl.com
+  spa_catch_all: true
+  note: >-
+    Every path returns 200 text/html with an identical 6,335-byte SPA shell, verified by requesting
+    /.well-known/definitely-not-real-xyz which also returned 200 HTML. No document below is real.
+  documents:
+  - {path: /.well-known/security.txt, status: 200, content_type: text/html, result: false_positive}
+  - {path: /.well-known/openid-configuration, status: 200, content_type: text/html, result: false_positive}
+  - {path: /.well-known/oauth-authorization-server, status: 200, content_type: text/html, result: false_positive}
+  - {path: /.well-known/oauth-protected-resource, status: 200, content_type: text/html, result: false_positive}
+  - {path: /.well-known/api-catalog, status: 200, content_type: text/html, result: false_positive}
+  - {path: /.well-known/ai-plugin.json, status: 200, content_type: text/html, result: false_positive}
+  - {path: /.well-known/agent-card.json, status: 200, content_type: text/html, result: false_positive}
+  - {path: /.well-known/agent.json, status: 200, content_type: text/html, result: false_positive}
+  - {path: /llms.txt, status: 200, content_type: text/html, result: false_positive}
+files: []
+a2a_agent_card:
+  found: false
+  note: >-
+    No A2A agent card exists. The only 200s came from the app.measurabl.com SPA catch-all and were
+    HTML, which the A2A probe rejects. No a2a/ artifact was written, per the search-only rule.

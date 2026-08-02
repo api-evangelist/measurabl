@@ -1,23 +1,223 @@
 aid: measurabl
 name: Measurabl
-description: 'Measurabl is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Measurabl is an ESG (environmental, social and governance) data and sustainability management
+  platform for commercial real estate, used by owners, investors, asset managers and capital-markets
+  participants to measure, manage, report and act on building performance data. The platform covers
+  utility and waste data collection, carbon accounting, green building certifications and ratings,
+  local performance ordinance compliance, CRREM transition-risk analysis, and portfolio and
+  fund-level ESG reporting. Measurabl exposes this through a REST API surface documented in Swagger
+  UI at api.measurabl.com: a Core API for reading and writing portfolios, buildings, spaces, funds,
+  energy/water meters and readings, waste meters, certifications and ratings; an ESGx Buildings
+  (Insights) API for asset-level energy and carbon estimates, certification and ordinance lookups,
+  CRREM lookups and bulk exports; ESGx Securities and ESGx Securities Compliance Files APIs for
+  listed real estate company-level and building-level datasets; and a Partner API for partner-side
+  portfolio, building and monthly utility data access. Every API is OpenAPI 3.0.1, secured with
+  OAuth 2.0 client credentials, and returns JSON:API (application/vnd.api+json) documents.
+image: https://www.measurabl.com/wp-content/uploads/2019/06/cropped-measurabl_icon-1-192x192.png
 url: https://raw.githubusercontent.com/api-evangelist/measurabl/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment-pipeline
 specificationVersion: '0.20'
 created: '2026-08-01'
 modified: '2026-08-01'
 tags:
-- Company
-apis: []
+- esg
+- real-estate
+- sustainability
+- carbon-accounting
+- energy-management
+- building-performance
+- climate-risk
+- benchmarking
+- compliance
+- proptech
+- utility-data
+- capital-markets
+apis:
+- name: Measurabl Core API
+  description: >-
+    Read and write the ESG data core of the Measurabl platform: portfolios, buildings, spaces,
+    funds, energy and water meters and their readings and bills, waste meters and readings, green
+    building certifications and certification types, and ratings (including space-level
+    certifications and ratings). JSON:API over OAuth 2.0 client credentials; 57 operations across
+    32 paths.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - esg
+  - real-estate
+  - building-performance
+  - utility-data
+  - energy-management
+  - certifications
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-core-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Overlay
+    url: overlays/measurabl-core-overlay.yaml
+- name: Measurabl ESGx Buildings API
+  description: >-
+    Asset-level building intelligence (the Insights surface): submit buildings by coordinates,
+    address or Measurabl building id and receive modeled energy estimates, carbon estimates, green
+    building certification lookups, local performance ordinance lookups and CRREM transition-risk
+    lookups, individually or as asynchronous batches with CSV upload and bulk export/download.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  baseURL: https://api.measurabl.com/insights/v0
+  tags:
+  - esg
+  - real-estate
+  - carbon-accounting
+  - energy-management
+  - climate-risk
+  - benchmarking
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-esgx-buildings-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Overlay
+    url: overlays/measurabl-esgx-buildings-overlay.yaml
+- name: Measurabl ESGx Securities API
+  description: >-
+    Listed real estate ESG datasets for capital markets: list available listed-real-estate reports
+    and retrieve their company-level and building-level data sets, with pre-signed URL downloads for
+    each data set.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  baseURL: https://api.measurabl.com/insights/v0
+  tags:
+  - esg
+  - capital-markets
+  - real-estate
+  - benchmarking
+  - climate-risk
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-esgx-securities-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Overlay
+    url: overlays/measurabl-esgx-securities-overlay.yaml
+- name: Measurabl ESGx Securities Compliance Files API
+  description: >-
+    List and download the compliance files published alongside the ESGx Securities listed real
+    estate datasets, with pre-signed URL redirect downloads.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  baseURL: https://api.measurabl.com/insights/v0
+  tags:
+  - esg
+  - capital-markets
+  - compliance
+  - real-estate
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-esgx-securities-compliance-files-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Overlay
+    url: overlays/measurabl-esgx-securities-compliance-files-overlay.yaml
+- name: Measurabl Partner API
+  description: >-
+    Partner-facing surface for integration partners acting on behalf of a Measurabl customer: list
+    portfolios, list the buildings in a portfolio, and read monthly utility data for a building.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  baseURL: https://api.measurabl.com/partners/v0
+  tags:
+  - esg
+  - real-estate
+  - utility-data
+  - partners
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-partners-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: Overlay
+    url: overlays/measurabl-partners-overlay.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/measurabl-domain-security.yml
+- type: OAuthScopes
+  url: scopes/measurabl-scopes.yml
+- type: Authentication
+  url: authentication/measurabl-authentication.yml
 - type: Website
-  url: https://forgeglobal.com/measurabl_stock/
+  url: https://www.measurabl.com/
+- type: DeveloperPortal
+  url: https://api.measurabl.com/api-docs/
+- type: Documentation
+  url: https://api.measurabl.com/api-docs/
+- type: APIReference
+  url: https://api.measurabl.com/api-docs/index.html
+- type: GettingStarted
+  url: https://support.measurabl.com/hc/en-us/articles/34695708902541-Measurabl-API-Getting-Started-Guide
+- type: Support
+  url: https://support.measurabl.com/hc/en-us
+- type: HelpCenter
+  url: https://support.measurabl.com/hc/en-us
+- type: Blog
+  url: https://www.measurabl.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/Measurabl
+- type: SignUp
+  url: https://app.measurabl.com/users/auth/identities?screen_hint=signup
+- type: Login
+  url: https://app.measurabl.com
+- type: PrivacyPolicy
+  url: https://www.measurabl.com/privacy-policy/
+- type: ChangeLog
+  url: https://api.measurabl.com/release_notes
+- type: FAQ
+  url: https://www.measurabl.com/measurabl-api-faq/
+- type: CodeSamples
+  url: https://github.com/Measurabl/measurabl_api_code_samples
+- type: Postman
+  url: https://www.postman.com/measurabl-api/measurabl-core-api/overview
+- type: Compliance
+  url: https://www.measurabl.com/security/
+- type: TrustCenter
+  url: security/measurabl-trust-center.yml
+- type: Conformance
+  url: conformance/measurabl-conformance.yml
+- type: Conventions
+  url: conventions/measurabl-conventions.yml
+- type: ErrorCatalog
+  url: errors/measurabl-problem-types.yml
+- type: RateLimits
+  url: rate-limits/measurabl-rate-limits.yml
+- type: DataModel
+  url: data-model/measurabl-data-model.yml
+- type: Lifecycle
+  url: lifecycle/measurabl-lifecycle.yml
+- type: ChangeLog
+  url: changelog/measurabl-changelog.yml
+- type: Packages
+  url: packages/measurabl-packages.yml
+- type: LLMsTxt
+  url: llms/measurabl-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-01'
+  status: enriched
+  artifacts_added: 36
+  pass: local-v1

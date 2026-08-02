@@ -1,0 +1,65 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: Measurabl
+providerId: measurabl
+generated: '2026-08-01'
+method: searched
+created: '2026-08-01'
+modified: '2026-08-01'
+tags:
+- Rate Limiting
+- ESG
+- Real Estate
+description: >-
+  Measurabl Core API rate limits, published in the 2023-12-18 release note that raised every
+  ceiling. Limits are enforced PER ENDPOINT over a rolling 5-minute window and are split by HTTP
+  method class, with a higher write allowance for the meter endpoints that carry bulk utility
+  ingestion. Measurabl publishes no rate-limit response headers and no per-tier table.
+sources:
+- https://api.measurabl.com/release_notes/core-api-release-notes-2023-12-18
+- https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits
+effective: '2023-12-18'
+headers:
+  limit: none_published
+  remaining: none_published
+  reset: none_published
+  retryAfter: none_published
+responseCodes:
+  throttled: 429
+limits:
+- name: Authorized GET requests
+  scope: endpoint
+  methods: [GET]
+  metric: requests_per_5_minutes
+  limit: 1000
+  timeFrame: 5 minutes
+  previous_limit: 500
+  note: 'documented verbatim - "increased to 1000 (from 500) GET requests per endpoint per 5 minutes"'
+- name: Authorized writes on Energy & Water Meter and Waste Meter endpoints
+  scope: endpoint
+  methods: [POST, PATCH, DELETE]
+  metric: requests_per_5_minutes
+  limit: 200
+  timeFrame: 5 minutes
+  previous_limit: 100
+  note: 'documented verbatim - "increased to 200 (from 100) per endpoint per 5 minutes"'
+- name: Authorized writes on all other endpoints
+  scope: endpoint
+  methods: [POST, PATCH, DELETE]
+  metric: requests_per_5_minutes
+  limit: 100
+  timeFrame: 5 minutes
+  previous_limit: 25
+  note: 'documented verbatim - "increased to 100 (from 25) per endpoint per 5 minutes"'
+batch_caps:
+  note: >-
+    Separate from request-rate limiting, the ESGx Buildings API rejects oversized batch payloads
+    with 413 - "too many estimates in request", "too many certification lookups in request",
+    "too many ordinance lookups in request". The numeric cap is not published in the spec.
+  status: 413
+pagination_cap:
+  max_page_size: 200
+  see: conventions/measurabl-conventions.yml
+cross_links:
+  conventions: conventions/measurabl-conventions.yml
+  errors: errors/measurabl-problem-types.yml

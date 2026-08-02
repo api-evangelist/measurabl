@@ -1,0 +1,60 @@
+generated: '2026-08-01'
+method: searched
+source: >-
+  https://api.measurabl.com/api-docs/ (five OpenAPI 3.0.1 documents),
+  https://api.measurabl.com/release_notes, https://www.measurabl.com/measurabl-api-faq/
+versioning:
+  scheme: uri-path
+  current: v0
+  surfaces:
+  - {api: Core, prefix: /core/v0}
+  - {api: ESGx Buildings, prefix: /insights/v0}
+  - {api: ESGx Securities, prefix: /insights/v0}
+  - {api: ESGx Securities Compliance Files, prefix: /insights/v0}
+  - {api: Partner, prefix: /partners/v0}
+  policy_url: null
+  note: >-
+    Every published surface is still v0 and the Swagger UI has carried a BETA label on the Core
+    API docs entry. Measurabl publishes no written versioning policy, no v1 timeline, and no
+    statement of what a breaking change would look like.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: >-
+    Zero of the 110 published operations carry deprecated: true, and no RFC 8594 Sunset or
+    Deprecation header is documented or declared. There is no published deprecation policy, so no
+    Deprecation pointer is emitted.
+release_notes:
+  url: https://api.measurabl.com/release_notes
+  format: dated entries, paginated
+  entries_published: 12
+  note: Dated per-release notes for the Core API; see changelog/measurabl-changelog.yml.
+status_page:
+  url: null
+  probed:
+  - {url: 'https://status.measurabl.com', result: does_not_resolve}
+  - {url: 'https://measurabl.statuspage.io', result: not_found}
+  note: >-
+    Measurabl publishes no public status page or uptime history. No StatusPage pointer is emitted.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA. The API is gated behind Premium Tier commercial terms; any availability
+    commitment lives in the private subscription agreement.
+support:
+  help_center: https://support.measurabl.com/hc/en-us
+  ticket: https://support.measurabl.com/hc/en-us/requests/new
+  sales: sales@measurabl.com
+maturity:
+  stage: production-behind-entitlement
+  self_serve_signup_for_api: false
+  sandbox: false
+  note: >-
+    The platform is production and widely deployed, but API access requires Premium Tier
+    entitlement and credentials issued by a Customer Delivery Manager, and there is no sandbox.
+cross_links:
+  changelog: changelog/measurabl-changelog.yml
+  conventions: conventions/measurabl-conventions.yml

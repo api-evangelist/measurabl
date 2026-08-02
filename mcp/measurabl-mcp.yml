@@ -1,0 +1,700 @@
+generated: '2026-08-01'
+method: derived
+status: candidate
+published: false
+search_result:
+  official_server: null
+  searched:
+  - Measurabl docs and API FAQ
+  - https://github.com/Measurabl (31 public repos)
+  - npm @modelcontextprotocol and measurabl queries
+  - public MCP registries
+  - web search
+  found: false
+  note: 'Measurabl publishes NO Model Context Protocol server. This file is a DERIVED candidate tool surface computed
+    from the 110 published OpenAPI operations, offered as a design input for a future server. It is deliberately
+    NOT wired as a common[].type: MCPServer pointer in apis.yml, because no server exists and a pointer would credit
+    Measurabl with an agent surface it does not operate.'
+server:
+  name: measurabl
+  transport: http
+  url: null
+  auth: Would inherit OAuth 2.0 client credentials at https://api.measurabl.com/token; the flow declares no scopes,
+    so a server would need per-portfolio entitlement checks.
+design_notes:
+- Tool names below are SYNTHESIZED from METHOD + path because Measurabl declares no operationId on any operation.
+  They are candidate names, not published identifiers.
+- Each tool would inherit its real inputSchema from the backing operation parameters and requestBody in openapi/.
+- Write tools are NOT idempotent - Measurabl publishes no Idempotency-Key contract - so any server should gate writes
+  behind confirmation and re-read before retry.
+- There is no sandbox, so every tool would act on live customer ESG data.
+- Rate limits are per endpoint per 5 minutes with no response headers, so a server must pace calls blind.
+coverage:
+  rest_operations: 110
+  candidate_tools: 110
+tools:
+- name: measurabl_create_portfolios
+  method: POST
+  path: /core/v0/portfolios
+  description: Creates a new portfolio for a specified account
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios
+- name: measurabl_get_portfolios
+  method: GET
+  path: /core/v0/portfolios
+  description: Returns a list of portfolios for a specified account
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios
+- name: measurabl_update_portfolios
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}
+  description: Update a specific portfolio's name for a specified account
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}
+- name: measurabl_create_portfolios_buildings
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/buildings
+  description: Adds a building to a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings
+- name: measurabl_get_portfolios_buildings
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings
+  description: Returns a paginated list of buildings for a specified portfolio or fund
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings
+- name: measurabl_delete_portfolios_buildings
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+  description: Removes a building from a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- name: measurabl_get_portfolios_buildings_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+  description: Returns details of a specific building for a specified portfolio or fund
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- name: measurabl_update_portfolios_buildings
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+  description: Updates a building's attributes in a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}
+- name: measurabl_create_portfolios_buildings_certifications
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications
+  description: Creates a certification for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications
+- name: measurabl_get_portfolios_buildings_certifications
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications
+  description: Returns a specified buildings list of certifications
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications
+- name: measurabl_delete_portfolios_buildings_certifications
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}
+  description: Deletes a specific certification for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}
+- name: measurabl_get_portfolios_buildings_certifications_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}
+  description: Returns a specific certification for a specific building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}
+- name: measurabl_update_portfolios_buildings_certifications
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}
+  description: Updates a specific certification for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}
+- name: measurabl_update_portfolios_buildings_certifications_relationships
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}/relationships
+  description: Assigns a specific certification to a specified space or list of spaces
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}/relationships
+- name: measurabl_create_portfolios_buildings_meters
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters
+  description: Creates an energy or water meter for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters
+- name: measurabl_get_portfolios_buildings_meters
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters
+  description: Returns a list of meters (energy or water) for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters
+- name: measurabl_delete_portfolios_buildings_meters
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}
+  description: Deletes a specific meter for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}
+- name: measurabl_get_portfolios_buildings_meters_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}
+  description: Returns details of a specific meter (energy or water) for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}
+- name: measurabl_update_portfolios_buildings_meters
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}
+  description: Updates a specific meter for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}
+- name: measurabl_create_portfolios_buildings_meters_readings
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings
+  description: Creates an energy or water meter reading for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings
+- name: measurabl_get_portfolios_buildings_meters_readings
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings
+  description: Returns a list of meter readings for a specified meter and building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings
+- name: measurabl_delete_portfolios_buildings_meters_readings
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}
+  description: Deletes a specific meter reading for a specified meter and building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}
+- name: measurabl_get_portfolios_buildings_meters_readings_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}
+  description: Returns details of a specific meter reading for a specified meter and building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}
+- name: measurabl_update_portfolios_buildings_meters_readings
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}
+  description: Updates a specific meter reading for a specified meter and building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}
+- name: measurabl_get_portfolios_buildings_meters_readings_bill
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}/bill
+  description: Retrieves a utility bill for the given reading if one exists
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}/bill
+- name: measurabl_update_portfolios_buildings_meters_relationships
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/relationships
+  description: Assigns an existing energy or water meter to a specified space or list of spaces
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/relationships
+- name: measurabl_get_portfolios_buildings_meters_spaces
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/spaces
+  description: Returns a list of spaces a specified energy or water meter serves
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/spaces
+- name: measurabl_get_portfolios_buildings_ratings
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings
+  description: Returns a list of ratings for the specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings
+- name: measurabl_delete_portfolios_buildings_ratings
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings/{rating_id}
+  description: Deletes a specific rating assigned to a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings/{rating_id}
+- name: measurabl_get_portfolios_buildings_ratings_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings/{rating_id}
+  description: Returns a specific rating for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings/{rating_id}
+- name: measurabl_create_portfolios_buildings_spaces
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces
+  description: Creates space for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces
+- name: measurabl_get_portfolios_buildings_spaces
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces
+  description: Returns a list of spaces for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces
+- name: measurabl_delete_portfolios_buildings_spaces
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}
+  description: Deletes a specific space for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}
+- name: measurabl_get_portfolios_buildings_spaces_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}
+  description: Returns details of a specific space for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}
+- name: measurabl_update_portfolios_buildings_spaces
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}
+  description: Updates a specific space for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}
+- name: measurabl_get_portfolios_buildings_spaces_certifications
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}/certifications
+  description: Returns a list of certifications for a specific space in a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}/certifications
+- name: measurabl_get_portfolios_buildings_spaces_ratings
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}/ratings
+  description: Returns a list of ratings for a specific space in a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}/ratings
+- name: measurabl_create_portfolios_buildings_waste_meters
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters
+  description: Creates a waste meter for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters
+- name: measurabl_get_portfolios_buildings_waste_meters
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters
+  description: Returns a list of waste meters for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters
+- name: measurabl_delete_portfolios_buildings_waste_meters
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}
+  description: Deletes a specific waste meter for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}
+- name: measurabl_get_portfolios_buildings_waste_meters_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}
+  description: Returns a specific waste meter for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}
+- name: measurabl_update_portfolios_buildings_waste_meters
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}
+  description: Updates a specific waste meter for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}
+- name: measurabl_create_portfolios_buildings_waste_meters_readings
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings
+  description: Creates a waste meter reading for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings
+- name: measurabl_get_portfolios_buildings_waste_meters_readings
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings
+  description: Returns a list of waste meter readings for a specified waste meter and building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings
+- name: measurabl_delete_portfolios_buildings_waste_meters_readings
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings/{waste_meter_reading_id}
+  description: Deletes a specific waste meter reading for a specified waste meter and building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings/{waste_meter_reading_id}
+- name: measurabl_get_portfolios_buildings_waste_meters_readings_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings/{waste_meter_reading_id}
+  description: Returns details of a specific waste meter reading for a specified waste meter and building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings/{waste_meter_reading_id}
+- name: measurabl_update_portfolios_buildings_waste_meters_readings
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings/{waste_meter_reading_id}
+  description: Updates a specific waste meter reading for a specified building
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings/{waste_meter_reading_id}
+- name: measurabl_get_portfolios_certification_types
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/certification_types
+  description: Returns a list of all relevant certifications for a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/certification_types
+- name: measurabl_get_portfolios_certifications
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/certifications
+  description: Returns a list of certifications for a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/certifications
+- name: measurabl_create_portfolios_funds
+  method: POST
+  path: /core/v0/portfolios/{portfolio_id}/funds
+  description: Creates a new fund for a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#POST /core/v0/portfolios/{portfolio_id}/funds
+- name: measurabl_get_portfolios_funds
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/funds
+  description: Returns a list of all funds for a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/funds
+- name: measurabl_delete_portfolios_funds
+  method: DELETE
+  path: /core/v0/portfolios/{portfolio_id}/funds/{fund_id}
+  description: Deletes a specific fund in a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#DELETE /core/v0/portfolios/{portfolio_id}/funds/{fund_id}
+- name: measurabl_get_portfolios_funds_by_id
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/funds/{fund_id}
+  description: Returns details of a specific fund in a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/funds/{fund_id}
+- name: measurabl_update_portfolios_funds_relationships
+  method: PATCH
+  path: /core/v0/portfolios/{portfolio_id}/funds/{fund_id}/relationships
+  description: Assigns existing buildings to a specific fund in a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#PATCH /core/v0/portfolios/{portfolio_id}/funds/{fund_id}/relationships
+- name: measurabl_get_portfolios_meters
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/meters
+  description: Returns a list of meters (energy or water) for a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/meters
+- name: measurabl_get_portfolios_ratings
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/ratings
+  description: Returns a list of all ratings for a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/ratings
+- name: measurabl_get_portfolios_waste_meters
+  method: GET
+  path: /core/v0/portfolios/{portfolio_id}/waste_meters
+  description: Returns a list of waste meters for a specified portfolio
+  category: Core
+  source_operation: openapi/measurabl-core-openapi.yml#GET /core/v0/portfolios/{portfolio_id}/waste_meters
+- name: measurabl_create_buildings
+  method: POST
+  path: /insights/v0/buildings
+  description: Creates a building
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/buildings
+- name: measurabl_get_buildings
+  method: GET
+  path: /insights/v0/buildings
+  description: Returns all buildings for an app
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/buildings
+- name: measurabl_create_buildings_export
+  method: POST
+  path: /insights/v0/buildings/export
+  description: Requests a CSV download for the current app
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/buildings/export
+- name: measurabl_get_carbon_estimate_batches
+  method: GET
+  path: /insights/v0/carbon_estimate_batches
+  description: Returns all carbon estimates batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/carbon_estimate_batches
+- name: measurabl_create_carbon_estimate_batches_export
+  method: POST
+  path: /insights/v0/carbon_estimate_batches/export
+  description: Requests a CSV download for the given Carbon Estimate batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/carbon_estimate_batches/export
+- name: measurabl_create_carbon_estimate_batches_upload
+  method: POST
+  path: /insights/v0/carbon_estimate_batches/upload
+  description: Uploads a file to create new carbon estimate(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/carbon_estimate_batches/upload
+- name: measurabl_get_carbon_estimate_batches_by_id
+  method: GET
+  path: /insights/v0/carbon_estimate_batches/{id}
+  description: Returns carbon estimate batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/carbon_estimate_batches/{id}
+- name: measurabl_get_carbon_estimate_batches_carbon_estimates
+  method: GET
+  path: /insights/v0/carbon_estimate_batches/{id}/carbon_estimates
+  description: Returns all carbon estimates for a given batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/carbon_estimate_batches/{id}/carbon_estimates
+- name: measurabl_get_carbon_estimates
+  method: GET
+  path: /insights/v0/carbon_estimates
+  description: Returns all carbon estimates
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/carbon_estimates
+- name: measurabl_create_carbon_estimates
+  method: POST
+  path: /insights/v0/carbon_estimates
+  description: Creates new carbon estimate(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/carbon_estimates
+- name: measurabl_get_carbon_estimates_by_id
+  method: GET
+  path: /insights/v0/carbon_estimates/{id}
+  description: Retrieves an existing carbon estimate
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/carbon_estimates/{id}
+- name: measurabl_get_certification_lookup_batches
+  method: GET
+  path: /insights/v0/certification_lookup_batches
+  description: Returns all certification lookup batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/certification_lookup_batches
+- name: measurabl_create_certification_lookup_batches_export
+  method: POST
+  path: /insights/v0/certification_lookup_batches/export
+  description: Requests a CSV download for the given Certification Lookups batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/certification_lookup_batches/export
+- name: measurabl_create_certification_lookup_batches_upload
+  method: POST
+  path: /insights/v0/certification_lookup_batches/upload
+  description: Uploads a file to create new certification lookup(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/certification_lookup_batches/upload
+- name: measurabl_get_certification_lookup_batches_by_id
+  method: GET
+  path: /insights/v0/certification_lookup_batches/{id}
+  description: Returns certification lookup batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/certification_lookup_batches/{id}
+- name: measurabl_get_certification_lookup_batches_certification_lookups
+  method: GET
+  path: /insights/v0/certification_lookup_batches/{id}/certification_lookups
+  description: Returns all certification lookups for a given batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/certification_lookup_batches/{id}/certification_lookups
+- name: measurabl_create_certification_lookups
+  method: POST
+  path: /insights/v0/certification_lookups
+  description: Creates new certification lookup(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/certification_lookups
+- name: measurabl_get_certification_lookups
+  method: GET
+  path: /insights/v0/certification_lookups
+  description: Returns all certification lookups
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/certification_lookups
+- name: measurabl_get_certification_lookups_by_id
+  method: GET
+  path: /insights/v0/certification_lookups/{id}
+  description: Retrieves an existing certification lookup
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/certification_lookups/{id}
+- name: measurabl_get_energy_estimate_batches
+  method: GET
+  path: /insights/v0/energy_estimate_batches
+  description: Returns all energy estimates batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/energy_estimate_batches
+- name: measurabl_create_energy_estimate_batches_export
+  method: POST
+  path: /insights/v0/energy_estimate_batches/export
+  description: Requests a CSV download for the given Energy Estimate batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/energy_estimate_batches/export
+- name: measurabl_create_energy_estimate_batches_upload
+  method: POST
+  path: /insights/v0/energy_estimate_batches/upload
+  description: Uploads a file to create new energy estimate(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/energy_estimate_batches/upload
+- name: measurabl_get_energy_estimate_batches_by_id
+  method: GET
+  path: /insights/v0/energy_estimate_batches/{id}
+  description: Returns energy estimate batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/energy_estimate_batches/{id}
+- name: measurabl_get_energy_estimate_batches_energy_estimates
+  method: GET
+  path: /insights/v0/energy_estimate_batches/{id}/energy_estimates
+  description: Returns all energy estimates for a given batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/energy_estimate_batches/{id}/energy_estimates
+- name: measurabl_get_energy_estimates
+  method: GET
+  path: /insights/v0/energy_estimates
+  description: Returns all energy estimates
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/energy_estimates
+- name: measurabl_create_energy_estimates
+  method: POST
+  path: /insights/v0/energy_estimates
+  description: Creates new energy estimate(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/energy_estimates
+- name: measurabl_get_energy_estimates_by_id
+  method: GET
+  path: /insights/v0/energy_estimates/{id}
+  description: Retrieves an existing energy estimate
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/energy_estimates/{id}
+- name: measurabl_get_exports
+  method: GET
+  path: /insights/v0/exports
+  description: Returns all exports for an app
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/exports
+- name: measurabl_get_exports_by_id
+  method: GET
+  path: /insights/v0/exports/{id}
+  description: Retrieves an existing export
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/exports/{id}
+- name: measurabl_get_exports_download
+  method: GET
+  path: /insights/v0/exports/{id}/download
+  description: Downloads the export file
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/exports/{id}/download
+- name: measurabl_get_ordinance_lookup_batches
+  method: GET
+  path: /insights/v0/ordinance_lookup_batches
+  description: Returns all ordinance lookup batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/ordinance_lookup_batches
+- name: measurabl_create_ordinance_lookup_batches_export
+  method: POST
+  path: /insights/v0/ordinance_lookup_batches/export
+  description: Requests a CSV download for the given Ordinance Lookup batches
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/ordinance_lookup_batches/export
+- name: measurabl_create_ordinance_lookup_batches_upload
+  method: POST
+  path: /insights/v0/ordinance_lookup_batches/upload
+  description: Uploads a file to create new ordinance lookup(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/ordinance_lookup_batches/upload
+- name: measurabl_get_ordinance_lookup_batches_by_id
+  method: GET
+  path: /insights/v0/ordinance_lookup_batches/{id}
+  description: Returns ordinance lookup batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/ordinance_lookup_batches/{id}
+- name: measurabl_get_ordinance_lookup_batches_ordinance_lookups
+  method: GET
+  path: /insights/v0/ordinance_lookup_batches/{id}/ordinance_lookups
+  description: Returns all ordinance lookups for a given batch
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/ordinance_lookup_batches/{id}/ordinance_lookups
+- name: measurabl_create_ordinance_lookups
+  method: POST
+  path: /insights/v0/ordinance_lookups
+  description: Creates new ordinance lookup(s)
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#POST /insights/v0/ordinance_lookups
+- name: measurabl_get_ordinance_lookups
+  method: GET
+  path: /insights/v0/ordinance_lookups
+  description: Returns all ordinance lookups
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/ordinance_lookups
+- name: measurabl_get_ordinance_lookups_by_id
+  method: GET
+  path: /insights/v0/ordinance_lookups/{id}
+  description: Retrieves an existing ordinance lookup
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/ordinance_lookups/{id}
+- name: measurabl_get_ordinances
+  method: GET
+  path: /insights/v0/ordinances
+  description: Returns a list of ordinances
+  category: ESGx Buildings
+  source_operation: openapi/measurabl-esgx-buildings-openapi.yml#GET /insights/v0/ordinances
+- name: measurabl_get_listed_real_estate_reports
+  method: GET
+  path: /insights/v0/listed_real_estate_reports
+  description: Returns all listed real estate reports
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports
+- name: measurabl_get_listed_real_estate_reports_by_id
+  method: GET
+  path: /insights/v0/listed_real_estate_reports/{id}
+  description: Retrieves an existing listed real estate report
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports/{id}
+- name: measurabl_get_listed_real_estate_reports_building_level
+  method: GET
+  path: /insights/v0/listed_real_estate_reports/{id}/building_level
+  description: Retrieves the data sets available for a Listed Real Estate Report
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports/{id}/building_level
+- name: measurabl_get_listed_real_estate_reports_building_level_by_id
+  method: GET
+  path: /insights/v0/listed_real_estate_reports/{id}/building_level/{data_set}
+  description: Retrieves a Listed Real Estate Report Building Level Data Set
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports/{id}/building_level/{data_set}
+- name: measurabl_get_listed_real_estate_reports_building_level_download
+  method: GET
+  path: /insights/v0/listed_real_estate_reports/{id}/building_level/{data_set}/download
+  description: Downloads the export file
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports/{id}/building_level/{data_set}/download
+- name: measurabl_get_listed_real_estate_reports_company_level
+  method: GET
+  path: /insights/v0/listed_real_estate_reports/{id}/company_level
+  description: Retrieves the company-level data sets for a Listed Real Estate Report
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports/{id}/company_level
+- name: measurabl_get_listed_real_estate_reports_company_level_by_id
+  method: GET
+  path: /insights/v0/listed_real_estate_reports/{id}/company_level/{data_set}
+  description: Retrieves a Listed Real Estate Report Company Level Data Set
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports/{id}/company_level/{data_set}
+- name: measurabl_get_listed_real_estate_reports_company_level_download
+  method: GET
+  path: /insights/v0/listed_real_estate_reports/{id}/company_level/{data_set}/download
+  description: Downloads the export file
+  category: ESGx Securities
+  source_operation: openapi/measurabl-esgx-securities-openapi.yml#GET /insights/v0/listed_real_estate_reports/{id}/company_level/{data_set}/download
+- name: measurabl_get_listed_real_estate_compliance_files
+  method: GET
+  path: /insights/v0/listed_real_estate/compliance_files
+  description: Shows available Compliance File(s)
+  category: ESGx Securities Compliance Files
+  source_operation: openapi/measurabl-esgx-securities-compliance-files-openapi.yml#GET /insights/v0/listed_real_estate/compliance_files
+- name: measurabl_get_listed_real_estate_compliance_files_by_id
+  method: GET
+  path: /insights/v0/listed_real_estate/compliance_files/{id}
+  description: Retrieves metadata about an ESGx Securities (fka Listed Real Estate) Compliance File
+  category: ESGx Securities Compliance Files
+  source_operation: openapi/measurabl-esgx-securities-compliance-files-openapi.yml#GET /insights/v0/listed_real_estate/compliance_files/{id}
+- name: measurabl_get_listed_real_estate_compliance_files_download
+  method: GET
+  path: /insights/v0/listed_real_estate/compliance_files/{id}/download
+  description: Downloads the Compliance File
+  category: ESGx Securities Compliance Files
+  source_operation: openapi/measurabl-esgx-securities-compliance-files-openapi.yml#GET /insights/v0/listed_real_estate/compliance_files/{id}/download
+- name: measurabl_get_buildings_monthly_utility_data
+  method: GET
+  path: /partners/v0/buildings/{building_id}/monthly_utility_data
+  description: monthly utility data for a building
+  category: Partner
+  source_operation: openapi/measurabl-partners-openapi.yml#GET /partners/v0/buildings/{building_id}/monthly_utility_data
+- name: measurabl_get_portfolios_2
+  method: GET
+  path: /partners/v0/portfolios
+  description: Returns the portfolios that a partner can access
+  category: Partner
+  source_operation: openapi/measurabl-partners-openapi.yml#GET /partners/v0/portfolios
+- name: measurabl_get_portfolios_buildings_2
+  method: GET
+  path: /partners/v0/portfolios/{portfolio_id}/buildings
+  description: Returns buildings for a portfolio
+  category: Partner
+  source_operation: openapi/measurabl-partners-openapi.yml#GET /partners/v0/portfolios/{portfolio_id}/buildings
+cross_links:
+  openapi: openapi/
+  authentication: authentication/measurabl-authentication.yml
+  conventions: conventions/measurabl-conventions.yml
+  skills: skills/_index.yml

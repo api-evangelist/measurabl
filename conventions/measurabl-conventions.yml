@@ -1,0 +1,146 @@
+generated: '2026-08-01'
+method: searched
+source: >-
+  https://api.measurabl.com/api-docs/ (the five OpenAPI 3.0.1 documents and their info.description
+  Quick Start guides), https://api.measurabl.com/release_notes/core-api-release-notes-2023-12-18,
+  https://www.measurabl.com/measurabl-api-faq/
+summary: >-
+  Cross-cutting request/response semantics for the Measurabl API family. All five APIs share one
+  contract: OAuth 2.0 client credentials against a single token endpoint, JSON:API request and
+  response documents, page/size pagination, an RSQL-style filter parameter, per-endpoint rate
+  limits over a 5-minute window, and JSON:API error objects. Idempotency is NOT documented and
+  MUST NOT be assumed.
+authentication:
+  style: oauth2_client_credentials
+  token_url: https://api.measurabl.com/token
+  credentials: client key + secret, issued per organization by a Measurabl Customer Delivery Manager
+  self_serve: false
+  applied: 'every one of the 110 operations declares security [{OAuth2: []}]'
+  scopes: none declared
+  docs: https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-
+  see: authentication/measurabl-authentication.yml
+media_type:
+  request: application/vnd.api+json
+  response: application/vnd.api+json
+  standard: JSON:API
+  standard_url: https://jsonapi.org/
+  note: >-
+    Stated verbatim in every spec's info.description - "Each endpoint response complies with the
+    JSON-API Specification". Responses are JSON:API documents (data / errors / meta / links /
+    jsonapi), not bare JSON objects.
+pagination:
+  style: page-number
+  params:
+  - {name: page, in: query, type: integer, default: 1}
+  - {name: size, in: query, type: integer, default: 25, max: 200, note: 'documented verbatim - "The max page size is limited to 200 returned results"'}
+  - {name: pageSize, in: query, type: integer, note: alternate spelling used by ESGx Buildings batch/lookup collections}
+  response_fields:
+    links: [first, last, prev, next]
+    schema: openapi/measurabl-core-openapi.yml#/components/schemas/pagination
+  overflow: >-
+    Requesting a page past the last page returns 404 ("when requesting an overflow page"), not an
+    empty collection. Clients must stop on the links.next null or clamp to links.last.
+  docs: https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests
+filtering:
+  param: filter
+  style: rsql-like
+  operators:
+    equals: '=='
+    greater_or_equal: '=ge='
+  examples:
+  - 'filter=updatedAt=ge=2022-11-01T00:00 - buildings updated at or after the given UTC date-time'
+  - 'filter=yearbuilt==1969 - buildings with a year built of exactly 1969'
+  scope: 'documented verbatim as "Filter by any attribute available via the endpoint"'
+  note: >-
+    The filter grammar is described in the parameter description rather than formally specified;
+    no OpenAPI schema constrains it.
+date_ranges:
+  params: [startDate, endDate]
+  format: date
+  echo_headers:
+  - X-startDate-Requested
+  - X-startDate-Applied
+  - X-endDate-Requested
+  - X-endDate-Applied
+  note: >-
+    The Partner API monthly utility data operation echoes both the requested and the actually
+    applied date bounds back as response headers, so a client can detect server-side clamping.
+    This is the only response-header contract in the whole surface.
+idempotency:
+  documented: false
+  header: null
+  note: >-
+    No Idempotency-Key header, parameter or retry-safety contract appears anywhere in the five
+    specs or in the published docs. POST operations (meter readings, estimates, lookups, batches)
+    must be assumed NON-idempotent. Batch creation returns a job id, so the safe retry pattern is
+    to poll GET /insights/v0/{batch_type}/{id} before resubmitting.
+  warning: >-
+    Do NOT emit an Idempotency pointer for Measurabl. There is no idempotency contract to point at.
+async_jobs:
+  pattern: create-then-poll
+  applies_to: ESGx Buildings estimates, lookups and batches
+  status_param: {name: status, in: query, enum: [JOB_SUCCESS]}
+  flow: >-
+    POST the estimate/lookup (or batch), take the returned id, then GET the resource until status
+    reads JOB_SUCCESS, then read absoluteEstimates / intensityEstimates. Documented verbatim in
+    the ESGx Buildings Quick Start.
+  bulk: CSV upload via POST /insights/v0/{batch_type}/upload
+  export: >-
+    POST /insights/v0/{batch_type}/export creates an Export; GET /insights/v0/exports/{id}/download
+    returns 302 to a pre-signed URL. GET /insights/v0/exports/{id} returns 200 "Export is not ready
+    yet" while still generating.
+redirect_downloads:
+  status: 302
+  header: Location
+  target: pre-signed URL
+  applies_to: [ESGx exports, ESGx Securities data sets, ESGx Securities compliance files]
+  note: Meter reading bills use 303 with a Location header instead of 302.
+rate_limiting:
+  window: 5 minutes
+  scope: per endpoint
+  documented_headers: none
+  status: 429
+  see: rate-limits/measurabl-rate-limits.yml
+error_envelope:
+  media_type: application/vnd.api+json
+  standard: JSON:API errors
+  rfc9457: false
+  root: errors
+  see: errors/measurabl-problem-types.yml
+versioning:
+  scheme: uri-path
+  current: v0
+  segments: [/core/v0, /insights/v0, /partners/v0]
+  header_versioning: false
+  note: >-
+    v0 across every surface since at least 2022; the API docs portal has carried a BETA label.
+  see: lifecycle/measurabl-lifecycle.yml
+request_tracing:
+  request_id_header: none_documented
+  note: >-
+    The JSON:API error object carries an "id" member described as "A unique identifier for this
+    particular occurrence of the problem" - that is the only correlation handle Measurabl exposes,
+    and only on failures.
+sandbox:
+  available: false
+  evidence: >-
+    The Measurabl API FAQ states there is no sandbox / testing environment. Integrations are built
+    against live credentials issued for the customer's own account.
+  source: https://www.measurabl.com/measurabl-api-faq/
+audit:
+  available: true
+  evidence: >-
+    "The API has its own audit log. It tracks when data is pushed or pulled to and from Measurabl."
+  source: https://www.measurabl.com/measurabl-api-faq/
+access_model:
+  eligibility: Premium Tier Measurabl customers, or partners integrating on behalf of a customer
+  provisioning: contact a Measurabl Customer Delivery Manager to have API key + secret created
+  self_serve: false
+  source: https://www.measurabl.com/measurabl-api-faq/
+cross_links:
+  authentication: authentication/measurabl-authentication.yml
+  scopes: scopes/measurabl-scopes.yml
+  errors: errors/measurabl-problem-types.yml
+  lifecycle: lifecycle/measurabl-lifecycle.yml
+  rate_limits: rate-limits/measurabl-rate-limits.yml
+  data_model: data-model/measurabl-data-model.yml

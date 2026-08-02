@@ -1,0 +1,102 @@
+generated: '2026-08-01'
+method: derived
+source: >-
+  openapi/_original/*.json (five OpenAPI 3.0.1 documents) plus https://www.measurabl.com/security/
+  and https://www.measurabl.com/measurabl-api-faq/
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: All five published documents declare openapi 3.0.1 with paths and components.
+- id: json-api-1.0
+  conforms: true
+  evidence: >-
+    Every response is application/vnd.api+json and every spec's info.description states "Each
+    endpoint response complies with the JSON-API Specification". components.schemas carries the
+    full JSON:API vocabulary - json_api, success, failure, data, resource, relationships,
+    relationshipToOne, relationshipToMany, linkage, links, pagination, jsonapi, error, meta.
+  spec: https://jsonapi.org/
+- id: oauth2
+  conforms: true
+  evidence: >-
+    components.securitySchemes.OAuth2 type oauth2 with a clientCredentials flow at
+    https://api.measurabl.com/token, applied to all 110 operations.
+- id: oauth2-client-credentials-rfc6749
+  conforms: true
+  evidence: RFC 6749 section 4.4 client credentials grant; key + secret issued per organization.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server returns 404 on every Measurabl host.
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: false
+  evidence: /.well-known/oauth-protected-resource returns 404 on every Measurabl host.
+- id: oidc
+  conforms: false
+  evidence: No openIdConnect security scheme; /.well-known/openid-configuration returns 404.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are JSON:API error objects in application/vnd.api+json, not application/problem+json.
+    See errors/measurabl-problem-types.yml.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on every host.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header is declared or documented; no deprecated operations.
+- id: rsql
+  conforms: partial
+  evidence: >-
+    The filter query parameter uses RSQL-style comparison operators (field==value, field=ge=value)
+    and the 2022-12 release notes name RSQL explicitly, but no formal grammar or schema is published.
+- id: idempotency-key
+  conforms: false
+  evidence: No idempotency header, parameter or retry-safety contract anywhere in the specs or docs.
+- id: asyncapi
+  conforms: false
+  applicable: false
+  evidence: >-
+    Measurabl publishes no event, streaming or webhook surface. Asynchronous work is modeled as
+    create-then-poll job resources inside the REST API, not as events. Not a gap - not applicable.
+- id: mcp
+  conforms: false
+  evidence: No hosted or published Model Context Protocol server was found.
+- id: a2a
+  conforms: false
+  evidence: >-
+    No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any host. The 200s
+    from app.measurabl.com are an SPA catch-all serving HTML, rejected as false positives.
+- id: graphql
+  conforms: false
+  evidence: https://api.measurabl.com/graphql returns 404.
+- id: soc2-type2
+  conforms: true
+  evidence: >-
+    "we have successfully completed the SOC 2 Type 2 and ISO 27001:2013 security audits" -
+    https://www.measurabl.com/security/
+- id: iso-27001-2013
+  conforms: true
+  evidence: https://www.measurabl.com/security/
+- id: gdpr
+  conforms: true
+  evidence: >-
+    "We are committed to GDPR compliance and offer information about our practices,
+    sub-processors, and Data Processing agreements" - https://www.measurabl.com/security/;
+    EU and UK Standard Contractual Clauses published.
+- id: privacy-shield
+  conforms: claimed
+  evidence: >-
+    Listed on https://www.measurabl.com/security/. Recorded as published; the EU-US Privacy Shield
+    framework was invalidated in 2020.
+domain_standards:
+  note: >-
+    Measurabl's data surface is built on real estate ESG frameworks. These are the frameworks the
+    API's data represents rather than protocol conformance claims about the API itself.
+  frameworks:
+  - {id: crrem, name: Carbon Risk Real Estate Monitor, evidence: '/insights/v0/crrem_lookups and /insights/v0/crrem_lookup_batches operations'}
+  - {id: green-building-certifications, name: Green building certification programs, evidence: '/core/v0/.../certifications and /insights/v0/certification_lookups operations'}
+  - {id: building-performance-ordinances, name: Local building performance standards and ordinances, evidence: '/insights/v0/ordinances and /insights/v0/ordinance_lookups operations'}
+compliance_page: https://www.measurabl.com/security/
+cross_links:
+  trust_center: security/measurabl-trust-center.yml
+  authentication: authentication/measurabl-authentication.yml
+  errors: errors/measurabl-problem-types.yml

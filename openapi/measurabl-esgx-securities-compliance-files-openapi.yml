@@ -1,0 +1,435 @@
+openapi: 3.0.1
+info:
+  title: ESGx Securities Compliance Files API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a request to get a list of available Compliance Files
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client
+    libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+components:
+  schemas:
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources
+            along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by
+        a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests
+          that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+        nullable: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships
+        may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type: string
+        format: uri-reference
+        nullable: true
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which
+        it's defined.
+      type: object
+      additionalProperties: true
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in
+        which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including
+        a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    empty:
+      description: Describes an empty to-one relationship.
+      nullable: true
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence
+            of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary
+                data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}
+paths:
+  /insights/v0/listed_real_estate/compliance_files/{id}/download:
+    get:
+      summary: Downloads the Compliance File
+      description: 'Provides a redirect to download the Compliance File.
+
+        The url in the redirect has an expiration, typically of 5 minutes.
+
+        '
+      tags:
+      - Listed Real Estate Compliance Files
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>july-2026</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '302':
+          description: Compliance file can be downloaded via redirect to pre-signed URL
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: The redirect URL location of the requested export file (pre-signed URL).
+        '404':
+          description: Compliance file does not exist
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+  /insights/v0/listed_real_estate/compliance_files:
+    get:
+      summary: Shows available Compliance File(s)
+      description: 'Provides list of published Compliance Files.
+
+        '
+      tags:
+      - Listed Real Estate Compliance Files
+      security:
+      - OAuth2: []
+      responses:
+        '200':
+          description: List of Compliance file(s)
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: july-2026
+                  type: listedRealEstateComplianceFiles
+                  attributes:
+                    filesizeInKb: 24
+                    contentType: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                    checksum: hzw0IcBzC/CDJrgU4bS+Rw==
+                    createdAt: '2026-07-02T00:00:00.000Z'
+                    updatedAt: '2026-07-03T00:00:00.000Z'
+                    publishedAt: '2026-07-03T00:00:00.000Z'
+                - id: april-2026
+                  type: listedRealEstateComplianceFiles
+                  attributes:
+                    filesizeInKb: 24
+                    contentType: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                    checksum: hzw0IcBzC/CDJrgU4bS+Rw==
+                    createdAt: '2026-04-02T00:00:00.000Z'
+                    updatedAt: '2026-04-03T00:00:00.000Z'
+                    publishedAt: '2026-04-03T00:00:00.000Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          examples:
+            application/vnd.api+json:
+              errors:
+              - status: '403'
+                title: Forbidden
+                detail: Access Denied
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/listed_real_estate/compliance_files/{id}:
+    get:
+      summary: Retrieves metadata about an ESGx Securities (fka Listed Real Estate) Compliance File
+      description: 'Provides metadata about a Compliance File.<br>
+
+        The checksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:
+
+        `openssl md5 -binary <filename> | base64`
+
+        '
+      tags:
+      - Listed Real Estate Compliance Files
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>july-2026</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Compliance file is published and available
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: july-2026
+                  type: listedRealEstateComplianceFiles
+                  attributes:
+                    filesizeInKb: 24
+                    contentType: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                    checksum: hzw0IcBzC/CDJrgU4bS+Rw==
+                    createdAt: '2026-07-02T00:00:00.000Z'
+                    updatedAt: '2026-07-03T00:00:00.000Z'
+                    publishedAt: '2026-07-03T00:00:00.000Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: No Published Compliance file
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          examples:
+            application/vnd.api+json:
+              errors:
+              - status: '403'
+                title: Forbidden
+                detail: Access Denied
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'

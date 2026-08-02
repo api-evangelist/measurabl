@@ -1,0 +1,56 @@
+generated: '2026-08-01'
+method: searched
+probe: false
+probe_note: >-
+  0-working/probe-security-programs.py returned trust=none; the page was found and verified by
+  hand at https://www.measurabl.com/security/ (200), which the automated heuristic missed.
+url: https://www.measurabl.com/security/
+title: Measurabl Security
+certifications:
+- id: soc2-type2
+  name: SOC 2 Type 2
+  status: completed
+  evidence: >-
+    "Measurabl is proud to announce that we have successfully completed the SOC 2 Type 2 and
+    ISO 27001:2013 security audits."
+  renewal: >-
+    "we'll renew the SOC 2 Type 2 certification yearly"
+- id: iso-27001-2013
+  name: ISO 27001:2013
+  status: completed
+  evidence: >-
+    "we have successfully completed the SOC 2 Type 2 and ISO 27001:2013 security audits."
+- id: gdpr
+  name: GDPR
+  status: committed
+  evidence: >-
+    "We are committed to GDPR compliance and offer information about our practices,
+    sub-processors, and Data Processing agreements."
+- id: privacy-shield
+  name: Privacy Shield
+  status: certified
+  evidence: >-
+    "Privacy Shield certification means that Measurabl privacy and data collection practices have
+    been reviewed and approved by an independent third-party."
+  note: >-
+    Recorded as published. The EU-US Privacy Shield framework was invalidated by Schrems II in
+    2020; Measurabl still lists it on the security page.
+practices:
+  encryption_in_transit: 'AES 256-based encryption and TLS 1.2 to encrypt network traffic'
+  encryption_at_rest: 'AWS KMS (Key Management Service), which encrypts the data at rest'
+  hosting: Amazon Web Services (AWS) data centers
+  vulnerability_management: >-
+    "maintains a documented vulnerability management program which includes periodic scans,
+    identification, and remediation of security vulnerabilities"
+  penetration_testing: >-
+    "regular internal and external penetration tests and remediate them according to the
+    severity of any results found"
+  personnel: background screening at hire, NDAs, ongoing privacy and security training
+data_processing:
+  eu_standard_contractual_clauses: https://www.measurabl.com/eu-standard-contractual-clauses/
+  uk_standard_contractual_clauses: https://www.measurabl.com/uk-standard-contractual-clauses/
+gaps:
+- no_dedicated_trust_portal: trust.measurabl.com does not resolve
+- no_public_audit_report_request_flow: no self-serve document request on the security page
+evidence:
+- {source: 'https://www.measurabl.com/security/', http_status: 200, fetched: '2026-08-01', keywords: [soc 2, iso 27001, gdpr, privacy shield, penetration, vulnerability]}

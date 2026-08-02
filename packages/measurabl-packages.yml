@@ -1,0 +1,35 @@
+generated: '2026-08-01'
+method: searched
+source: >-
+  npm registry search, PyPI, RubyGems, Packagist, NuGet, and the Measurabl GitHub organization
+  (https://github.com/Measurabl, 31 public repos) searched 2026-08-01.
+summary: >-
+  Measurabl publishes NO first-party client SDK on any public package registry. The only
+  first-party developer code Measurabl ships publicly is an example-project repository. The
+  Core API description itself points integrators at the JSON:API specification's third-party
+  client libraries rather than at a Measurabl SDK.
+packages: []
+registries_searched:
+- {registry: npm, query: measurabl, results: 0}
+- {registry: pypi, query: 'measurabl / measurabl-api / measurabl-sdk', results: 0}
+- {registry: rubygems, query: measurabl, results: 0, note: only unrelated "measurable" gem}
+- {registry: packagist, query: measurabl, results: 0, note: only unrelated package}
+- {registry: nuget, query: measurabl, results: 0, note: only unrelated package}
+- {registry: github, query: 'org:Measurabl', results: 31, note: mostly forks of cloudposse Terraform modules; no client library}
+code_samples:
+- name: measurabl_api_code_samples
+  official: true
+  url: https://github.com/Measurabl/measurabl_api_code_samples
+  description: >-
+    First-party example projects for accessing the Measurabl Core API. Contains a Node.js
+    (node/index.js + Express static front end) and a Python (python/index.py) sample app that
+    perform the OAuth 2.0 client-credentials handshake and call the Core API.
+  languages: [javascript, python]
+  last_pushed: '2024-01-10'
+  note: Example applications, not an installable client library. Not counted as an SDK.
+recommended_clients:
+- ecosystem: json-api
+  url: https://jsonapi.org/implementations/#client-libraries
+  note: >-
+    Referenced verbatim in every Measurabl OpenAPI info.description as the client-library path,
+    since all five APIs return application/vnd.api+json.

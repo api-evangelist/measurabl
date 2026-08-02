@@ -1,0 +1,65 @@
+generated: '2026-08-01'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the five Measurabl OpenAPI 3.0.1 documents harvested from
+  https://api.measurabl.com/api-docs/ (verbatim in openapi/_original/). Cross-cutting rules cite
+  ../authentication/, ../conventions/, ../errors/, ../rate-limits/ and ../data-model/.
+grounding_note: >-
+  Measurabl declares NO operationId on any of its 110 published operations. Skills therefore
+  reference operations by METHOD + path, every one verified verbatim in the harvested specs. No
+  operationId was synthesized, because an invented id would be indistinguishable from a published
+  one downstream. The gap is recorded in each overlays/ file as x-apievangelist-gap.
+warnings:
+  no_sandbox: >-
+    Measurabl publishes no test environment; every skill operates on live customer data.
+  no_idempotency: >-
+    No Idempotency-Key mechanism exists. Every skill that writes tells the agent to re-read before
+    retrying a failed POST.
+  no_events: >-
+    No webhook, event or streaming surface exists. Change detection is polling with an
+    updatedAt RSQL filter.
+skills:
+- file: measurabl-ingest-utility-meter-data.md
+  name: Ingest utility meter data into a Measurabl building
+  api: openapi/measurabl-core-openapi.yml
+  operations:
+  - GET /core/v0/portfolios
+  - GET /core/v0/portfolios/{portfolio_id}/buildings
+  - GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters
+  - POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters
+  - POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings
+  - GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings
+  - GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}/bill
+- file: measurabl-run-esgx-building-estimates.md
+  name: Run ESGx energy and carbon estimates for a set of buildings
+  api: openapi/measurabl-esgx-buildings-openapi.yml
+  operations:
+  - POST /insights/v0/energy_estimates
+  - GET /insights/v0/energy_estimates/{id}
+  - POST /insights/v0/carbon_estimates
+  - POST /insights/v0/energy_estimate_batches/upload
+  - GET /insights/v0/energy_estimate_batches/{id}
+  - GET /insights/v0/energy_estimate_batches/{id}/energy_estimates
+  - POST /insights/v0/energy_estimate_batches/export
+  - GET /insights/v0/exports/{id}
+  - GET /insights/v0/exports/{id}/download
+- file: measurabl-track-certifications-and-ratings.md
+  name: Track green building certifications and ratings across a portfolio
+  api: openapi/measurabl-core-openapi.yml
+  operations:
+  - GET /core/v0/portfolios/{portfolio_id}/certification_types
+  - GET /core/v0/portfolios/{portfolio_id}/certifications
+  - POST /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications
+  - PATCH /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}/relationships
+  - GET /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}/certifications
+  - GET /core/v0/portfolios/{portfolio_id}/ratings
+- file: measurabl-pull-esgx-securities-datasets.md
+  name: Pull listed real estate ESG datasets and compliance files
+  api: openapi/measurabl-esgx-securities-openapi.yml
+  operations:
+  - GET /insights/v0/listed_real_estate_reports
+  - GET /insights/v0/listed_real_estate_reports/{id}/company_level
+  - GET /insights/v0/listed_real_estate_reports/{id}/company_level/{data_set}/download
+  - GET /insights/v0/listed_real_estate_reports/{id}/building_level
+  - GET /insights/v0/listed_real_estate/compliance_files
+  - GET /insights/v0/listed_real_estate/compliance_files/{id}/download

@@ -1,0 +1,66 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Partner API V0
+  version: 1.0.0
+extends: openapi/measurabl-partners-openapi.yml
+x-generated: '2026-08-01'
+x-method: generated
+x-source: openapi/_original/measurabl-partners-openapi.json
+x-note: Enhancements API Evangelist derives on top of the harvested Measurabl spec. The original is never mutated.
+  The two substantive gaps this overlay addresses are (1) the document declares NO servers array, so no client or
+  generator can resolve a base URL from the spec alone, and (2) 3 of 3 operations carry no operationId, which blocks
+  operation-level referencing from Arazzo, agent skills and SDK generators.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: measurabl
+    x-apievangelist-artifacts:
+      authentication: authentication/measurabl-authentication.yml
+      conventions: conventions/measurabl-conventions.yml
+      errors: errors/measurabl-problem-types.yml
+      rate-limits: rate-limits/measurabl-rate-limits.yml
+      data-model: data-model/measurabl-data-model.yml
+      lifecycle: lifecycle/measurabl-lifecycle.yml
+      conformance: conformance/measurabl-conformance.yml
+    x-media-type: application/vnd.api+json
+    x-standard: JSON:API 1.0
+    x-idempotency: not-supported
+- target: $
+  description: The published document declares no servers array. This is the production base URL, confirmed by the
+    path prefix and by the OAuth token URL declared in components.securitySchemes.
+  update:
+    servers:
+    - url: https://api.measurabl.com/partners/v0
+      description: Measurabl production (/partners/v0)
+- target: $.components.securitySchemes.OAuth2
+  description: Record how credentials are actually obtained; the spec declares the token URL but not the provisioning
+    path or the fact that no scopes exist.
+  update:
+    x-provisioning: Client key and secret are issued per organization by a Measurabl Customer Delivery Manager;
+      API access requires Premium Tier entitlement.
+    x-scopes: none - the clientCredentials flow declares an empty scopes map, so authorization is entitlement-based
+      rather than scope-based.
+    x-docs: https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-
+- target: $.tags
+  description: Declare the 2 tags used by operations in this document; the original declares an empty/absent top-level
+    tags array while tagging every operation.
+  update:
+  - name: Buildings
+    x-operation-count: 2
+  - name: Portfolios
+    x-operation-count: 1
+- target: $.components.schemas.failure
+  update:
+    x-error-catalog: errors/measurabl-problem-types.yml
+    x-format: jsonapi-errors
+    x-rfc9457: false
+- target: $.paths
+  description: '3 of 3 operations in this document have no operationId. API Evangelist does NOT synthesize them
+    into the spec: an invented operationId would be indistinguishable from a published one downstream. This action
+    records the gap so it can be raised with Measurabl. Agent skills in skills/ therefore reference operations by
+    METHOD + path, which are verbatim real.'
+  update:
+    x-apievangelist-gap:
+      missing_operation_ids: 3
+      total_operations: 3
+      severity: high
