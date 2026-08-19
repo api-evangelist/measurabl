@@ -1,0 +1,572 @@
+{
+  "item": [
+    {
+      "id": "bfeea755-db0a-43b6-b3bb-717622e00f32",
+      "name": "Listed Real Estate Compliance Files",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a326a46c-f5b6-4864-81b2-64cc69dba284",
+          "name": "Downloads the Compliance File",
+          "request": {
+            "name": "Downloads the Compliance File",
+            "description": {
+              "content": "Provides a redirect to download the Compliance File.\nThe url in the redirect has an expiration, typically of 5 minutes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate",
+                "compliance_files",
+                ":id",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>july-2026</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c7d5181a-4eee-4291-9c6b-b4b7b9b4c643",
+              "name": "Compliance file can be downloaded via redirect to pre-signed URL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate",
+                    "compliance_files",
+                    ":id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>july-2026</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The redirect URL location of the requested export file (pre-signed URL).",
+                  "key": "Location",
+                  "value": "http://FXBPUcZWTZnm.cueAuG9nKSXKNuG2P6GqKGLbSkUqt-Ks-m3jw"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "323ac191-b8d7-4986-889b-fece9de46ab1",
+              "name": "Compliance file does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate",
+                    "compliance_files",
+                    ":id",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>july-2026</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"Page not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aca934a7-bb98-4ca5-a431-83cc3433f99b",
+          "name": "Shows available Compliance File(s)",
+          "request": {
+            "name": "Shows available Compliance File(s)",
+            "description": {
+              "content": "Provides list of published Compliance Files.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate",
+                "compliance_files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3490378b-5868-49b5-982e-33704a997363",
+              "name": "List of Compliance file(s)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate",
+                    "compliance_files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"july-2026\",\n      \"type\": \"listedRealEstateComplianceFiles\",\n      \"attributes\": {\n        \"filesizeInKb\": 24,\n        \"contentType\": \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\",\n        \"checksum\": \"hzw0IcBzC/CDJrgU4bS+Rw==\",\n        \"createdAt\": \"2026-07-02T00:00:00.000Z\",\n        \"updatedAt\": \"2026-07-03T00:00:00.000Z\",\n        \"publishedAt\": \"2026-07-03T00:00:00.000Z\"\n      }\n    },\n    {\n      \"id\": \"april-2026\",\n      \"type\": \"listedRealEstateComplianceFiles\",\n      \"attributes\": {\n        \"filesizeInKb\": 24,\n        \"contentType\": \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\",\n        \"checksum\": \"hzw0IcBzC/CDJrgU4bS+Rw==\",\n        \"createdAt\": \"2026-04-02T00:00:00.000Z\",\n        \"updatedAt\": \"2026-04-03T00:00:00.000Z\",\n        \"publishedAt\": \"2026-04-03T00:00:00.000Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5d28425-5404-40de-ad9c-a5542f231415",
+              "name": "when authenticated but not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate",
+                    "compliance_files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"Access Denied\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ea73d7e6-f055-4f17-8bb5-15804eccd0d5",
+          "name": "Retrieves metadata about an ESGx Securities (fka Listed Real Estate) Compliance File",
+          "request": {
+            "name": "Retrieves metadata about an ESGx Securities (fka Listed Real Estate) Compliance File",
+            "description": {
+              "content": "Provides metadata about a Compliance File.<br>\nThe checksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:\n`openssl md5 -binary <filename> | base64`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate",
+                "compliance_files",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>july-2026</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0f49b0fe-4cda-42d6-a1d9-ddcff1ccad98",
+              "name": "Compliance file is published and available",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate",
+                    "compliance_files",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>july-2026</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"july-2026\",\n    \"type\": \"listedRealEstateComplianceFiles\",\n    \"attributes\": {\n      \"filesizeInKb\": 24,\n      \"contentType\": \"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\",\n      \"checksum\": \"hzw0IcBzC/CDJrgU4bS+Rw==\",\n      \"createdAt\": \"2026-07-02T00:00:00.000Z\",\n      \"updatedAt\": \"2026-07-03T00:00:00.000Z\",\n      \"publishedAt\": \"2026-07-03T00:00:00.000Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77e101eb-3dc0-4e51-8ba1-db552cda14b7",
+              "name": "when authenticated but not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate",
+                    "compliance_files",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>july-2026</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"Access Denied\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1adaaf97-4a3d-4c37-aedd-0318a8bb4096",
+              "name": "No Published Compliance file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate",
+                    "compliance_files",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>july-2026</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"Page not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c4a1bc49-fc40-4fda-ae73-82e556d6356d",
+    "name": "ESGx Securities Compliance Files API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Quick Start Guide\n\n1. Authorize using your client credentials (key and secret).\n2. Make a request to get a list of available Compliance Files\n\n* [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)\n* [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)\n* [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)\n\n### Response Format\n\nEach endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).\n",
+      "type": "text/plain"
+    }
+  }
+}

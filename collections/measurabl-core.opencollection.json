@@ -1,0 +1,2550 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Measurabl Core API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buildings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a paginated list of buildings for a specified portfolio or fund",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>73755608-a99d-40d9-94df-09d8ff67e7cd</em>"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.\n                  <ul>\n                    <li>updatedAt=ge=2022-11-01T00:00 will query for buildings that were updated at or after the set date and UTC time.</li>\n                    <li>yearbuilt==1969 will query for buildings that have a year built specifically in 1969.</li>\n                  </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a paginated list of buildings for a specified portfolio or fund"
+        },
+        {
+          "info": {
+            "name": "Adds a building to a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>bb97d075-a826-4001-b4bb-2dbab87e2b72</em>"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Adds a building to a specified portfolio"
+        },
+        {
+          "info": {
+            "name": "Returns details of a specific building for a specified portfolio or fund",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>e2302549-cd8b-4098-91f5-a70ead86df4d</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the building<br>\n                              Example: <em>c3c076ae-8360-4d85-876a-ba85fd6a4bab</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns details of a specific building for a specified portfolio or fund"
+        },
+        {
+          "info": {
+            "name": "Updates a building's attributes in a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>7a1eec7b-1372-40ac-92eb-aeacd4687260</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>eaf5b11d-5b5c-41c9-a0d8-ad5eb69f1e31</em>"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates a building's attributes in a specified portfolio"
+        },
+        {
+          "info": {
+            "name": "Removes a building from a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>a6e32f0e-5f5f-4497-b024-11f9d6f200ca</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>01327933-9400-4c64-81be-2e5af129d495</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Removes a building from a specified portfolio"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Certification Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of all relevant certifications for a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/certification_types",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>3cc2664f-1d91-4114-abb1-16e2b27258eb</em>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of all relevant certifications for a specified portfolio"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Certifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a specified buildings list of certifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/certifications",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>Example: d778dc3f-480e-4e68-b16a-3ddd5964dd58"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: cc334c38-e033-4ee1-a4be-d29d399fc121"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a specified buildings list of certifications"
+        },
+        {
+          "info": {
+            "name": "Creates a certification for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/certifications",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: d20abdff-fa4c-46ff-8f01-c1abc65876e4"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: d55f00d7-a869-4746-bba5-8a6d0b69bfc7"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a certification for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns a specific certification for a specific building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/certifications/:certification_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>Example: 21897b9b-251f-4714-9a36-75e2850c2541"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 4aa69684-4dd5-4508-8863-2ee64c332d35"
+              },
+              {
+                "name": "certification_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 84424a54-cba2-4a79-b933-5a622be1e02d"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a specific certification for a specific building"
+        },
+        {
+          "info": {
+            "name": "Updates a specific certification for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/certifications/:certification_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>Example: c8c8cde1-5f75-47f1-9612-a22954b9707e"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 773c9980-d70f-45ca-b25c-f5200c99cc41"
+              },
+              {
+                "name": "certification_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 61bdee9d-e27f-48cc-abb6-4d053bf31a50"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates a specific certification for a specified building"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific certification for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/certifications/:certification_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>Example: 9adf9e65-906f-421c-a31a-752f6d581ef5"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: dc1b99db-835f-4f19-a24c-76af69ddaba8"
+              },
+              {
+                "name": "certification_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 886c166e-dee3-4336-96ac-0c709ac8bb97"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific certification for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns a list of certifications for a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/certifications",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>adeb76ab-b9f2-4535-bf1f-d2821f74470b</em>"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.\n                  <ul>\n                    <li>updatedAt=ge=2022-11-01T00:00 will query for Certifications that were updated at or after the set date and UTC time.</li>\n                  </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of certifications for a specified portfolio"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Space Certifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Assigns a specific certification to a specified space or list of spaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/certifications/:certification_id/relationships",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>Example: ea278d77-7232-464c-989e-ca5f3ab40b4d"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 84f34431-69df-4686-8695-ceab0841d0dd"
+              },
+              {
+                "name": "certification_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 0a8ea329-70a6-4e5d-9c88-9584b5da221f"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Assigns a specific certification to a specified space or list of spaces"
+        },
+        {
+          "info": {
+            "name": "Returns a list of certifications for a specific space in a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/spaces/:space_id/certifications",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>e43e6f47-848d-47df-980f-196c8a647aad</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: f043b802-268a-4ab4-955d-2a0d4c05689b"
+              },
+              {
+                "name": "space_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: b366eb76-5d85-4cc2-9541-0a6a1ec04cfd"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>certificationDate=ge=2022-11-01 will query for certifications dated at or after the set date.</li>\n                                <li>isCustomType==true will query for only those certifications that are a custom type.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of certifications for a specific space in a specified building"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Funds Buildings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Assigns existing buildings to a specific fund in a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/funds/:fund_id/relationships",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>Example: 61b03d30-3ad8-4ddc-8fbc-b25b7d5b49d0"
+              },
+              {
+                "name": "fund_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 8da040e6-5a10-4110-ba1a-af12b6eec513"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Assigns existing buildings to a specific fund in a specified portfolio"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Funds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of all funds for a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/funds",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: a892099b-d3e8-40be-b94e-7cffc2b0bf0c"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of all funds for a specified portfolio"
+        },
+        {
+          "info": {
+            "name": "Creates a new fund for a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/funds",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: c56289c7-a0a9-4c30-9ca6-92246fba35c6"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a new fund for a specified portfolio"
+        },
+        {
+          "info": {
+            "name": "Returns details of a specific fund in a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/funds/:fund_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 8852637c-4cc2-4e00-ad68-040cd35cc9a9"
+              },
+              {
+                "name": "fund_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 184b780b-65d8-458a-84f1-eac6808c6e58"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns details of a specific fund in a specified portfolio"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific fund in a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/funds/:fund_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 47fb960c-9087-433f-9720-08af1e9991a1"
+              },
+              {
+                "name": "fund_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: d2daf7f6-936f-4900-9dac-dbeba3e065f4"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific fund in a specified portfolio"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Energy and Water Meters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of meters (energy or water) for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>03165e30-0e76-42d5-b47e-a302b488dbdf</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 22a90c0c-df32-4591-9d35-0b50bf45a481"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for Energy & Water Meters that were updated at or after the set date and UTC time.</li>\n                                <li>servesExteriorAreas==true will query for only those meters that serve exterior areas.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of meters (energy or water) for a specified building"
+        },
+        {
+          "info": {
+            "name": "Creates an energy or water meter for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: f0c9271f-ca15-48b2-b489-3bbef3905da6"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 52839c1a-5b3c-49f5-93b7-768d06e7b371"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates an energy or water meter for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns details of a specific meter (energy or water) for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>5df7c5b7-18d2-425c-ad66-6542d59654a6</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 2db61e3e-8061-469e-a4b2-4ca15caa392f"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 545a9dcb-acf7-4c99-b7d2-4245c995cccf"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns details of a specific meter (energy or water) for a specified building"
+        },
+        {
+          "info": {
+            "name": "Updates a specific meter for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>7f3dea66-3051-41f5-91d0-b88e44d2cb3a</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 7467f8e5-155c-4fbf-95ab-b79e06d6ece5"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: e095d364-96c0-4521-8086-a48db78d1f8e"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates a specific meter for a specified building"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific meter for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 30d9d10b-0641-49e6-a32a-6a9b015a5439"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: c0ceaaed-e398-467a-824f-0d495711f823"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 60f03d17-f43e-4ca0-9637-c1edd074fd30"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific meter for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns a list of meters (energy or water) for a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/meters",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>8fb14065-cd01-41bb-9e90-0974d2293c60</em>"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for Energy & Water Meters that were updated at or after the set date and UTC time.</li>\n                                <li>servesExteriorAreas==true will query for only those meters that serve exterior areas.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of meters (energy or water) for a specified portfolio"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Energy and Water Meter Bills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieves a utility bill for the given reading if one exists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/readings/:meter_reading_id/bill",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>f9f3fc20-37f4-4fbc-9388-ed3f18fd10d5</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 05a9147c-5e0b-4967-9db0-eff8327cc0a6"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 0c5f57e8-86cb-47e5-a175-581c664fba89"
+              },
+              {
+                "name": "meter_reading_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 0014a1a8-5f3f-4066-a887-b574b65c1848"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Retrieves a utility bill for the given reading if one exists"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Energy and Water Meter Readings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of meter readings for a specified meter and building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/readings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>0343323b-6de0-4cab-a39b-65fd7c614835</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 3d51e4b6-8888-4bc9-9ac6-5ce414dd7ddf"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 73c8d8d0-7710-4b79-bbd6-fad42a4f015e"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for meter readings updated at or after the set date and time.</li>\n                                <li>cost=ge=50 will query for meter readings with the cost attribute value greater than or equal to 50.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of meter readings for a specified meter and building"
+        },
+        {
+          "info": {
+            "name": "Creates an energy or water meter reading for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/readings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>f314a538-5e32-49d5-9d7b-dbd6ece4159d</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 224f747d-712c-4d27-b55d-05ecad7fd14c"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 3828dcef-0784-41cb-baf3-b5e6bd676e01"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates an energy or water meter reading for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns details of a specific meter reading for a specified meter and building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/readings/:meter_reading_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>38d9cb1b-dc70-47a1-9ff4-fd12ee79e13e</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 13ee4c8d-855d-4224-b788-2bf75474046c"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 2d31add7-a309-4f77-9025-b841f24c3c34"
+              },
+              {
+                "name": "meter_reading_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 17226f7b-007f-4daf-93cb-e58acc5cb201"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns details of a specific meter reading for a specified meter and building"
+        },
+        {
+          "info": {
+            "name": "Updates a specific meter reading for a specified meter and building",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/readings/:meter_reading_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>157fcdaf-5323-42b3-a60b-c6fc23715a1e</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 6ae49b75-65e4-4af4-a7e5-3f5c563d804e"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 33e000c1-ab0d-4bf2-82f6-481fd100b847"
+              },
+              {
+                "name": "meter_reading_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 50d95667-6647-41c5-90d9-1a131d0deb79"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates a specific meter reading for a specified meter and building"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific meter reading for a specified meter and building",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/readings/:meter_reading_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 89450297-c8e1-41e3-ba0e-864f6cdd9511"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: ca996f17-6d4f-4bb1-8f6a-39558c38d61e"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: e8beecd1-7199-47ca-9e9c-3fc1ab4f9d4d"
+              },
+              {
+                "name": "meter_reading_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 213ba4e0-430e-443d-b6de-4780b32c18bc"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific meter reading for a specified meter and building"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Energy and Water Meter Spaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of spaces a specified energy or water meter serves",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/spaces",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>abbc676c-47a1-4790-bf1d-a60a2ccce6c9</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 03972683-b67f-44b3-bb25-edd874e7f3c8"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 57aa12d4-f834-4808-9eeb-512ba50338e2"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.\n                  <ul>\n                    <li>updatedAt=ge=2022-11-01T00:00 will query for meter spaces that were updated at or after the set date and UTC time.</li>\n                    <li>propertyType==Office will query for meter spaces that have the specified propertyType.</li>\n                  </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of spaces a specified energy or water meter serves"
+        },
+        {
+          "info": {
+            "name": "Assigns an existing energy or water meter to a specified space or list of spaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/meters/:meter_id/relationships",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>2b3c84b1-30e1-4e2c-bb7a-836b300e84e4</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 039e095e-4475-481e-9cfb-29b82869d8bd"
+              },
+              {
+                "name": "meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 87c8c19d-a6cb-44f5-a1a6-37dd0aaecc64"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Assigns an existing energy or water meter to a specified space or list of spaces"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ratings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of all ratings for a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/ratings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>bb5c780e-09ab-42e0-940c-3d9d6188c2b7</em>"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>ratingDate=ge=2022-11-01 will query for buildings with Ratings dated at or after the set date.</li>\n                                <li>isWholeBuilding==true will query for only those ratings that apply to an entire building.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of all ratings for a specified portfolio"
+        },
+        {
+          "info": {
+            "name": "Returns a specific rating for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/ratings/:rating_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>3cc51c77-e386-4f25-86f3-387ba231f618</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 20445565-8aa0-4fcf-b9e5-e9c61e1f6d7e"
+              },
+              {
+                "name": "rating_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 77ed95a8-65a4-4fee-b957-6af941320cec"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a specific rating for a specified building"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific rating assigned to a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/ratings/:rating_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>318c4d3d-de20-4d70-bcf6-cce3812daf67</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 4c1385b9-0452-422f-92f3-3e2e3c83cfe0"
+              },
+              {
+                "name": "rating_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 4d8cc3cf-ff61-4138-9437-a3132149a141"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific rating assigned to a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns a list of ratings for the specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/ratings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>36f897c5-f700-4dd1-8c4a-38c4ae90419e</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 8e6f99d7-f1e2-4ca7-be08-43091696d8c5"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of ratings for the specified building"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Waste Meters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of waste meters for a specified portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/waste_meters",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>2abff3f0-f8d9-4fc6-bcfe-d8214d39377f</em>"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>meterType==\"Disposed - Trash\" will query for only those meters that match the specified meter type.</li>\n                                <li>updatedAt=ge=2022-03-13T00:00 will query for Waste Meters that were updated at or after the set date and UTC time.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of waste meters for a specified portfolio"
+        },
+        {
+          "info": {
+            "name": "Returns a list of waste meters for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>b35ae5fe-a075-47d3-975e-50316f9a617d</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 09791d5e-98cc-4b4a-b67d-237cc8700201"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-11-01T00:00 will query for Waste meters that were updated at or after the set date and UTC time.</li>\n                                <li>meterType==\"Disposed - Trash\" will query for only those meters of the specified meter type.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of waste meters for a specified building"
+        },
+        {
+          "info": {
+            "name": "Creates a waste meter for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>6556e062-30de-4726-bd5c-43a06cfb95d6</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: e1ac370b-89cb-46a4-880f-1a9199031e15"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a waste meter for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns a specific waste meter for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>8926bdd6-24de-400f-a09a-08182cfa80cc</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 27e8da79-d3d9-45a3-9d68-504c2631599d"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 9baddc4b-5702-4212-8163-6b9607ac028b"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a specific waste meter for a specified building"
+        },
+        {
+          "info": {
+            "name": "Updates a specific waste meter for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>4ea32812-5af4-49ee-8e3d-f23be84ad14b</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: e7927fbf-b2c9-4ae5-8712-867450195c36"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: ca7d4dc8-8326-4770-b750-897b0c276324"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates a specific waste meter for a specified building"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific waste meter for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                            Example: <em>f401879f-8624-4052-b571-50c5045ed1df</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 4cbf6792-43ed-447a-a88e-a7de4ddbf182"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 98a86bcc-babf-42e5-b17b-35eff6f8f3c6"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deleting the waste meter will also delete any waste meter readings associated with the waste meter.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Portfolios",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of portfolios for a specified account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of portfolios for a specified account"
+        },
+        {
+          "info": {
+            "name": "Creates a new portfolio for a specified account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a new portfolio for a specified account"
+        },
+        {
+          "info": {
+            "name": "Update a specific portfolio's name for a specified account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 74d75229-efad-4ef7-898e-607ad832796d"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update a specific portfolio's name for a specified account"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Space Ratings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of ratings for a specific space in a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/spaces/:space_id/ratings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>0c1f567b-ba23-44b7-ada3-713c966f6f0e</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 51a8e325-4ce9-481b-a6ee-830ab1787c5e"
+              },
+              {
+                "name": "space_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: baa9ca58-6c28-42d4-bc7b-88f19324c3ff"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>ratingDate=ge=2022-05-08 will query for ratings dated at or after the set date.</li>\n                                <li>ratingType==OTHER will query for only those ratings that are type 'OTHER'.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of ratings for a specific space in a specified building"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Spaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of spaces for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/spaces",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>ad838cbe-650a-4e93-8d84-58e8abd3f272</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: ecc01f7d-2732-4ddf-900a-c4cc40959727"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of spaces for a specified building"
+        },
+        {
+          "info": {
+            "name": "Creates space for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/spaces",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: a5b8cf61-c294-4e59-b1fa-b4732511ef57"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 1a9e7262-8f03-46e2-96de-e384ef56175f"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates space for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns details of a specific space for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/spaces/:space_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>b3488eca-a284-4c56-bdcf-a94709a49717</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 1c00f770-1600-42a9-a335-881b5b48772e"
+              },
+              {
+                "name": "space_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 3e57bf30-caad-4f51-ae39-ea9a448c38ae"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns details of a specific space for a specified building"
+        },
+        {
+          "info": {
+            "name": "Updates a specific space for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/spaces/:space_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>02cbb0a6-ce94-42ba-919d-6cdb26f90482</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: fc170ca8-d19a-4f36-b92d-7deab59a074e"
+              },
+              {
+                "name": "space_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 6aef4b6d-d054-4979-a9ff-e7f80519e648"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates a specific space for a specified building"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific space for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/spaces/:space_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>3e6c2f1a-20f5-4b95-bafe-2d771b1d8b60</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: bbd04c49-64a6-45f1-9b97-0b05f90d4914"
+              },
+              {
+                "name": "space_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 8356a90d-bce3-447d-bb50-4eb2c70ddf7f"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific space for a specified building"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Waste Meter Readings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of waste meter readings for a specified waste meter and building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id/readings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>1e57a075-bb0e-4ace-960c-7f659037579e</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: e692b1fd-8817-433e-9369-63779ac56ea1"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: c2b5f5eb-d979-4587-b7c8-6728a2f566a7"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for waste meter readings updated at or after the set date and time.</li>\n                                <li>cost=ge=50 will query for waste meter readings with the cost attribute value greater than or equal to 50.</li>\n                              </ul>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "size",
+                "value": "",
+                "type": "query",
+                "description": "The max page size is limited to 200 returned results"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of waste meter readings for a specified waste meter and building"
+        },
+        {
+          "info": {
+            "name": "Creates a waste meter reading for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id/readings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>50960f84-7c85-4448-a330-f743ef2ccb52</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 124c0183-645c-418b-a3b0-7a2227da5d5f"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 7d033756-fa66-47cf-82c2-91b0f1cced9c"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Creates a waste meter reading for a specified building"
+        },
+        {
+          "info": {
+            "name": "Returns details of a specific waste meter reading for a specified waste meter and building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id/readings/:waste_meter_reading_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID of either the parent portfolio or fund<br>\n                              Example: <em>8e6f37da-2df7-4925-9724-b6fc9b8e51e3</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 86a3fc90-9373-40da-a14e-f31cc44df3d3"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 06b69ed6-a772-4cb0-b2cb-1f62dce1d595"
+              },
+              {
+                "name": "waste_meter_reading_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: bbc32c66-f85c-463f-8fde-30f5a6f646f6"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns details of a specific waste meter reading for a specified waste meter and building"
+        },
+        {
+          "info": {
+            "name": "Updates a specific waste meter reading for a specified building",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id/readings/:waste_meter_reading_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>fd6dbf39-a76e-4117-952c-8aa9032cca8b</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: d2fa3087-b192-4042-b80d-e05a3a0879c5"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 871673d6-0b78-4938-a661-e085ee1e2207"
+              },
+              {
+                "name": "waste_meter_reading_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 83c083ca-3a9c-4935-ab54-952502894c01"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Updates a specific waste meter reading for a specified building"
+        },
+        {
+          "info": {
+            "name": "Deletes a specific waste meter reading for a specified waste meter and building",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/core/v0/portfolios/:portfolio_id/buildings/:building_id/waste_meters/:waste_meter_id/readings/:waste_meter_reading_id",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path",
+                "description": "UUID for the parent portfolio<br>\n                              Example: <em>411bc8cc-1599-41c6-bde0-026bfa52df6b</em>"
+              },
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: 13cc5e72-7a7a-4d66-b13d-2859bfbba4d0"
+              },
+              {
+                "name": "waste_meter_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: d6484baa-adec-47fb-ae3d-48d2db9a6ee5"
+              },
+              {
+                "name": "waste_meter_reading_id",
+                "value": "",
+                "type": "path",
+                "description": "Example: e981b586-477e-46e3-9b96-f40c1cbf9eec"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Deletes a specific waste meter reading for a specified waste meter and building"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ESGx Securities Compliance Files API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Listed Real Estate Compliance Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Downloads the Compliance File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate/compliance_files/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>july-2026</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides a redirect to download the Compliance File.\nThe url in the redirect has an expiration, typically of 5 minutes.\n"
+        },
+        {
+          "info": {
+            "name": "Shows available Compliance File(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate/compliance_files",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides list of published Compliance Files.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves metadata about an ESGx Securities (fka Listed Real Estate) Compliance File",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate/compliance_files/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>july-2026</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides metadata about a Compliance File.<br>\nThe checksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:\n`openssl md5 -binary <filename> | base64`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

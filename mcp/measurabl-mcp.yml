@@ -11,22 +11,23 @@ search_result:
   - public MCP registries
   - web search
   found: false
-  note: 'Measurabl publishes NO Model Context Protocol server. This file is a DERIVED candidate tool surface computed
-    from the 110 published OpenAPI operations, offered as a design input for a future server. It is deliberately
-    NOT wired as a common[].type: MCPServer pointer in apis.yml, because no server exists and a pointer would credit
-    Measurabl with an agent surface it does not operate.'
+  note: 'Measurabl publishes NO Model Context Protocol server. This file is a DERIVED candidate tool surface
+    computed from the 110 published OpenAPI operations, offered as a design input for a future server.
+    It is deliberately NOT wired as a common[].type: MCPServer pointer in apis.yml, because no server
+    exists and a pointer would credit Measurabl with an agent surface it does not operate.'
 server:
   name: measurabl
   transport: http
   url: null
-  auth: Would inherit OAuth 2.0 client credentials at https://api.measurabl.com/token; the flow declares no scopes,
-    so a server would need per-portfolio entitlement checks.
+  auth: Would inherit OAuth 2.0 client credentials at https://api.measurabl.com/token; the flow declares
+    no scopes, so a server would need per-portfolio entitlement checks.
 design_notes:
-- Tool names below are SYNTHESIZED from METHOD + path because Measurabl declares no operationId on any operation.
-  They are candidate names, not published identifiers.
-- Each tool would inherit its real inputSchema from the backing operation parameters and requestBody in openapi/.
-- Write tools are NOT idempotent - Measurabl publishes no Idempotency-Key contract - so any server should gate writes
-  behind confirmation and re-read before retry.
+- Tool names below are SYNTHESIZED from METHOD + path because Measurabl declares no operationId on any
+  operation. They are candidate names, not published identifiers.
+- Each tool would inherit its real inputSchema from the backing operation parameters and requestBody in
+  openapi/.
+- Write tools are NOT idempotent - Measurabl publishes no Idempotency-Key contract - so any server should
+  gate writes behind confirmation and re-read before retry.
 - There is no sandbox, so every tool would act on live customer ESG data.
 - Rate limits are per endpoint per 5 minutes with no response headers, so a server must pace calls blind.
 coverage:
@@ -698,3 +699,9 @@ cross_links:
   authentication: authentication/measurabl-authentication.yml
   conventions: conventions/measurabl-conventions.yml
   skills: skills/_index.yml
+deployment:
+  mode: none
+  verified: derived
+  tools: 110
+  checked: '2026-08-12'
+  source: catalog MCP census

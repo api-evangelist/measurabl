@@ -1,0 +1,1242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ESGx Buildings API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buildings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all buildings for an app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/buildings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "buildingCustomId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "msrBuildingId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all buildings for an app"
+        },
+        {
+          "info": {
+            "name": "Creates a building",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/buildings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create a new building record. The response will include the created building record, including its ID.\n\nThe request body can include building information in one of two formats:\n- Coordinates and additional building information (latitude, longitude, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits, buildingCustomId, buildingClientMetadata)\n- Full address and additional building information (addressLine1, addressLine2, city, stateOrProvince, postalCode, country, primaryPropertyT"
+        },
+        {
+          "info": {
+            "name": "Requests a CSV download for the current app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/buildings/export",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests a CSV download for the current app"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Carbon Estimates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all carbon estimates batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimate_batches",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all carbon estimates batches"
+        },
+        {
+          "info": {
+            "name": "Returns all carbon estimates for a given batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimate_batches/:id/carbon_estimates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all carbon estimates for a given batch"
+        },
+        {
+          "info": {
+            "name": "Requests a CSV download for the given Carbon Estimate batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimate_batches/export",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests a CSV download for the given Carbon Estimate batches"
+        },
+        {
+          "info": {
+            "name": "Returns carbon estimate batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimate_batches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns carbon estimate batch"
+        },
+        {
+          "info": {
+            "name": "Uploads a file to create new carbon estimate(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimate_batches/upload",
+            "params": [
+              {
+                "name": "timePeriod",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "estimate_batch_file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Upload an Excel file of carbon estimate records to be processed.\n"
+        },
+        {
+          "info": {
+            "name": "Returns all carbon estimates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimates",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all carbon estimates"
+        },
+        {
+          "info": {
+            "name": "Creates new carbon estimate(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create new carbon estimate records to be processed. The response will include those records, including IDs that can be used to access the carbon estimate(s).\n\nThere is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.\n\nPlease note: You can process larger collections of Buildings via the file upload endpoint.\n\nCoverage: Global\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing carbon estimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/carbon_estimates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the carbon estimate record once it completes processing. It can be polled while processing to see the current status.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Certification Lookups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all certification lookup batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/certification_lookup_batches",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all certification lookup batches"
+        },
+        {
+          "info": {
+            "name": "Returns all certification lookups for a given batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/certification_lookup_batches/:id/certification_lookups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for all the certification lookups in a given certification lookup batch record once it completes processing. It can be polled while processing to see the current status.\n"
+        },
+        {
+          "info": {
+            "name": "Requests a CSV download for the given Certification Lookups batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/certification_lookup_batches/export",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests a CSV download for the given Certification Lookups batches"
+        },
+        {
+          "info": {
+            "name": "Returns certification lookup batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/certification_lookup_batches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the certification lookup batch record once it completes processing. It can be polled while processing to see the current status.\n"
+        },
+        {
+          "info": {
+            "name": "Uploads a file to create new certification lookup(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/certification_lookup_batches/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "certification_lookup_batch_file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Upload an Excel file of certification lookup records to be processed.\n"
+        },
+        {
+          "info": {
+            "name": "Returns all certification lookups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/certification_lookups",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all certification lookups"
+        },
+        {
+          "info": {
+            "name": "Creates new certification lookup(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/certification_lookups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create new certification lookup records to be processed. The response will include those records, including IDs that can be used to access the certification lookup(s).\n\nThere is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.\n\nPlease note: You can process larger collections of Buildings via the file upload endpoint.\n\nCoverage: Global\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing certification lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/certification_lookups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the certification lookup record once it completes processing. It can be polled while processing to see the current status.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Energy Estimates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all energy estimates batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/energy_estimate_batches",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all energy estimates batches"
+        },
+        {
+          "info": {
+            "name": "Returns all energy estimates for a given batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/energy_estimate_batches/:id/energy_estimates",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for all the energy estimates in a given energy estimate batch record once it completes processing. It can be polled while processing to see the current status.\n"
+        },
+        {
+          "info": {
+            "name": "Requests a CSV download for the given Energy Estimate batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/energy_estimate_batches/export",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests a CSV download for the given Energy Estimate batches"
+        },
+        {
+          "info": {
+            "name": "Returns energy estimate batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/energy_estimate_batches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the energy estimate batch record once it completes processing. It can be polled while processing to see the current status.\n"
+        },
+        {
+          "info": {
+            "name": "Uploads a file to create new energy estimate(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/energy_estimate_batches/upload",
+            "params": [
+              {
+                "name": "timePeriod",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "estimate_batch_file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Upload an Excel file of energy estimate records to be processed. The response will include the estimate batch record, including the ID that can be used to access the estimate batch or its energy estimates.\n"
+        },
+        {
+          "info": {
+            "name": "Returns all energy estimates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/energy_estimates",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all energy estimates"
+        },
+        {
+          "info": {
+            "name": "Creates new energy estimate(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/energy_estimates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create new energy estimate records to be processed. The response will include those records, including IDs that can be used to access the energy estimate(s).\n\nThere is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.\n\nPlease note: You can process larger collections of Buildings via the file upload endpoint.\n\nCoverage: Global\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing energy estimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/energy_estimates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the energy estimate record once it completes processing. It can be polled while processing to see the current status.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ordinance Lookups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all ordinance lookup batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookup_batches",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all ordinance lookup batches"
+        },
+        {
+          "info": {
+            "name": "Requests a CSV download for the given Ordinance Lookup batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookup_batches/export",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Requests a CSV download for the given Ordinance Lookup batches"
+        },
+        {
+          "info": {
+            "name": "Returns all ordinance lookups for a given batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookup_batches/:id/ordinance_lookups",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for all the ordinance lookups in a given ordinance lookup batch record once it completes processing. It can be polled while processing to see the current status.\n"
+        },
+        {
+          "info": {
+            "name": "Returns ordinance lookup batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookup_batches/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the ordinance lookup batch record once it completes processing. It can be polled while processing to see the current status.\n"
+        },
+        {
+          "info": {
+            "name": "Uploads a file to create new ordinance lookup(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookup_batches/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "ordinance_lookup_batch_file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Upload an Excel file of ordinance lookup records to be processed. The response will include the ordinance lookup batch record, including the ID that can be used to access the ordinance lookup batch or its ordinance lookups.\n"
+        },
+        {
+          "info": {
+            "name": "Returns all ordinance lookups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookups",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all ordinance lookups"
+        },
+        {
+          "info": {
+            "name": "Creates new ordinance lookup(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Create new ordinance lookup records to be processed. The response will include those records, including IDs that can be used to access the ordinance lookup(s).\n\nThere is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.\n\nPlease note: You can process larger collections of Buildings via the file upload endpoint.\n\nCoverage: United States and Canada\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing ordinance lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/ordinance_lookups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the ordinance lookup record once it completes processing. It can be polled while processing to see the current status.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Exports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Downloads the export file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/exports/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides a redirect to download the export file.\nThe url in the redirect has an expiration, typically of 5 minutes.\n"
+        },
+        {
+          "info": {
+            "name": "Returns all exports for an app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/exports",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all exports for an app"
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/exports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the ordinance lookup batch record once it completes processing. It can be polled while processing to see the current status.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ordinances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a list of ordinances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/ordinances",
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns a list of all ordinances.\n\nCoverage: United States and Canada\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

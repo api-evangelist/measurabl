@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Partner API V0",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buildings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns buildings for a portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/partners/v0/portfolios/:portfolio_id/buildings",
+            "params": [
+              {
+                "name": "portfolio_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns buildings for a portfolio"
+        },
+        {
+          "info": {
+            "name": "monthly utility data for a building",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/partners/v0/buildings/:building_id/monthly_utility_data",
+            "params": [
+              {
+                "name": "building_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "monthly utility data for a building"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Portfolios",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the portfolios that a partner can access",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/partners/v0/portfolios",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns the portfolios that a partner can access"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

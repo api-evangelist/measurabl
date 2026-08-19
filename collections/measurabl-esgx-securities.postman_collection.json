@@ -1,0 +1,1835 @@
+{
+  "item": [
+    {
+      "id": "6848d250-63bf-4f10-a241-71fa018e0a07",
+      "name": "Listed Real Estate Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "df8cb7e4-2634-4fe2-88c1-8b156beb9365",
+          "name": "Downloads the export file",
+          "request": {
+            "name": "Downloads the export file",
+            "description": {
+              "content": "Provides a redirect to download the export file.\nThe url in the redirect has an expiration, typically of 5 minutes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports",
+                ":id",
+                "building_level",
+                ":data_set",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>august-2023</em>"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "data_set",
+                  "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4b9b9c52-8e6c-4819-9d60-acbf42b9617a",
+              "name": "Export is not ready yet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level",
+                    ":data_set",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"july-2021/building_level/t-12-carbon-estimates\",\n    \"type\": \"listedRealEstateDataSets\",\n    \"attributes\": {\n      \"dataSet\": \"carbon_estimates\",\n      \"timePeriod\": \"T-12\",\n      \"status\": \"PROCESSING\",\n      \"createdAt\": \"2026-07-16T13:20:45.373Z\",\n      \"updatedAt\": \"2026-07-16T13:20:45.373Z\"\n    }\n  },\n  \"meta\": {\n    \"message\": \"The export is not ready yet. Check the status with http://www.example.com/insights/v0/listed_real_estate_reports/july-2021/building_level/t-12-carbon-estimates\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89d99be2-3120-47f6-96fb-2bef92aa7ec6",
+              "name": "Export is downloaded via redirect to pre-signed URL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level",
+                    ":data_set",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "URL of file location",
+                  "key": "Location",
+                  "value": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c9391de1-5a26-4570-8aa4-42343a4e6dc1",
+          "name": "Retrieves the data sets available for a Listed Real Estate Report",
+          "request": {
+            "name": "Retrieves the data sets available for a Listed Real Estate Report",
+            "description": {
+              "content": "Provides information about the company-level data sets for a given Listed Real Estate Report\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports",
+                ":id",
+                "building_level"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>august-2023</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dc404684-ad87-4c29-807d-49390fb7c586",
+              "name": "Building Level Listed Real Estate Data Sets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"july-2024/building_level/t-12-carbon-estimates\",\n      \"type\": \"listedRealEstateDataSets\",\n      \"attributes\": {\n        \"dataSet\": \"carbon_estimates\",\n        \"timePeriod\": \"T-12\",\n        \"status\": \"READY\",\n        \"createdAt\": \"2026-07-16T13:20:45.842Z\",\n        \"updatedAt\": \"2026-07-16T13:20:45.865Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a79e3d5-5bd9-4214-a72e-82f4d2cebc2c",
+              "name": "when authenticated but not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"Access Denied\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2254d141-cf18-46bd-ac02-229ee9f6a786",
+              "name": "Listed Instance Slug is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"Page not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ada7e99-febd-468e-9b9f-c5dfd015827b",
+          "name": "Retrieves a Listed Real Estate Report Building Level Data Set",
+          "request": {
+            "name": "Retrieves a Listed Real Estate Report Building Level Data Set",
+            "description": {
+              "content": "Provides information about a building-Level data set.\nThe fileChecksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:\n`openssl md5 -binary <filename> | base64`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports",
+                ":id",
+                "building_level",
+                ":data_set"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>august-2023</em>"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "data_set",
+                  "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7dd8e236-a9ff-4812-937f-329dbe01137d",
+              "name": "Building Level Listed Real Estate Report has been processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level",
+                    ":data_set"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"july-2021/building_level/t-12-carbon-estimates\",\n    \"type\": \"listedRealEstateDataSets\",\n    \"attributes\": {\n      \"dataSet\": \"carbon_estimates\",\n      \"timePeriod\": \"T-12\",\n      \"status\": \"READY\",\n      \"createdAt\": \"2026-07-16T13:20:46.211Z\",\n      \"updatedAt\": \"2026-07-16T13:20:46.234Z\",\n      \"downloadLink\": \"http://localhost:3000/insights/v0/listed_real_estate_reports/july-2021/building_level/t-12-carbon-estimates/download\",\n      \"fileChecksum\": null\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18af185f-20fb-44b0-a65e-45c6238e525b",
+              "name": "when authenticated but not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level",
+                    ":data_set"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"Access Denied\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba5fce5f-7eb2-4b04-97b4-46a307c17e96",
+              "name": "Data Set does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "building_level",
+                    ":data_set"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"Page not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b93628fe-f920-430b-966d-e33e5e2033ae",
+          "name": "Downloads the export file",
+          "request": {
+            "name": "Downloads the export file",
+            "description": {
+              "content": "Provides a redirect to download the export file.\nThe url in the redirect has an expiration, typically of 5 minutes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports",
+                ":id",
+                "company_level",
+                ":data_set",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>august-2023</em>"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "data_set",
+                  "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6483ac49-eb1d-4f1d-9f58-2d7dc7a79a7d",
+              "name": "Export is not ready yet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level",
+                    ":data_set",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"july-2021/company_level/t-12-carbon-estimates\",\n    \"type\": \"listedRealEstateDataSets\",\n    \"attributes\": {\n      \"dataSet\": \"carbon_estimates\",\n      \"timePeriod\": \"T-12\",\n      \"status\": \"PROCESSING\",\n      \"createdAt\": \"2026-07-16T13:20:47.046Z\",\n      \"updatedAt\": \"2026-07-16T13:20:47.046Z\"\n    }\n  },\n  \"meta\": {\n    \"message\": \"The export is not ready yet. Check the status with http://www.example.com/insights/v0/listed_real_estate_reports/july-2021/company_level/t-12-carbon-estimates\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66ed060a-0c19-4cce-9e58-feee7e964859",
+              "name": "Export is downloaded via redirect to pre-signed URL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level",
+                    ":data_set",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "URL of file location",
+                  "key": "Location",
+                  "value": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc882315-01d2-4c64-abb4-6bbf315e0538",
+          "name": "Retrieves the company-level data sets for a Listed Real Estate Report",
+          "request": {
+            "name": "Retrieves the company-level data sets for a Listed Real Estate Report",
+            "description": {
+              "content": "Provides information about the company-level data sets for a given Listed Real Estate Report\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports",
+                ":id",
+                "company_level"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>august-2023</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0eeb6680-b0de-4ed5-a26d-1760518d713e",
+              "name": "Company Level Listed Real Estate Report Data Sets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"july-2026/company_level/t-12-carbon-estimates\",\n      \"type\": \"listedRealEstateDataSets\",\n      \"attributes\": {\n        \"dataSet\": \"carbon_estimates\",\n        \"timePeriod\": \"T-12\",\n        \"status\": \"READY\",\n        \"createdAt\": \"2026-07-16T13:20:47.532Z\",\n        \"updatedAt\": \"2026-07-16T13:20:47.556Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4ac8247-3c3e-4ed6-b81d-07d0ba2068cc",
+              "name": "when authenticated but not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"Access Denied\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "895f66a9-44ae-481f-bbb2-71dba81f0ba8",
+              "name": "Listed Instance Slug is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"Page not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7dda5977-e14d-4ba5-b2a6-6d97508d8b82",
+          "name": "Retrieves a Listed Real Estate Report Company Level Data Set",
+          "request": {
+            "name": "Retrieves a Listed Real Estate Report Company Level Data Set",
+            "description": {
+              "content": "Provides information about a company-level data set.\nThe fileChecksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:\n`openssl md5 -binary <filename> | base64`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports",
+                ":id",
+                "company_level",
+                ":data_set"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Example: <em>august-2023</em>"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "data_set",
+                  "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1f78c3e8-9227-473c-b73a-93bc0c2b4627",
+              "name": "Company Level Listed Real Estate Report has been processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level",
+                    ":data_set"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"july-2024/company_level/t-12-carbon-estimates\",\n    \"type\": \"listedRealEstateDataSets\",\n    \"attributes\": {\n      \"dataSet\": \"carbon_estimates\",\n      \"timePeriod\": \"T-12\",\n      \"status\": \"READY\",\n      \"createdAt\": \"2026-07-16T13:20:47.906Z\",\n      \"updatedAt\": \"2026-07-16T13:20:47.929Z\",\n      \"downloadLink\": \"http://localhost:3000/insights/v0/listed_real_estate_reports/july-2024/company_level/t-12-carbon-estimates/download\",\n      \"fileChecksum\": null\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36426afb-736e-40db-80b8-e0025956b43f",
+              "name": "when authenticated but not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level",
+                    ":data_set"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"Access Denied\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d17a2e02-ef62-45dc-98cf-c9fbbbf91759",
+              "name": "Data Set does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id",
+                    "company_level",
+                    ":data_set"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Example: <em>august-2023</em>"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "data_set",
+                      "description": "(Required) Example: <em>t-12-carbon-estimates</em>"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"Page not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61ad751c-01cf-4410-b199-cba60931da8b",
+          "name": "Returns all listed real estate reports",
+          "request": {
+            "name": "Returns all listed real estate reports",
+            "description": {},
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "790e15f7-bd62-4a70-87a7-83b2c0c845c4",
+              "name": "list of listed real estate reports",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"july-2026\",\n      \"type\": \"listedRealEstateReports\",\n      \"attributes\": {\n        \"name\": \"July 2026\",\n        \"status\": \"PROCESSING\",\n        \"createdAt\": \"2026-07-16T13:20:48.559Z\",\n        \"updatedAt\": \"2026-07-16T13:20:48.559Z\"\n      }\n    },\n    {\n      \"id\": \"july-2024\",\n      \"type\": \"listedRealEstateReports\",\n      \"attributes\": {\n        \"name\": \"July 2024\",\n        \"status\": \"PROCESSING\",\n        \"createdAt\": \"2026-07-16T13:20:48.564Z\",\n        \"updatedAt\": \"2026-07-16T13:20:48.564Z\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"totalCount\": 2,\n    \"itemCount\": 5,\n    \"pageCount\": 1,\n    \"currentPage\": 1,\n    \"prevPage\": null,\n    \"nextPage\": null,\n    \"lastPage\": 1,\n    \"fromRecord\": 1,\n    \"toRecord\": 2\n  },\n  \"links\": {\n    \"self\": \"/insights/v0/listed_real_estate_reports?page=1&pageSize=5\",\n    \"prev\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d47c18b-5358-4409-9fe1-ab4a0332fc8f",
+              "name": "unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"A valid auth token is required.\\nPOST to '/token' with a valid 'key' and 'secret' to get an auth token.\\n\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7fd351c-9353-401d-8c28-fc898c765973",
+              "name": "when requesting an overflow page",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"The page requested was not found\\nThe last page available is 1\\n\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3951c702-5432-4aae-970f-9a8e00c39f1e",
+          "name": "Retrieves an existing listed real estate report",
+          "request": {
+            "name": "Retrieves an existing listed real estate report",
+            "description": {
+              "content": "Provides access to the data for the listed real estate report.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "insights",
+                "v0",
+                "listed_real_estate_reports",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "06d69b1b-843c-4299-9cc2-66ebdfeedd98",
+              "name": "Listed Real Estate Report has been processed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"july-2023\",\n    \"type\": \"listedRealEstateReports\",\n    \"attributes\": {\n      \"name\": \"July 2023\",\n      \"status\": \"PROCESSING\",\n      \"createdAt\": \"2026-07-16T13:20:49.145Z\",\n      \"updatedAt\": \"2026-07-16T13:20:49.145Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6abf870-67e5-4c89-8019-edbb3bcda92b",
+              "name": "when authenticated but not authorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"Access Denied\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99346f7d-763d-4586-95ea-15ea9c4a8e9a",
+              "name": "Name is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "insights",
+                    "v0",
+                    "listed_real_estate_reports",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"Page not found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "349c4333-c864-47f9-8848-4b9c4aaf6890",
+    "name": "ESGx Securities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Quick Start Guide\n\n1. Authorize using your client credentials (key and secret).\n2. Make a request to get a list of available data_set files\n\n* [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)\n* [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)\n* [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)\n\n### Response Format\n\nEach endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ESGx Securities API",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Listed Real Estate Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Downloads the export file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports/:id/building_level/:data_set/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>august-2023</em>"
+              },
+              {
+                "name": "data_set",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>t-12-carbon-estimates</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides a redirect to download the export file.\nThe url in the redirect has an expiration, typically of 5 minutes.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves the data sets available for a Listed Real Estate Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports/:id/building_level",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>august-2023</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides information about the company-level data sets for a given Listed Real Estate Report\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves a Listed Real Estate Report Building Level Data Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports/:id/building_level/:data_set",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>august-2023</em>"
+              },
+              {
+                "name": "data_set",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>t-12-carbon-estimates</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides information about a building-Level data set.\nThe fileChecksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:\n`openssl md5 -binary <filename> | base64`\n"
+        },
+        {
+          "info": {
+            "name": "Downloads the export file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports/:id/company_level/:data_set/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>august-2023</em>"
+              },
+              {
+                "name": "data_set",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>t-12-carbon-estimates</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides a redirect to download the export file.\nThe url in the redirect has an expiration, typically of 5 minutes.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves the company-level data sets for a Listed Real Estate Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports/:id/company_level",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>august-2023</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides information about the company-level data sets for a given Listed Real Estate Report\n"
+        },
+        {
+          "info": {
+            "name": "Retrieves a Listed Real Estate Report Company Level Data Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports/:id/company_level/:data_set",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>august-2023</em>"
+              },
+              {
+                "name": "data_set",
+                "value": "",
+                "type": "path",
+                "description": "Example: <em>t-12-carbon-estimates</em>"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides information about a company-level data set.\nThe fileChecksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:\n`openssl md5 -binary <filename> | base64`\n"
+        },
+        {
+          "info": {
+            "name": "Returns all listed real estate reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Returns all listed real estate reports"
+        },
+        {
+          "info": {
+            "name": "Retrieves an existing listed real estate report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/insights/v0/listed_real_estate_reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "client_credentials",
+              "accessTokenUrl": "https://api.measurabl.com/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Provides access to the data for the listed real estate report.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

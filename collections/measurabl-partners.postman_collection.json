@@ -1,0 +1,1050 @@
+{
+  "item": [
+    {
+      "id": "99498514-8932-4c6f-bc72-4f1e040afbfd",
+      "name": "Buildings",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c89ce31f-89bf-470a-b2ba-4f3c43d2bfc8",
+          "name": "Returns buildings for a portfolio",
+          "request": {
+            "name": "Returns buildings for a portfolio",
+            "description": {},
+            "url": {
+              "path": [
+                "partners",
+                "v0",
+                "portfolios",
+                ":portfolio_id",
+                "buildings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "portfolio_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "82570579-2d7d-4a71-b829-f7c9056fc082",
+              "name": "portfolio with buildings found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios",
+                    ":portfolio_id",
+                    "buildings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolio_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"79bc3ff6e578ecbcfc25a72006b77a78\",\n      \"type\": \"buildings\",\n      \"attributes\": {\n        \"name\": \"Test Building\",\n        \"customId\": \"A_Custom_Building_ID\",\n        \"addressLine1\": \"123 Elm St\",\n        \"addressLine2\": \"A\",\n        \"addressCity\": \"San Diego\",\n        \"addressState\": \"CA\",\n        \"addressZip\": \"92101\",\n        \"addressCountry\": \"United States\",\n        \"addressProvince\": \"\",\n        \"grossFloorArea\": {\n          \"units\": \"Sq. Ft.\",\n          \"value\": 248498\n        },\n        \"primaryType\": \"Hotel\",\n        \"isActive\": true,\n        \"createdAt\": \"2018-10-12T21:49:44.000Z\",\n        \"updatedAt\": \"2019-06-18T22:22:21.000Z\"\n      }\n    },\n    {\n      \"id\": \"ffd569a02bf0b1e8c5b6ca4d1c8aaf41\",\n      \"type\": \"buildings\",\n      \"attributes\": {\n        \"name\": \"testasdf\",\n        \"customId\": \"Custom-ID-e05c874c-39b5-4ca0-b7e5-a9ef24a5f5b1\",\n        \"addressLine1\": \"test\",\n        \"addressLine2\": \"\",\n        \"addressCity\": \"test\",\n        \"addressState\": \"\",\n        \"addressZip\": \"9999\",\n        \"addressCountry\": \"Belgium\",\n        \"addressProvince\": \"somewhere\",\n        \"grossFloorArea\": {\n          \"units\": \"Sq. Ft.\",\n          \"value\": 248498\n        },\n        \"primaryType\": \"Hotel\",\n        \"isActive\": false,\n        \"createdAt\": \"2018-10-12T21:49:46.000Z\",\n        \"updatedAt\": \"2019-06-18T22:22:21.000Z\"\n      }\n    },\n    {\n      \"id\": \"7ec656ba99dce1a64d3069f4981d5476\",\n      \"type\": \"buildings\",\n      \"attributes\": {\n        \"name\": \"mock-building-27192\",\n        \"customId\": null,\n        \"addressLine1\": \"5150 sci-test\",\n        \"addressLine2\": \"\",\n        \"addressCity\": \"Telluride\",\n        \"addressState\": \"CO\",\n        \"addressZip\": \"81435\",\n        \"addressCountry\": \"United States\",\n        \"addressProvince\": null,\n        \"grossFloorArea\": {\n          \"units\": \"Sq. Ft.\",\n          \"value\": 496996\n        },\n        \"primaryType\": \"Laboratory\",\n        \"isActive\": true,\n        \"createdAt\": \"2019-03-21T18:21:34.000Z\",\n        \"updatedAt\": \"2019-05-22T20:05:39.000Z\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"totalCount\": 3,\n    \"itemCount\": 5,\n    \"pageCount\": 1,\n    \"currentPage\": 1,\n    \"prevPage\": null,\n    \"nextPage\": null,\n    \"lastPage\": 1,\n    \"fromRecord\": 1,\n    \"toRecord\": 3\n  },\n  \"links\": {\n    \"self\": \"/partners/v0/portfolios/caa54ae2405bb71d14a4c992b3864337/buildings?page=1&pageSize=5\",\n    \"prev\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ecec243-1648-40df-9339-bca466506eea",
+              "name": "unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios",
+                    ":portfolio_id",
+                    "buildings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolio_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"A valid auth token is required.\\nPOST to '/token' with a valid 'key' and 'secret' to get an auth token.\\n\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a35e87a-68c5-40d1-8faa-ffd09687df47",
+              "name": "when requesting an overflow page",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios",
+                    ":portfolio_id",
+                    "buildings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolio_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"The page requested was not found\\nThe last page available is 1\\n\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57177bc2-12e9-40a0-bb11-a75b76a33ce3",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios",
+                    ":portfolio_id",
+                    "buildings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolio_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"429\",\n      \"title\": \"Too Many Requests\",\n      \"detail\": \"Rate Limit Exceeded\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c4ff8e7-e3b8-4d97-8a0a-03754dc3a704",
+          "name": "monthly utility data for a building",
+          "request": {
+            "name": "monthly utility data for a building",
+            "description": {},
+            "url": {
+              "path": [
+                "partners",
+                "v0",
+                "buildings",
+                ":building_id",
+                "monthly_utility_data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "building_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0125bdf2-ddc7-425a-b8f0-101047a77625",
+              "name": "sandbox environments return canned fixture data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "buildings",
+                    ":building_id",
+                    "monthly_utility_data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "building_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "the startDate sent as a URL parameter",
+                  "key": "X-startDate-Requested",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "the startDate applied based on date range restriction rules",
+                  "key": "X-startDate-Applied",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "the startDate sent as a URL parameter",
+                  "key": "X-endDate-Requested",
+                  "value": ""
+                },
+                {
+                  "disabled": false,
+                  "description": "the endDate applied based on date range restriction rules",
+                  "key": "X-endDate-Applied",
+                  "value": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"electricity\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"utilityUsage\": 1959.039\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"utilityUsage\": 2035.921\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"utilityUsage\": 2256.677\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"utilityUsage\": 2389.4350000000004\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"utilityUsage\": 2309.363\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 2353.23\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 1903.2830000000004\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 1984.4865000000002\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 1792.7989999999998\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 1860.903\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 1678.2685000000001\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 1656.5835000000002\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"MWH\"\n  },\n  \"onSiteRenewableElectric\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"utilityUsage\": 114.111\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"utilityUsage\": 115.001\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"utilityUsage\": 115.717\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"utilityUsage\": 105.675\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"utilityUsage\": 84.083\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 61.35\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 43.163000000000004\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 53.6465\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 20.999\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 37.903\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 33.8685\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 50.743500000000004\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"MWH\"\n  },\n  \"offSiteRenewableElectric\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"utilityUsage\": 126\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"utilityUsage\": 129\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"utilityUsage\": 162\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"utilityUsage\": 138\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"utilityUsage\": 138\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 147\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 117\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 123\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 99\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 111\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"MWH\"\n  },\n  \"naturalGas\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"utilityUsage\": 9205\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"utilityUsage\": 2009\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"utilityUsage\": 203\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"utilityUsage\": 0\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"utilityUsage\": 1\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 3383.4117647058824\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 2544.697610294118\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 5435.374999999999\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 7907.662176724137\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 11661.822198275862\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 19615.45866935484\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 16644.010080645163\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"fuelOilNo1\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 706.5573283561122\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 433.9029241174464\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 213.30595359945414\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 835.0327209731879\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 631.3024888528099\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 390.037675680435\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 677.365599652216\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"fuelOilNo2\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 1035.0807393581792\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 489.49073454151363\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 727.755035823951\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 630.2589362227791\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 798.8726400310592\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 581.5027883250239\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 677.6429639779443\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"fuelOilNo4\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 1125.0860376904088\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 298.84957515503646\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 771.495809877175\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 653.4839409875411\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 724.0652849592349\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 461.1879385132235\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 543.8743056014132\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"fuelOilNo5or6\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 1172.3416621510428\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 311.40179144841153\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 803.9000127942683\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 680.9314344874646\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 754.4773210567182\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 480.5586562166386\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 566.717998508711\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"propane\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 856.8267806610874\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 183.28222650370282\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 280.28774309109525\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 440.3533291568137\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 324.53305774185577\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 187.86587067058477\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 154.05634017895468\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"diesel\": {\n    \"years\": [],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"compressedNaturalGas\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"utilityUsage\": 9205\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"utilityUsage\": 2009\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"utilityUsage\": 203\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"utilityUsage\": 0\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"utilityUsage\": 1\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 3383.4117647058824\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 2544.697610294118\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 5435.374999999999\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 7907.662176724137\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 11661.822198275862\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 19615.45866935484\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 16644.010080645163\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"liquifiedNaturalGas\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 768.4736914516587\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 296.69713635316464\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 278.7670261931359\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 320.46209839835944\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 162.00811766021587\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 121.22770051456183\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 502.1514747733956\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"biodieselB100\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 670.0558071163023\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 390.08715700959317\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 487.9578600177413\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 320.0499103352157\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 756.7045678500454\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 717.9290896030419\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 471.22138228880374\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"biodieselB20\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 1165.425050073093\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 729.888262020561\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 741.2302270855297\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 274.7703801930677\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 783.1268453116661\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 643.6411251154683\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 882.1839418000254\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"renewableDiesel\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 1047.9099090854356\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 859.4079107712686\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 864.1911770726714\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 680.3717866092543\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 893.3538735749831\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 566.7314379106549\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 198.29082411595735\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"coalAnthracite\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 34606.96258867682\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 11042.51273766231\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 8459.321402827532\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 8177.2306635556\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 23042.56089747306\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 6466.3886532457545\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 10189.260860188228\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"coalBituminous\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 29364.378762397893\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 18007.584162542396\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 6595.267595125383\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 14085.531429392551\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 5609.941452686942\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 7190.346285399539\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 13849.709419521989\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"coke\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 30272.52094157786\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 21219.374064542062\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 7142.874123635278\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 13504.969039046784\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 8361.383158326127\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 9187.463540284749\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 17181.760295522145\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"wood\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 30756.974934031747\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 10856.678778459718\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 19162.674534437905\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 10261.43616434605\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 9057.612760061147\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 9911.153669816395\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 17746.67806515034\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"kerosene\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 1003.2645955004315\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 729.1656224286029\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 275.24394404640054\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 827.800725964423\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 777.7369531553312\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 385.7380934201693\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 625.814597640902\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"THERMS\"\n  },\n  \"steam\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"utilityUsage\": 2392950.7777733207\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"utilityUsage\": 597957.1259492042\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"utilityUsage\": 343439.7149799299\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"utilityUsage\": 416280.0716889805\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"utilityUsage\": 301557.40530359\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 296268.39071219356\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 393512.23686777754\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 953443.3775492673\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 3064655.6308806636\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 5122786.712940394\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 5952756.074904511\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 3926299.3849688773\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"KBTU\"\n  },\n  \"chilledWater\": {\n    \"years\": [],\n    \"usageUnit\": \"KBTU\"\n  },\n  \"hotWater\": {\n    \"years\": [],\n    \"usageUnit\": \"KBTU\"\n  },\n  \"water\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"utilityUsage\": 3100.695075\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"utilityUsage\": 2711.3383875\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"utilityUsage\": 3101.40299625\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"utilityUsage\": 3619.6013512500003\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"utilityUsage\": 3619.6013512500003\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"utilityUsage\": 5227.7435796\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"utilityUsage\": 4793.3064669000005\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"utilityUsage\": 3346.00394655\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"utilityUsage\": 3026.7880965\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"utilityUsage\": 3496.2814695\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"utilityUsage\": 3448.7091615\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"utilityUsage\": 3940.0065090000003\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"CM\"\n  },\n  \"wasteDisposal\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"hazardousWasteUsage\": 1.0000000000000007,\n            \"nonHazardousWasteUsage\": 0\n          },\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 3.0000000000000018\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 2.000000000000001\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.000000000000001\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.000000000000001\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.000000000000001\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          },\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 14\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"MT\"\n  },\n  \"wasteRecycle\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"hazardousWasteUsage\": 1.000000000000001,\n            \"nonHazardousWasteUsage\": 0\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"hazardousWasteUsage\": 1.000000000000001,\n            \"nonHazardousWasteUsage\": 0\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"hazardousWasteUsage\": 1.000000000000001,\n            \"nonHazardousWasteUsage\": 0\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"hazardousWasteUsage\": 1.000000000000001,\n            \"nonHazardousWasteUsage\": 0\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"hazardousWasteUsage\": 1.000000000000001,\n            \"nonHazardousWasteUsage\": 0\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.730697698355205\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.828953510676766\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.828953510676766\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.828953510676766\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.828953510676766\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.828953510676766\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.374302287936603\n          },\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 4.794651171649211\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.4994187135960535\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"MT\"\n  },\n  \"wasteCompost\": {\n    \"years\": [\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"hazardousWasteUsage\": 0.9999999999990751,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"hazardousWasteUsage\": 0.9999999999990751,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          },\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 5.999999999994451\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"MT\"\n  },\n  \"wasteDonation\": {\n    \"years\": [\n      {\n        \"year\": 2017,\n        \"months\": [\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.0191780820960687\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.0191780820960687\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 0.986301369770389\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.0191780820960687\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 0.986301369770389\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.0191780820960687\n          }\n        ]\n      },\n      {\n        \"year\": 2018,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.0191780820960687\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 0.9205479451190298\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.0191780820960687\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 0.986301369770389\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.0191780820960687\n          },\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 0.986301369770389\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 2.0383561642980492\n          },\n          {\n            \"monthNumber\": 8,\n            \"monthName\": \"Aug\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 2.0383561642980492\n          },\n          {\n            \"monthNumber\": 9,\n            \"monthName\": \"Sep\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 1.9726027396432735\n          },\n          {\n            \"monthNumber\": 10,\n            \"monthName\": \"Oct\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 2.0383561642980492\n          },\n          {\n            \"monthNumber\": 11,\n            \"monthName\": \"Nov\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 603.481568939643\n          },\n          {\n            \"monthNumber\": 12,\n            \"monthName\": \"Dec\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 604.4091421642977\n          }\n        ]\n      },\n      {\n        \"year\": 2019,\n        \"months\": [\n          {\n            \"monthNumber\": 1,\n            \"monthName\": \"Jan\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 599.8732171642977\n          },\n          {\n            \"monthNumber\": 2,\n            \"monthName\": \"Feb\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 595.1400318903335\n          },\n          {\n            \"monthNumber\": 3,\n            \"monthName\": \"Mar\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 590.8013671642977\n          },\n          {\n            \"monthNumber\": 4,\n            \"monthName\": \"Apr\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 586.199688739643\n          },\n          {\n            \"monthNumber\": 5,\n            \"monthName\": \"May\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 2.0383561642980492\n          },\n          {\n            \"monthNumber\": 6,\n            \"monthName\": \"Jun\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 581.663763739643\n          },\n          {\n            \"monthNumber\": 7,\n            \"monthName\": \"Jul\",\n            \"hazardousWasteUsage\": 0,\n            \"nonHazardousWasteUsage\": 569.7756348799998\n          }\n        ]\n      }\n    ],\n    \"usageUnit\": \"MT\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f84c08f5-b88b-4d36-b278-b8cc90b84ad5",
+              "name": "passing endDate param without startDate param",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "buildings",
+                    ":building_id",
+                    "monthly_utility_data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "building_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"400\",\n      \"title\": \"Bad Request\",\n      \"detail\": \"Cannot pass 'endDate' without also passing 'startDate' in query params.\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "002cb738-c671-45c8-9fbb-588d99fed820",
+              "name": "unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "buildings",
+                    ":building_id",
+                    "monthly_utility_data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "building_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"A valid auth token is required.\\nPOST to '/token' with a valid 'key' and 'secret' to get an auth token.\\n\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6413dcbe-494d-4edf-a835-e716901624f5",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "buildings",
+                    ":building_id",
+                    "monthly_utility_data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "building_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"429\",\n      \"title\": \"Too Many Requests\",\n      \"detail\": \"Rate Limit Exceeded\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56de79a5-ea67-4e51-b686-787e66128989",
+              "name": "when the upstream wizard request fails",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "buildings",
+                    ":building_id",
+                    "monthly_utility_data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "building_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Gateway",
+              "code": 502,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"502\",\n      \"title\": \"Bad Gateway\",\n      \"detail\": \"A Measurabl Server is down, please try again later\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1e5036e4-6a1d-48ef-935a-969b3cc14a9a",
+      "name": "Portfolios",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cf3560c0-c3d0-44e2-be91-91769cf3a9f8",
+          "name": "Returns the portfolios that a partner can access",
+          "request": {
+            "name": "Returns the portfolios that a partner can access",
+            "description": {},
+            "url": {
+              "path": [
+                "partners",
+                "v0",
+                "portfolios"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://api.measurabl.com/token"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fe4b9ec0-e20d-4076-b1e5-61e23ab0d277",
+              "name": "list of portfolios",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"caa54ae2405bb71d14a4c992b3864337\",\n      \"type\": \"portfolios\",\n      \"attributes\": {\n        \"name\": \"ACME Co.\",\n        \"createdAt\": \"2014-06-05T03:55:36.000Z\",\n        \"updatedAt\": \"2019-03-28T00:04:32.000Z\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"totalCount\": 1,\n    \"itemCount\": 5,\n    \"pageCount\": 1,\n    \"currentPage\": 1,\n    \"prevPage\": null,\n    \"nextPage\": null,\n    \"lastPage\": 1,\n    \"fromRecord\": 1,\n    \"toRecord\": 1\n  },\n  \"links\": {\n    \"self\": \"/partners/v0/portfolios?page=1&pageSize=5\",\n    \"prev\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45708da7-f4d9-4213-a713-587fba702bc5",
+              "name": "unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"403\",\n      \"title\": \"Forbidden\",\n      \"detail\": \"A valid auth token is required.\\nPOST to '/token' with a valid 'key' and 'secret' to get an auth token.\\n\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d008c0f7-12e9-4e89-a779-3c9ae51307b8",
+              "name": "when requesting an overflow page",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"404\",\n      \"title\": \"Not Found\",\n      \"detail\": \"The page requested was not found\\nThe last page available is 1\\n\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9292c8cd-c421-4375-a028-43eaa1d276e2",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "partners",
+                    "v0",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"status\": \"429\",\n      \"title\": \"Too Many Requests\",\n      \"detail\": \"Rate Limit Exceeded\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c50e908b-a3c5-4341-8aba-601c77c8559c",
+    "name": "Partner API V0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
