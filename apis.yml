@@ -24,6 +24,19 @@ specificationVersion: '0.23'
 created: '2026-08-01'
 modified: '2026-08-01'
 tags:
+- ESG
+- Real-Estate
+- Sustainability
+- Carbon Accounting
+- Energy Management
+- Building Performance
+- Climate Risk
+- Benchmarking
+- Compliance
+- PropTech
+- Utility Data
+- Capital Markets
+tags_raw:
 - esg
 - real-estate
 - sustainability
@@ -47,6 +60,13 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
+  - ESG
+  - Real-Estate
+  - Building Performance
+  - Utility Data
+  - Energy Management
+  - Certifications
+  tags_raw:
   - esg
   - real-estate
   - building-performance
@@ -71,6 +91,13 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
   baseURL: https://api.measurabl.com/insights/v0
   tags:
+  - ESG
+  - Real-Estate
+  - Carbon Accounting
+  - Energy Management
+  - Climate Risk
+  - Benchmarking
+  tags_raw:
   - esg
   - real-estate
   - carbon-accounting
@@ -94,6 +121,12 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
   baseURL: https://api.measurabl.com/insights/v0
   tags:
+  - ESG
+  - Capital Markets
+  - Real-Estate
+  - Benchmarking
+  - Climate Risk
+  tags_raw:
   - esg
   - capital-markets
   - real-estate
@@ -115,6 +148,11 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
   baseURL: https://api.measurabl.com/insights/v0
   tags:
+  - ESG
+  - Capital Markets
+  - Compliance
+  - Real-Estate
+  tags_raw:
   - esg
   - capital-markets
   - compliance
@@ -135,6 +173,11 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
   baseURL: https://api.measurabl.com/partners/v0
   tags:
+  - ESG
+  - Real-Estate
+  - Utility Data
+  - Partners
+  tags_raw:
   - esg
   - real-estate
   - utility-data
