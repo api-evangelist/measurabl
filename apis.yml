@@ -50,153 +50,798 @@ tags_raw:
 - utility-data
 - capital-markets
 apis:
-- name: Measurabl Core API
-  description: >-
-    Read and write the ESG data core of the Measurabl platform: portfolios, buildings, spaces,
-    funds, energy and water meters and their readings and bills, waste meters and readings, green
-    building certifications and certification types, and ratings (including space-level
-    certifications and ratings). JSON:API over OAuth 2.0 client credentials; 57 operations across
-    32 paths.
+- aid: measurabl:measurabl-buildings-api
+  name: Measurabl Buildings API
+  description: The Buildings API from Measurabl — 6 operation(s) for buildings.
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
-  - ESG
-  - Real-Estate
-  - Building Performance
-  - Utility Data
-  - Energy Management
+  - Buildings
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-buildings-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-carbon-estimates-api
+  name: Measurabl Carbon Estimates API
+  description: The Carbon Estimates API from Measurabl — 7 operation(s) for carbon estimates.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Carbon Estimates
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-carbon-estimates-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-certification-lookups-api
+  name: Measurabl Certification Lookups API
+  description: The Certification Lookups API from Measurabl — 7 operation(s) for certification lookups.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Certification Lookups
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-certification-lookups-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-certification-types-api
+  name: Measurabl Certification Types API
+  description: The Certification Types API from Measurabl — 1 operation(s) for certification types.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Certification Types
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-certification-types-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-certifications-api
+  name: Measurabl Certifications API
+  description: The Certifications API from Measurabl — 3 operation(s) for certifications.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
   - Certifications
-  tags_raw:
-  - esg
-  - real-estate
-  - building-performance
-  - utility-data
-  - energy-management
-  - certifications
   properties:
   - type: OpenAPI
-    url: openapi/measurabl-core-openapi.yml
+    url: openapi/measurabl-certifications-api-openapi.yml
   - type: Documentation
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   - type: APIReference
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
-  - type: Overlay
-    url: overlays/measurabl-core-overlay.yaml
-- name: Measurabl ESGx Buildings API
-  description: >-
-    Asset-level building intelligence (the Insights surface): submit buildings by coordinates,
-    address or Measurabl building id and receive modeled energy estimates, carbon estimates, green
-    building certification lookups, local performance ordinance lookups and CRREM transition-risk
-    lookups, individually or as asynchronous batches with CSV upload and bulk export/download.
-  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
-  baseURL: https://api.measurabl.com/insights/v0
-  tags:
-  - ESG
-  - Real-Estate
-  - Carbon Accounting
-  - Energy Management
-  - Climate Risk
-  - Benchmarking
-  tags_raw:
-  - esg
-  - real-estate
-  - carbon-accounting
-  - energy-management
-  - climate-risk
-  - benchmarking
-  properties:
-  - type: OpenAPI
-    url: openapi/measurabl-esgx-buildings-openapi.yml
   - type: Documentation
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
   - type: APIReference
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
-  - type: Overlay
-    url: overlays/measurabl-esgx-buildings-overlay.yaml
-- name: Measurabl ESGx Securities API
-  description: >-
-    Listed real estate ESG datasets for capital markets: list available listed-real-estate reports
-    and retrieve their company-level and building-level data sets, with pre-signed URL downloads for
-    each data set.
-  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
-  baseURL: https://api.measurabl.com/insights/v0
-  tags:
-  - ESG
-  - Capital Markets
-  - Real-Estate
-  - Benchmarking
-  - Climate Risk
-  tags_raw:
-  - esg
-  - capital-markets
-  - real-estate
-  - benchmarking
-  - climate-risk
-  properties:
-  - type: OpenAPI
-    url: openapi/measurabl-esgx-securities-openapi.yml
   - type: Documentation
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
   - type: APIReference
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
-  - type: Overlay
-    url: overlays/measurabl-esgx-securities-overlay.yaml
-- name: Measurabl ESGx Securities Compliance Files API
-  description: >-
-    List and download the compliance files published alongside the ESGx Securities listed real
-    estate datasets, with pre-signed URL redirect downloads.
-  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
-  baseURL: https://api.measurabl.com/insights/v0
-  tags:
-  - ESG
-  - Capital Markets
-  - Compliance
-  - Real-Estate
-  tags_raw:
-  - esg
-  - capital-markets
-  - compliance
-  - real-estate
-  properties:
-  - type: OpenAPI
-    url: openapi/measurabl-esgx-securities-compliance-files-openapi.yml
   - type: Documentation
-    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
   - type: APIReference
-    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
-  - type: Overlay
-    url: overlays/measurabl-esgx-securities-compliance-files-overlay.yaml
-- name: Measurabl Partner API
-  description: >-
-    Partner-facing surface for integration partners acting on behalf of a Measurabl customer: list
-    portfolios, list the buildings in a portfolio, and read monthly utility data for a building.
-  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
-  baseURL: https://api.measurabl.com/partners/v0
-  tags:
-  - ESG
-  - Real-Estate
-  - Utility Data
-  - Partners
-  tags_raw:
-  - esg
-  - real-estate
-  - utility-data
-  - partners
-  properties:
-  - type: OpenAPI
-    url: openapi/measurabl-partners-openapi.yml
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
   - type: Documentation
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
   - type: APIReference
     url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
-  - type: Overlay
-    url: overlays/measurabl-partners-overlay.yaml
+- aid: measurabl:measurabl-energy-and-water-meter-bills-api
+  name: Measurabl Energy and Water Meter Bills API
+  description: >-
+    The Energy and Water Meter Bills API from Measurabl — 1 operation(s) for energy and water meter bills.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Energy and Water Meter Bills
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-energy-and-water-meter-bills-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-energy-and-water-meter-readings-api
+  name: Measurabl Energy and Water Meter Readings API
+  description: >-
+    The Energy and Water Meter Readings API from Measurabl — 2 operation(s) for energy and water meter
+    readings.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Energy and Water Meter Readings
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-energy-and-water-meter-readings-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-energy-and-water-meter-spaces-api
+  name: Measurabl Energy and Water Meter Spaces API
+  description: >-
+    The Energy and Water Meter Spaces API from Measurabl — 2 operation(s) for energy and water meter spaces.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Energy and Water Meter Spaces
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-energy-and-water-meter-spaces-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-energy-and-water-meters-api
+  name: Measurabl Energy and Water Meters API
+  description: >-
+    The Energy and Water Meters API from Measurabl — 3 operation(s) for energy and water meters.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Energy and Water Meters
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-energy-and-water-meters-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-energy-estimates-api
+  name: Measurabl Energy Estimates API
+  description: The Energy Estimates API from Measurabl — 7 operation(s) for energy estimates.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Energy Estimates
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-energy-estimates-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-exports-api
+  name: Measurabl Exports API
+  description: The Exports API from Measurabl — 3 operation(s) for exports.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Exports
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-exports-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-funds-api
+  name: Measurabl Funds API
+  description: The Funds API from Measurabl — 2 operation(s) for funds.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Funds
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-funds-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-funds-buildings-api
+  name: Measurabl Funds Buildings API
+  description: The Funds Buildings API from Measurabl — 1 operation(s) for funds buildings.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Funds Buildings
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-funds-buildings-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-listed-real-estate-compliance-files-api
+  name: Measurabl Listed Real Estate Compliance Files API
+  description: >-
+    The Listed Real Estate Compliance Files API from Measurabl — 3 operation(s) for listed real estate
+    compliance files.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Listed Real Estate Compliance Files
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-listed-real-estate-compliance-files-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-listed-real-estate-reports-api
+  name: Measurabl Listed Real Estate Reports API
+  description: >-
+    The Listed Real Estate Reports API from Measurabl — 8 operation(s) for listed real estate reports.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Listed Real Estate Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-listed-real-estate-reports-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-ordinance-lookups-api
+  name: Measurabl Ordinance Lookups API
+  description: The Ordinance Lookups API from Measurabl — 7 operation(s) for ordinance lookups.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Ordinance Lookups
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-ordinance-lookups-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-ordinances-api
+  name: Measurabl Ordinances API
+  description: The Ordinances API from Measurabl — 1 operation(s) for ordinances.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Ordinances
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-ordinances-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-portfolios-api
+  name: Measurabl Portfolios API
+  description: The Portfolios API from Measurabl — 3 operation(s) for portfolios.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Portfolios
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-portfolios-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-ratings-api
+  name: Measurabl Ratings API
+  description: The Ratings API from Measurabl — 3 operation(s) for ratings.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Ratings
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-ratings-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-space-certifications-api
+  name: Measurabl Space Certifications API
+  description: The Space Certifications API from Measurabl — 2 operation(s) for space certifications.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Space Certifications
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-space-certifications-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-space-ratings-api
+  name: Measurabl Space Ratings API
+  description: The Space Ratings API from Measurabl — 1 operation(s) for space ratings.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Space Ratings
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-space-ratings-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-spaces-api
+  name: Measurabl Spaces API
+  description: The Spaces API from Measurabl — 2 operation(s) for spaces.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Spaces
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-spaces-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-waste-meter-readings-api
+  name: Measurabl Waste Meter Readings API
+  description: The Waste Meter Readings API from Measurabl — 2 operation(s) for waste meter readings.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Waste Meter Readings
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-waste-meter-readings-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+- aid: measurabl:measurabl-waste-meters-api
+  name: Measurabl Waste Meters API
+  description: The Waste Meters API from Measurabl — 3 operation(s) for waste meters.
+  humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  baseURL: https://api.measurabl.com/core/v0
+  tags:
+  - Waste Meters
+  properties:
+  - type: OpenAPI
+    url: openapi/measurabl-waste-meters-api-openapi.yml
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Buildings+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+V0+Docs
+  - type: Documentation
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: APIReference
+    url: >-
+      https://api.measurabl.com/api-docs/index.html?urls.primaryName=ESGx+Securities+Compliance+Files+V0+Docs
+  - type: Documentation
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
+  - type: APIReference
+    url: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Partner+API+V0+Docs
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/measurabl-core-overlay.yaml
+- type: Overlay
+  url: overlays/measurabl-esgx-buildings-overlay.yaml
+- type: Overlay
+  url: overlays/measurabl-esgx-securities-overlay.yaml
+- type: Overlay
+  url: overlays/measurabl-esgx-securities-compliance-files-overlay.yaml
+- type: Overlay
+  url: overlays/measurabl-partners-overlay.yaml
 - type: MCPServer
   url: mcp/measurabl-mcp.yml
 - type: DomainSecurity
