@@ -14,6 +14,18 @@ description: >-
   listed real estate company-level and building-level datasets; and a Partner API for partner-side
   portfolio, building and monthly utility data access. Every API is OpenAPI 3.0.1, secured with
   OAuth 2.0 client credentials, and returns JSON:API (application/vnd.api+json) documents.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.measurabl.com/wp-content/uploads/2019/06/cropped-measurabl_icon-1-192x192.png
 url: https://raw.githubusercontent.com/api-evangelist/measurabl/refs/heads/main/apis.yml
 x-type: company
