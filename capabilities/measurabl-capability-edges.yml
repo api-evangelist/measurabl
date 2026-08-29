@@ -1,0 +1,57 @@
+slug: measurabl
+provider: Measurabl
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Real Estate
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Ordinance Lookups
+  spec_file: measurabl-ordinance-lookups-api-openapi.yml
+  capability_id: BC-4990.50
+  capability_id_l1: BC-4990
+  capability_name: Building Energy Performance Compliance
+  confidence: 0.78
+  evidence: '"Uploads a file to create new ordinance lookup(s)"; "Returns all ordinance lookups for a
+    given batch" on an ESG platform covering "local perfor[mance]" standards'
+  reason: Looking up which local building ordinances apply to a given building/coordinates is the determination
+    step of building energy performance compliance (e.g. Local Law 97, benchmarking laws). Batch/upload
+    mechanics are plumbing but the subject matter is clearly ordinance applicability.
+- tag: Carbon Estimates
+  spec_file: measurabl-carbon-estimates-api-openapi.yml
+  capability_id: BC-4920.50
+  capability_id_l1: BC-4920
+  capability_name: Asset-Level Sustainability & ESG Management
+  confidence: 0.72
+  evidence: '"Creates new carbon estimate(s)", "Returns all carbon estimates for a given batch"; vendor:
+    "carbon accounting" for "commercial real estate"'
+  reason: Generates and retrieves building-level carbon estimates for CRE owners and asset managers, matching
+    asset-level decarbonisation and ESG measurement. Batch/upload mechanics are plumbing but the estimated
+    subject matter is clearly asset ESG.
+- tag: Certifications
+  spec_file: measurabl-certifications-api-openapi.yml
+  capability_id: BC-4920.50
+  capability_id_l1: BC-4920
+  capability_name: Asset-Level Sustainability & ESG Management
+  confidence: 0.72
+  evidence: '"Creates a certification for a specified building", "Returns a list of certifications for
+    a specified portfolio"'
+  reason: Full lifecycle management of green-building certification records at building and portfolio
+    level for CRE owners/investors — asset-level sustainability and certification management.
+- tag: Ordinances
+  spec_file: measurabl-ordinances-api-openapi.yml
+  capability_id: BC-4990.50
+  capability_id_l1: BC-4990
+  capability_name: Building Energy Performance Compliance
+  confidence: 0.72
+  evidence: '"Returns a list of ordinances"'
+  reason: Reference catalogue of local building ordinances on a CRE ESG platform that covers local performance
+    standards — supports building energy performance compliance. Single read-only operation, so confidence
+    tempered.
