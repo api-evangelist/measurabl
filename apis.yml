@@ -37,17 +37,17 @@ created: '2026-08-01'
 modified: '2026-08-01'
 tags:
 - ESG
-- Real-Estate
-- Sustainability
-- Carbon Accounting
-- Energy Management
-- Building Performance
-- Climate Risk
-- Benchmarking
+- real-estate
+- sustainability
+- carbon-accounting
+- energy-management
+- building-performance
+- climate-risk
+- benchmarking
 - Compliance
-- PropTech
-- Utility Data
-- Capital Markets
+- proptech
+- utility-data
+- capital-markets
 tags_raw:
 - esg
 - real-estate
@@ -393,6 +393,8 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
+  - Export
+  tags_raw:
   - Exports
   properties:
   - type: OpenAPI
@@ -620,6 +622,8 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
+  - Portfolio
+  tags_raw:
   - Portfolios
   properties:
   - type: OpenAPI
