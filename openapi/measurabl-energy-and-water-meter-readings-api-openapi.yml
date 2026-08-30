@@ -1,0 +1,1276 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Core Energy and Water Meter Readings API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a `GET /core/v0/portfolios` request (under the Portfolios section) to get a list of available portfolios.
+
+    3. Obtain the proper portfolio_id (id) in which you need to get/create data for.
+
+    4. This `portfolio_id` will be required for all other reoccurring requests.
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Release Notes](https://api.measurabl.com/release_notes)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+    * [Code Examples](https://github.com/Measurabl/measurabl_api_code_samples)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Energy and Water Meter Readings
+paths:
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings:
+    post:
+      summary: Creates an energy or water meter reading for a specified building
+      tags:
+      - Energy and Water Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>f314a538-5e32-49d5-9d7b-dbd6ece4159d</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 224f747d-712c-4d27-b55d-05ecad7fd14c'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 3828dcef-0784-41cb-baf3-b5e6bd676e01'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific meter readings list
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 4cf325db-5f9e-4686-b45a-24674f410778
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2027-02-17'
+                    toDate: '2027-03-17'
+                    cost: 1656
+                    usage: 692
+                    exported: 0
+                    demand: null
+                    demandCharge: null
+                    estimate: false
+                    updatedAt: '2026-05-25 14:14:55'
+                  relationships:
+                    meter:
+                      data:
+                        id: 7ec4f244-bcac-42e8-b867-a73fcf7a44ea
+                        type: meters
+                      links:
+                        self: /portfolios/b5d2beb6-c011-4f0b-8a46-e13ec484d8ea/buildings/9b68d162-b605-4327-a3df-d3ecc89513e1/meters/7ec4f244-bcac-42e8-b867-a73fcf7a44ea
+                links:
+                  self: /portfolios/b5d2beb6-c011-4f0b-8a46-e13ec484d8ea/buildings/9b68d162-b605-4327-a3df-d3ecc89513e1/meters/7ec4f244-bcac-42e8-b867-a73fcf7a44ea/readings/4cf325db-5f9e-4686-b45a-24674f410778
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find meter 15d3f8b7-56cb-4f18-ad46-26bc8aa8e2a1 in building 77220924-2de9-4193-84a8-542ca3e6f414 in portfolio 33c85134-16a2-4e79-94de-0ea400bbea44
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        fromDate:
+                          type: string
+                        toDate:
+                          type: string
+                        cost:
+                          type: decimal
+                        usage:
+                          type: decimal
+                        exported:
+                          type: decimal
+                        demand:
+                          type: boolean
+                        demandCharge:
+                          type: string
+                      required:
+                      - fromDate
+                      - toDate
+                      - cost
+                      - usage
+              example:
+                data:
+                  type: meterReadings
+                  attributes:
+                    fromDate: '2022-01-01'
+                    toDate: '2022-02-01'
+                    cost: 1200.0
+                    usage: 1234.0
+                    exported: 0.0
+                    demand: null
+                    demandCharge: null
+        required: true
+        description: Request body used to create a meter reading associated with a meter
+    get:
+      summary: Returns a list of meter readings for a specified meter and building
+      tags:
+      - Energy and Water Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>0343323b-6de0-4cab-a39b-65fd7c614835</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 3d51e4b6-8888-4bc9-9ac6-5ce414dd7ddf'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 73c8d8d0-7710-4b79-bbd6-fad42a4f015e'
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for meter readings updated at or after the set date and time.</li>\n                                <li>cost=ge=50 will query for meter readings with the cost attribute value greater than or equal to 50.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific meter readings list
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: c85e1829-f655-46d6-a3fd-4b97cbf39fd3
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-01-01'
+                    toDate: '2018-02-01'
+                    cost: 90
+                    usage: 412
+                    exported: 0
+                    demand: 6
+                    demandCharge: 9
+                    estimate: true
+                    updatedAt: '2025-10-13 04:27:52'
+                  relationships:
+                    meter:
+                      data:
+                        id: 6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                        type: meters
+                      links:
+                        self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                  links:
+                    self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings/c85e1829-f655-46d6-a3fd-4b97cbf39fd3
+                - id: 14645db3-6f10-4cea-905e-63fe1f0f985c
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-02-01'
+                    toDate: '2018-03-01'
+                    cost: 39
+                    usage: 843
+                    exported: 0
+                    demand: 37
+                    demandCharge: 15
+                    estimate: false
+                    updatedAt: '2026-06-22 07:11:01'
+                  relationships:
+                    meter:
+                      data:
+                        id: 6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                        type: meters
+                      links:
+                        self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                  links:
+                    self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings/14645db3-6f10-4cea-905e-63fe1f0f985c
+                - id: 704acb14-11fb-4b86-9276-93746b63cd18
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-04-01'
+                    toDate: '2018-05-01'
+                    cost: 61
+                    usage: 405
+                    exported: 0
+                    demand: 182
+                    demandCharge: 10
+                    estimate: true
+                    updatedAt: '2026-03-27 18:39:05'
+                  relationships:
+                    meter:
+                      data:
+                        id: 6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                        type: meters
+                      links:
+                        self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                  links:
+                    self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings/704acb14-11fb-4b86-9276-93746b63cd18
+                - id: 3bab3387-76f1-4eef-add0-abab5458ba09
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-01-01'
+                    toDate: '2018-02-01'
+                    cost: 76
+                    usage: 715
+                    exported: 0
+                    demand: 44
+                    demandCharge: 11
+                    estimate: false
+                    updatedAt: '2026-03-23 00:57:22'
+                  relationships:
+                    meter:
+                      data:
+                        id: 6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                        type: meters
+                      links:
+                        self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                  links:
+                    self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings/3bab3387-76f1-4eef-add0-abab5458ba09
+                - id: 0dade6f7-ec58-4bf6-8142-99ed581f1fee
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-02-01'
+                    toDate: '2018-03-01'
+                    cost: 38
+                    usage: 168
+                    exported: 0
+                    demand: 56
+                    demandCharge: 10
+                    estimate: false
+                    updatedAt: '2025-10-22 21:44:00'
+                  relationships:
+                    meter:
+                      data:
+                        id: 6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                        type: meters
+                      links:
+                        self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579
+                  links:
+                    self: /portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings/0dade6f7-ec58-4bf6-8142-99ed581f1fee
+                links:
+                  self: /core/v0/portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings?size=5&page=3
+                  first: /core/v0/portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings?size=5&page=1
+                  last: /core/v0/portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings?size=5&page=5
+                  next: /core/v0/portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings?size=5&page=4
+                  prev: /core/v0/portfolios/2125c6a3-cda6-41ce-ad7f-2830ff185efb/buildings/5cc9a85b-87a5-487e-99cf-29261e317966/meters/6c1fd9ee-3ff6-4940-9f01-c8f816847579/readings?size=5&page=2
+                meta:
+                  page:
+                    number: 3
+                    size: 100
+                    totalPages: 5
+                    totalElements: 420
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find meter e5cb16bc-ac90-4412-a15b-befdb51f61e4 in building db9f53c0-6e04-4c98-890e-436963b20c7d in portfolio 87771a54-a873-480d-97d8-e34efa63575f
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/readings/{meter_reading_id}:
+    delete:
+      summary: Deletes a specific meter reading for a specified meter and building
+      tags:
+      - Energy and Water Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: 'Example: 89450297-c8e1-41e3-ba0e-864f6cdd9511'
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: ca996f17-6d4f-4bb1-8f6a-39558c38d61e'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: e8beecd1-7199-47ca-9e9c-3fc1ab4f9d4d'
+        required: true
+        schema:
+          type: string
+      - name: meter_reading_id
+        in: path
+        description: 'Example: 213ba4e0-430e-443d-b6de-4780b32c18bc'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Meter Reading Deleted Successfully
+          content:
+            application/vnd.api+json:
+              example: ''
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find reading 5e71ac70-766d-4e61-9ce4-f0a8fdec146c for meter 8bbebf97-ba90-4236-8261-cf56942a2ce3 in building 85f1d2fd-8879-4bde-b526-cfa3c818f6f2 in portfolio 57f05be2-1e46-4616-b09b-e36df963b0b6
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    get:
+      summary: Returns details of a specific meter reading for a specified meter and building
+      tags:
+      - Energy and Water Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>38d9cb1b-dc70-47a1-9ff4-fd12ee79e13e</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 13ee4c8d-855d-4224-b788-2bf75474046c'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 2d31add7-a309-4f77-9025-b841f24c3c34'
+        required: true
+        schema:
+          type: string
+      - name: meter_reading_id
+        in: path
+        description: 'Example: 17226f7b-007f-4daf-93cb-e58acc5cb201'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific meter readings list
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: c86ce40f-e7ac-4a9d-a66a-573a598f5138
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2027-03-30'
+                    toDate: '2027-04-30'
+                    cost: 53
+                    usage: 2
+                    exported: 0
+                    demand: 73
+                    demandCharge: 16
+                    estimate: true
+                    updatedAt: '2026-03-25 19:11:20'
+                  relationships:
+                    meter:
+                      data:
+                        id: ae807cdc-0fc5-4963-9ffa-9845ec335f73
+                        type: meters
+                      links:
+                        self: /portfolios/bf9fc23e-203d-44ae-b2ed-b0011f048aa0/buildings/068f273b-a567-4c82-8c52-f9b77816b7e7/meters/ae807cdc-0fc5-4963-9ffa-9845ec335f73
+                  links:
+                    self: portfolios/bf9fc23e-203d-44ae-b2ed-b0011f048aa0/buildings/068f273b-a567-4c82-8c52-f9b77816b7e7/meters/ae807cdc-0fc5-4963-9ffa-9845ec335f73/readings/c86ce40f-e7ac-4a9d-a66a-573a598f5138
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find reading 21da3346-f685-4b29-8910-e3d8525e8bef for meter b3afd6d9-f686-4e5f-a080-8fe12320868e in building c20f4428-20ff-46af-89c3-0b86749a7755 in portfolio ebeaa220-ca0d-42e1-8c5d-02c50a1790fb
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    patch:
+      summary: Updates a specific meter reading for a specified meter and building
+      tags:
+      - Energy and Water Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>157fcdaf-5323-42b3-a60b-c6fc23715a1e</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 6ae49b75-65e4-4af4-a7e5-3f5c563d804e'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 33e000c1-ab0d-4bf2-82f6-481fd100b847'
+        required: true
+        schema:
+          type: string
+      - name: meter_reading_id
+        in: path
+        description: 'Example: 50d95667-6647-41c5-90d9-1a131d0deb79'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio / Building / Meter Specific Meter Reading Updated
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 702ed8d1-4d87-49c3-8ffc-be6090865679
+                  type: meterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2026-02-24'
+                    toDate: '2026-03-24'
+                    cost: 86
+                    usage: 872
+                    exported: 0
+                    demand: 74
+                    demandCharge: 17
+                    estimate: false
+                    updatedAt: '2026-02-14 09:31:10'
+                  relationships:
+                    meter:
+                      data:
+                        id: 38f26459-f8bc-40c6-b8c7-7670014960b2
+                        type: meters
+                      links:
+                        self: /portfolios/23b56ca5-343e-4547-ae23-3503975df296/buildings/e2411f0c-87fe-4c6c-bcbd-48f6a045b4b5/meters/38f26459-f8bc-40c6-b8c7-7670014960b2
+                  links:
+                    self: portfolios/23b56ca5-343e-4547-ae23-3503975df296/buildings/e2411f0c-87fe-4c6c-bcbd-48f6a045b4b5/meters/38f26459-f8bc-40c6-b8c7-7670014960b2/readings/702ed8d1-4d87-49c3-8ffc-be6090865679
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find reading 05e57d97-b1d6-4c7c-bb46-1889ec8f5f3a for meter f3c1bab2-6356-4772-b9c8-b7d5060e5279 in building b7a72255-f794-4d8b-9199-3f6a7c9bc978 in portfolio bc141424-be9b-4dc5-a912-2ecbc9cd9e06
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: string
+                    attributes:
+                      type: object
+                      properties:
+                        fromDate:
+                          type: string
+                        toDate:
+                          type: string
+                        cost:
+                          type: decimal
+                        usage:
+                          type: decimal
+                        demand:
+                          type: boolean
+                        demandCharge:
+                          type: string
+                        exported:
+                          type: decimal
+                  required:
+                  - id
+                  - type
+              example:
+                data:
+                  id: 4608f77e-4ca6-4d9e-9660-e61302e5c346
+                  type: meterReadings
+                  attributes:
+                    fromDate: '2022-01-01'
+                    toDate: '2022-02-01'
+                    cost: 1200.0
+                    usage: 1234.0
+                    exported: 0.0
+                    demand: null
+                    demandCharge: null
+        required: true
+        description: Request body used to update a specific meter reading
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

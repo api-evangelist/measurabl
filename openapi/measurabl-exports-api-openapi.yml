@@ -1,0 +1,480 @@
+openapi: 3.2.0
+info:
+  title: ESGx Buildings Exports API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret)
+
+    2. Make a `POST /insights/v0/energy_estimates` request with at least one building
+
+    3. Take note of the `id` for the first estimate record
+
+    4. Check the status of the energy estimate with `GET /insights/v0/energy_estimates/{id}`
+
+    5. Keep polling until the status says `JOB_SUCCESS`
+
+    6. Check out the results of the estimate in the `absoluteEstimates` and `intensityEstimates` fields!
+
+
+    ### Response Format
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/insights/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Exports
+paths:
+  /insights/v0/exports/{id}/download:
+    get:
+      summary: Downloads the export file
+      description: 'Provides a redirect to download the export file.
+
+        The url in the redirect has an expiration, typically of 5 minutes.
+
+        '
+      tags:
+      - Exports
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '302':
+          description: Export is downloaded via redirect to pre-signed URL
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: The redirect URL location of the requested export file (pre-signed URL).
+        '200':
+          description: Export is not ready yet
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 2962d854-8cd4-42a3-8554-95097ba33197
+                  type: exports
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    createdAt: '2026-07-16T13:22:12.964Z'
+                    updatedAt: '2026-07-16T13:22:12.964Z'
+                    permalink: http://www.example.com/insights/v0/exports/2962d854-8cd4-42a3-8554-95097ba33197/download
+                  relationships: {}
+                meta:
+                  message: The export is not ready yet. Check the status with http://www.example.com/insights/v0/exports/2962d854-8cd4-42a3-8554-95097ba33197
+  /insights/v0/exports:
+    get:
+      summary: Returns all exports for an app
+      tags:
+      - Exports
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of exports
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 99911f2a-a358-44c5-89bc-1b1004a873bb
+                  type: exports
+                  attributes:
+                    status: JOB_SUCCESS
+                    error: null
+                    createdAt: '2026-07-16T13:22:13.361Z'
+                    updatedAt: '2026-07-16T13:22:13.361Z'
+                  relationships:
+                    estimateBatches:
+                      data:
+                      - id: b33dd758-5ec6-4352-b985-30a0d3966526
+                        type: energyEstimateBatches
+                      - id: 8e2a6b2d-50ad-482a-8176-3a92df3ccb10
+                        type: energyEstimateBatches
+                      - id: 775566a8-d8f1-4f7f-b8bb-5d20aaa3a181
+                        type: energyEstimateBatches
+                - id: 9325c325-2878-411f-90fd-2b0c1d0e8c0e
+                  type: exports
+                  attributes:
+                    status: JOB_SUCCESS
+                    error: null
+                    createdAt: '2026-07-16T13:22:13.386Z'
+                    updatedAt: '2026-07-16T13:22:13.386Z'
+                  relationships:
+                    estimateBatches:
+                      data:
+                      - id: e19743ea-a0e8-47bf-8310-64d88a64c95c
+                        type: energyEstimateBatches
+                      - id: f0e929ea-5b01-4227-bbc1-9aeb26491645
+                        type: energyEstimateBatches
+                      - id: d610b3de-0344-4c15-96b5-75557faa72c5
+                        type: energyEstimateBatches
+                meta:
+                  totalCount: 2
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 2
+                links:
+                  self: /insights/v0/exports?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/exports/{id}:
+    get:
+      summary: Retrieves an existing export
+      description: 'Provides access to the data for the ordinance lookup batch record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Exports
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Export record
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: dc3e88e4-18a9-4541-88e9-ff501ed0d830
+                  type: exports
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    createdAt: '2026-07-16T13:22:13.763Z'
+                    updatedAt: '2026-07-16T13:22:13.763Z'
+                    permalink: http://www.example.com/insights/v0/exports/dc3e88e4-18a9-4541-88e9-ff501ed0d830/download
+                  relationships: {}
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '422':
+          description: Export record has batch records with different time periods
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '422'
+                  title: Unprocessable Entity
+                  detail: 'All batches in export must have the same time period
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

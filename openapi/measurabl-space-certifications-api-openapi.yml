@@ -1,0 +1,645 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Core Space Certifications API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a `GET /core/v0/portfolios` request (under the Portfolios section) to get a list of available portfolios.
+
+    3. Obtain the proper portfolio_id (id) in which you need to get/create data for.
+
+    4. This `portfolio_id` will be required for all other reoccurring requests.
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Release Notes](https://api.measurabl.com/release_notes)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+    * [Code Examples](https://github.com/Measurabl/measurabl_api_code_samples)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Space Certifications
+paths:
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/certifications/{certification_id}/relationships:
+    patch:
+      summary: Assigns a specific certification to a specified space or list of spaces
+      tags:
+      - Space Certifications
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: 'UUID for the parent portfolio<br>Example: ea278d77-7232-464c-989e-ca5f3ab40b4d'
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 84f34431-69df-4686-8695-ceab0841d0dd'
+        required: true
+        schema:
+          type: string
+      - name: certification_id
+        in: path
+        description: 'Example: 0a8ea329-70a6-4e5d-9c88-9584b5da221f'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Certification Assigned Successfully to the Specified Space
+          content:
+            application/vnd.api+json:
+              example: ''
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find certification da6f0bb1-f55c-4ace-827f-dd8f543ea873 for building dbc59f7f-acb4-41b9-b59e-d3baaf166104 in portfolio cef194d6-33e0-4b69-81df-72517a92c053
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: string
+                  required:
+                  - id
+                  - type
+              example:
+                data:
+                - type: spaces
+                  id: 0869c43c-9199-4e0f-a3bd-7a243454654e
+        required: true
+        description: Request body used to assign an existing certification to a specified space or list of spaces
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/spaces/{space_id}/certifications:
+    get:
+      summary: Returns a list of certifications for a specific space in a specified building
+      tags:
+      - Space Certifications
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>e43e6f47-848d-47df-980f-196c8a647aad</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: f043b802-268a-4ab4-955d-2a0d4c05689b'
+        required: true
+        schema:
+          type: string
+      - name: space_id
+        in: path
+        description: 'Example: b366eb76-5d85-4cc2-9541-0a6a1ec04cfd'
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>certificationDate=ge=2022-11-01 will query for certifications dated at or after the set date.</li>\n                                <li>isCustomType==true will query for only those certifications that are a custom type.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund / Building / Space list of certifications
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 29fe3bd5-f331-47b5-884a-d4314b01ca45
+                  type: certifications
+                  attributes:
+                    isCustomType: true
+                    certificationType: AirRated AirScore
+                    certificationDate: '2026-04-15'
+                    expirationDate: '2026-09-26'
+                    importedAt: '2026-07-15 08:16:37'
+                    importState: CONFIRMED
+                    isWholeBuilding: false
+                    notes: some notes
+                    dataSource: MANUAL
+                    accoladeLevel: null
+                  relationships:
+                    space:
+                      data:
+                        id: 23d6e80b-e3d7-4824-a17d-a9d42d3ce96c
+                        type: spaces
+                      links:
+                        self: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/spaces/23d6e80b-e3d7-4824-a17d-a9d42d3ce96c
+                  links:
+                    self: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/certifications/29fe3bd5-f331-47b5-884a-d4314b01ca45
+                - id: 304ed1da-81fc-4ae7-83ba-7d2cb0c0a2b0
+                  type: certifications
+                  attributes:
+                    isCustomType: true
+                    certificationType: CALGreen
+                    certificationDate: '2026-06-14'
+                    expirationDate: '2026-10-15'
+                    importedAt: '2026-04-06 07:07:00'
+                    importState: CONFIRMED
+                    isWholeBuilding: true
+                    notes: some notes
+                    dataSource: MANUAL
+                    accoladeLevel: null
+                  relationships:
+                    space:
+                      data:
+                        id: 23d6e80b-e3d7-4824-a17d-a9d42d3ce96c
+                        type: spaces
+                      links:
+                        self: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/spaces/23d6e80b-e3d7-4824-a17d-a9d42d3ce96c
+                  links:
+                    self: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/certifications/304ed1da-81fc-4ae7-83ba-7d2cb0c0a2b0
+                links:
+                  self: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/spaces/23d6e80b-e3d7-4824-a17d-a9d42d3ce96c/certifications/?size=2&page=1
+                  first: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/spaces/23d6e80b-e3d7-4824-a17d-a9d42d3ce96c/certifications/?size=2&page=1
+                  last: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/spaces/23d6e80b-e3d7-4824-a17d-a9d42d3ce96c/certifications/?size=2&page=2
+                  next: /portfolios/3e704ea1-9bf9-4d11-a2d2-bf50efacf132/buildings/e33a54a4-26b5-4e8a-bead-8559d43ff442/spaces/23d6e80b-e3d7-4824-a17d-a9d42d3ce96c/certifications/?size=2&page=2
+                meta:
+                  page:
+                    number: 1
+                    size: 2
+                    totalPages: 2
+                    totalElements: 4
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find space 34409e48-f64e-4f51-aaa9-3bdc7f16af6e in building d9d4b108-aeee-401b-a010-491368ace6b5
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

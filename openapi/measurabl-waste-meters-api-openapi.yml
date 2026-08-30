@@ -1,0 +1,1472 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Core Waste Meters API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a `GET /core/v0/portfolios` request (under the Portfolios section) to get a list of available portfolios.
+
+    3. Obtain the proper portfolio_id (id) in which you need to get/create data for.
+
+    4. This `portfolio_id` will be required for all other reoccurring requests.
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Release Notes](https://api.measurabl.com/release_notes)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+    * [Code Examples](https://github.com/Measurabl/measurabl_api_code_samples)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Waste Meters
+paths:
+  /core/v0/portfolios/{portfolio_id}/waste_meters:
+    get:
+      summary: Returns a list of waste meters for a specified portfolio
+      tags:
+      - Waste Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>2abff3f0-f8d9-4fc6-bcfe-d8214d39377f</em>"
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>meterType==\"Disposed - Trash\" will query for only those meters that match the specified meter type.</li>\n                                <li>updatedAt=ge=2022-03-13T00:00 will query for Waste Meters that were updated at or after the set date and UTC time.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund list of waste meters
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: efc5a733-114b-447c-9269-4e973b44e22c
+                  type: waste_meters
+                  attributes:
+                    estarMeterId: null
+                    meterType: Disposed - Trash
+                    units: tons
+                    name: Test waste meter 1
+                    containerSize: null
+                    activationDate: '2026-04-29'
+                    deactivationDate: '2026-09-14'
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: true
+                    hazardous: false
+                    updatedAt: '2026-07-05 09:12:05'
+                  relationships:
+                    building:
+                      data:
+                        id: 682691d6-cad4-4f3f-8dae-82b9c06d1ba8
+                        type: buildings
+                      links:
+                        self: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/buildings/682691d6-cad4-4f3f-8dae-82b9c06d1ba8
+                  links:
+                    self: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/buildings/682691d6-cad4-4f3f-8dae-82b9c06d1ba8/waste_meters/efc5a733-114b-447c-9269-4e973b44e22c
+                - id: 8be7bec3-a141-432f-8a4b-06dc3f734aff
+                  type: waste_meters
+                  attributes:
+                    estarMeterId: null
+                    meterType: Recycled - Glass
+                    units: tons
+                    name: Test waste meter 2
+                    containerSize: null
+                    activationDate: '2026-02-16'
+                    deactivationDate: '2026-12-24'
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: false
+                    hazardous: true
+                    updatedAt: '2026-06-23 08:48:55'
+                  relationships:
+                    building:
+                      data:
+                        id: 682691d6-cad4-4f3f-8dae-82b9c06d1ba8
+                        type: buildings
+                      links:
+                        self: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/buildings/682691d6-cad4-4f3f-8dae-82b9c06d1ba8
+                  links:
+                    self: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/buildings/682691d6-cad4-4f3f-8dae-82b9c06d1ba8/waste_meters/8be7bec3-a141-432f-8a4b-06dc3f734aff
+                links:
+                  self: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/waste_meters/?size=2&page=1
+                  first: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/waste_meters/?size=2&page=1
+                  last: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/waste_meters/?size=2&page=2
+                  next: /portfolios/73b01d69-57a5-4bc6-bb72-2aa71cc20842/waste_meters/?size=2&page=2
+                meta:
+                  page:
+                    number: 1
+                    size: 2
+                    totalPages: 1
+                    totalElements: 2
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find portfolio b287ca66-b539-4c56-9c0f-f535ed62d12c
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters:
+    post:
+      summary: Creates a waste meter for a specified building
+      tags:
+      - Waste Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>6556e062-30de-4726-bd5c-43a06cfb95d6</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: e1ac370b-89cb-46a4-880f-1a9199031e15'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio / Building specific waste meter
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 979d5e17-5d1e-4476-ad4f-32857703ac40
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: null
+                    meterType: Disposed - Trash
+                    units: TONNES (METRIC)
+                    name: Disposed - Trash
+                    containerSize: null
+                    activationDate: '2025-03-05'
+                    deactivationDate: '2025-11-21'
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    hazardous: true
+                    updatedAt: '2026-03-22 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: fd400b55-e19e-46fa-82e4-f8f12e919b27
+                        type: buildings
+                      links:
+                        self: /portfolios/8f5ecfb8-5cd7-4320-958d-89cc21254737/buildings/fd400b55-e19e-46fa-82e4-f8f12e919b27
+                links:
+                  self: /portfolios/8f5ecfb8-5cd7-4320-958d-89cc21254737/buildings/fd400b55-e19e-46fa-82e4-f8f12e919b27/waste-meters/16f875f5-49d2-4dd9-b0c0-4c0910137bee
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find building 0b92a1c8-b722-46ae-b736-9bdff885c377 in portfolio 7bb9443a-799f-4eca-97c5-ef8c81ef7e83
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        meterType:
+                          type: string
+                        units:
+                          type: string
+                        name:
+                          type: string
+                        containerSize:
+                          type: decimal
+                        activationDate:
+                          type: string
+                        deactivationDate:
+                          type: string
+                        autoActivationDate:
+                          type: boolean
+                        currency:
+                          type: string
+                        intermittent:
+                          type: boolean
+                        hazardous:
+                          type: boolean
+                      required:
+                      - meterType
+                      - units
+                      - name
+                      - currency
+              example:
+                data:
+                  type: wasteMeters
+                  attributes:
+                    meterType: Disposed - Trash
+                    units: TONNES (METRIC)
+                    name: Disposed - Trash
+                    containerSize: null
+                    activationDate: '2019-08-01'
+                    deactivationDate: '2022-09-23'
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: false
+                    hazardous: false
+        required: true
+        description: Request body used to create a waste meter associated with a building
+    get:
+      summary: Returns a list of waste meters for a specified building
+      tags:
+      - Waste Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>b35ae5fe-a075-47d3-975e-50316f9a617d</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 09791d5e-98cc-4b4a-b67d-237cc8700201'
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-11-01T00:00 will query for Waste meters that were updated at or after the set date and UTC time.</li>\n                                <li>meterType==\"Disposed - Trash\" will query for only those meters of the specified meter type.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific waste meter
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: a6679b91-2973-4615-8e68-de0a297e469f
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: 70361525
+                    meterType: Disposed - Trash
+                    units: TONNES (METRIC)
+                    name: Intermittent Trash
+                    containerSize: null
+                    activationDate: '2024-03-31'
+                    deactivationDate: '2024-12-27'
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    hazardous: false
+                    updatedAt: '2026-03-01 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: e12a72bc-220c-4626-8953-37cc530e6a31
+                        type: buildings
+                      links:
+                        self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31
+                  links:
+                    self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters/a6679b91-2973-4615-8e68-de0a297e469f
+                - id: 11953c84-aa21-4a5f-a61e-48eaa7c6bce3
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: 78750219
+                    meterType: Recycled - Mixed Recyclables
+                    units: pounds
+                    name: Recycled- Mixed Recyclables
+                    containerSize: null
+                    activationDate: '2024-05-09'
+                    deactivationDate: '2025-08-25'
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    hazardous: false
+                    updatedAt: '2026-01-15 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: e12a72bc-220c-4626-8953-37cc530e6a31
+                        type: buildings
+                      links:
+                        self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31
+                  links:
+                    self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters/11953c84-aa21-4a5f-a61e-48eaa7c6bce3
+                - id: 8b24e1f3-7f65-4722-8598-7262a8816926
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: 75035732
+                    meterType: Recycled - Batteries
+                    units: Kilogram
+                    name: Recycled - Batteries
+                    containerSize: null
+                    activationDate: '2024-02-11'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    hazardous: true
+                    updatedAt: '2026-05-06 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: e12a72bc-220c-4626-8953-37cc530e6a31
+                        type: buildings
+                      links:
+                        self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31
+                  links:
+                    self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters/8b24e1f3-7f65-4722-8598-7262a8816926
+                - id: 35431151-d0ce-41af-9c9e-8b7ec7f0dc85
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: 7182734
+                    meterType: Composted - Cardboard/Corrugated Containers
+                    units: TONNES (METRIC)
+                    name: Composted - Cardboard/Corrugated Containers
+                    containerSize: null
+                    activationDate: '2024-05-10'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: true
+                    hazardous: false
+                    updatedAt: '2026-04-10 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: e12a72bc-220c-4626-8953-37cc530e6a31
+                        type: buildings
+                      links:
+                        self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31
+                  links:
+                    self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters/35431151-d0ce-41af-9c9e-8b7ec7f0dc85
+                - id: 7cdcae9f-d967-420f-9379-469e627ae39e
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: 31046927
+                    meterType: Recycled - Appliances
+                    units: pounds
+                    name: Recycled - Appliances
+                    containerSize: null
+                    activationDate: '2023-08-09'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: false
+                    hazardous: false
+                    updatedAt: '2026-06-22 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: e12a72bc-220c-4626-8953-37cc530e6a31
+                        type: buildings
+                      links:
+                        self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31
+                  links:
+                    self: /portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters/7cdcae9f-d967-420f-9379-469e627ae39e
+                links:
+                  self: /core/v0/portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters?size=5&page=3
+                  first: /core/v0/portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters?size=5&page=1
+                  last: /core/v0/portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters?size=5&page=8
+                  next: /core/v0/portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters?size=5&page=4
+                  prev: /core/v0/portfolios/dcc26acf-4584-4e3d-b652-52ea108a313d/buildings/e12a72bc-220c-4626-8953-37cc530e6a31/waste-meters?size=5&page=2
+                meta:
+                  page:
+                    number: 1
+                    size: 100
+                    totalPages: 8
+                    totalElements: 730
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find building e173c49a-9e27-49a7-92a6-0d9a81427408 in portfolio 5d4cd41a-a4f6-47be-9320-dbd7777cd9dc
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}:
+    delete:
+      summary: Deletes a specific waste meter for a specified building
+      description: 'Deleting the waste meter will also delete any waste meter readings associated with the waste meter.
+
+        '
+      tags:
+      - Waste Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                            Example: <em>f401879f-8624-4052-b571-50c5045ed1df</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 4cbf6792-43ed-447a-a88e-a7de4ddbf182'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: 98a86bcc-babf-42e5-b17b-35eff6f8f3c6'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Waste Meter Deleted Successfully
+          content:
+            application/vnd.api+json:
+              example: ''
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find waste meter 5afcf263-0619-4430-b991-ef50915b019f in building b4c9741a-58b8-42e5-bf61-9856fbd19300 in portfolio ae09e916-9298-45f0-8d37-19c13061fa03
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    get:
+      summary: Returns a specific waste meter for a specified building
+      tags:
+      - Waste Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>8926bdd6-24de-400f-a09a-08182cfa80cc</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 27e8da79-d3d9-45a3-9d68-504c2631599d'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: 9baddc4b-5702-4212-8163-6b9607ac028b'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific waste meter
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 369abb6c-6360-4cd7-94ec-6a02df2aac2e
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: 37077624
+                    meterType: Disposed - Trash
+                    units: TONNES (METRIC)
+                    name: Intermittent Trash
+                    containerSize: null
+                    activationDate: '2024-12-01'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: true
+                    hazardous: true
+                    updatedAt: '2026-05-27 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: bb34076c-c099-4d89-bb18-b99e4332f0a6
+                        type: buildings
+                      links:
+                        self: /portfolios/a4eda804-530d-4e46-9b2a-08081255d7fe/buildings/bb34076c-c099-4d89-bb18-b99e4332f0a6
+                links:
+                  self: /portfolios/a4eda804-530d-4e46-9b2a-08081255d7fe/buildings/bb34076c-c099-4d89-bb18-b99e4332f0a6/waste-meters/369abb6c-6360-4cd7-94ec-6a02df2aac2e
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find waste meter a85e3252-41d8-49cb-8ad3-39d912a282f9 in building e5e4d326-ca3d-4a4c-9fd8-d13a7a008d4b in portfolio 9289e0fa-8ee9-4132-a4db-b858d06412a0
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    patch:
+      summary: Updates a specific waste meter for a specified building
+      tags:
+      - Waste Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>4ea32812-5af4-49ee-8e3d-f23be84ad14b</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: e7927fbf-b2c9-4ae5-8712-867450195c36'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: ca7d4dc8-8326-4770-b750-897b0c276324'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio / Building Specific Waste Meter Updated
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 9fa329b0-e9ae-4851-8987-9311e76c031f
+                  type: wasteMeters
+                  attributes:
+                    estarMeterId: null
+                    meterType: Disposed - Trash
+                    units: TONNES (METRIC)
+                    name: New Name
+                    containerSize: null
+                    activationDate: '2024-10-23'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    hazardous: false
+                    updatedAt: '2025-11-22 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: f014ce08-000d-4335-b0c0-48ea7ac07af0
+                        type: buildings
+                      links:
+                        self: /portfolios/15369f00-1608-40ee-bec1-06c70a74fb58/buildings/f014ce08-000d-4335-b0c0-48ea7ac07af0
+                links:
+                  self: /portfolios/15369f00-1608-40ee-bec1-06c70a74fb58/buildings/f014ce08-000d-4335-b0c0-48ea7ac07af0/waste-meters/9fa329b0-e9ae-4851-8987-9311e76c031f
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find waste meter 023489be-c116-4ee4-beae-441de41543ff in building 363eadec-1d1d-4169-9ac4-2ef42b9737f9 in portfolio fcbd8362-6029-477b-9b80-f3f51de64352
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: string
+                    attributes:
+                      type: object
+                      properties:
+                        units:
+                          type: string
+                        name:
+                          type: string
+                        activationDate: '2019-08-01'
+                        deactivationDate: '2022-09-23'
+                        autoActivationDate: true
+                        currency: USD
+                        intermittent: true
+                        hazardous: false
+                  required:
+                  - id
+                  - type
+              example:
+                data:
+                  id: af606077-9cd9-4a8a-93fb-5e6fa34cab63
+                  type: wasteMeters
+                  attributes:
+                    units: TONNES (METRIC)
+                    name: New Name
+                    activationDate: '2019-08-01'
+                    deactivationDate: '2022-09-23'
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: false
+                    hazardous: false
+        required: true
+        description: Request body used to update a specific waste meter
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

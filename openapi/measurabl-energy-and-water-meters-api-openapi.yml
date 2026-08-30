@@ -1,0 +1,1588 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Core Energy and Water Meters API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a `GET /core/v0/portfolios` request (under the Portfolios section) to get a list of available portfolios.
+
+    3. Obtain the proper portfolio_id (id) in which you need to get/create data for.
+
+    4. This `portfolio_id` will be required for all other reoccurring requests.
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Release Notes](https://api.measurabl.com/release_notes)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+    * [Code Examples](https://github.com/Measurabl/measurabl_api_code_samples)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Energy and Water Meters
+paths:
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters:
+    post:
+      summary: Creates an energy or water meter for a specified building
+      tags:
+      - Energy and Water Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: 'Example: f0c9271f-ca15-48b2-b489-3bbef3905da6'
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 52839c1a-5b3c-49f5-93b7-768d06e7b371'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio/Building specific meter
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 787c6b27-e893-44e1-a6dd-799a908bdd1a
+                  type: meters
+                  attributes:
+                    estarMeterId: null
+                    meterType: Electric
+                    units: kWh (thousand Watt-hours)
+                    name: New Meter
+                    mode: TENANT_PAID_BY_TENANT
+                    servesExteriorAreas: false
+                    renewableOffsite: false
+                    trackingInstrument: Non-grid-connected low-carbon heat, steam, or cooling generation owned by company
+                    activationDate: '2025-10-25'
+                    deactivationDate: '2026-10-25'
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    updatedAt: '2025-08-11 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: c8d5fd75-e760-4802-bf56-4ff861b2b954
+                        type: buildings
+                      links:
+                        self: /portfolios/7db8efe8-dd9a-474c-8687-cc187b81fdf3/buildings/c8d5fd75-e760-4802-bf56-4ff861b2b954
+                links:
+                  self: /portfolios/7db8efe8-dd9a-474c-8687-cc187b81fdf3/buildings/c8d5fd75-e760-4802-bf56-4ff861b2b954/meters/7f9af74c-17a5-4949-8ec8-ef9beffc06ea
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find building 304130c0-06a7-47fb-8238-11f1403e73a6 in portfolio 2c15cd85-c6da-4c3f-be79-421346b4df13
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        meterType:
+                          type: string
+                        units:
+                          type: string
+                        name:
+                          type: string
+                        mode:
+                          type: string
+                        servesExteriorAreas:
+                          type: boolean
+                        renewableOffsite:
+                          type: boolean
+                        trackingInstrument:
+                          type: string
+                        activationDate:
+                          type: string
+                        deactivationDate:
+                          type: string
+                        autoActivationDate:
+                          type: boolean
+                        currency:
+                          type: string
+                        intermittent:
+                          type: boolean
+                      required:
+                      - meterType
+                      - units
+                      - name
+                      - mode
+                      - renewableOffsite
+                      - currency
+              example:
+                data:
+                  type: meters
+                  attributes:
+                    meterType: Electric
+                    units: kWh (thousand Watt-hours)
+                    name: New Meter
+                    mode: TENANT_PAID_BY_TENANT
+                    servesExteriorAreas: true
+                    renewableOffsite: true
+                    trackingInstrument: Non-grid-connected low-carbon heat, steam, or cooling generation owned by company
+                    activationDate: '2022-01-01'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: false
+        required: true
+        description: Request body used to create a meter associated with a building
+    get:
+      summary: Returns a list of meters (energy or water) for a specified building
+      tags:
+      - Energy and Water Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>03165e30-0e76-42d5-b47e-a302b488dbdf</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 22a90c0c-df32-4591-9d35-0b50bf45a481'
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for Energy & Water Meters that were updated at or after the set date and UTC time.</li>\n                                <li>servesExteriorAreas==true will query for only those meters that serve exterior areas.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific meter
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: f2bccde2-3363-447f-a74d-3101220fabc9
+                  type: meters
+                  attributes:
+                    estarMeterId: 93760805
+                    meterType: Electric
+                    units: kBtu (thousand Btu)
+                    name: Electric Grid Meter2
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: true
+                    trackingInstrument: null
+                    activationDate: '2024-09-29'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    updatedAt: '2026-06-11 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a29db54c-1253-4f92-be82-cabb6e42bf0b
+                        type: buildings
+                      links:
+                        self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b
+                  links:
+                    self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters/f2bccde2-3363-447f-a74d-3101220fabc9
+                - id: e684f24b-6485-4114-8aa4-649667ab0001
+                  type: meters
+                  attributes:
+                    estarMeterId: 17576231
+                    meterType: Electric on Site Wind
+                    units: kWh (thousand Watt-hours)
+                    name: wind1
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: true
+                    renewableOffsite: false
+                    trackingInstrument: Grid-connected low-carbon electricity generation owned by company; no instruments created
+                    activationDate: '2025-04-28'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: true
+                    updatedAt: '2026-03-17 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a29db54c-1253-4f92-be82-cabb6e42bf0b
+                        type: buildings
+                      links:
+                        self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b
+                  links:
+                    self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters/e684f24b-6485-4114-8aa4-649667ab0001
+                - id: cc0ffdc1-5653-43d0-8773-ab56e5419f31
+                  type: meters
+                  attributes:
+                    estarMeterId: 72112820
+                    meterType: District Chilled Water - Absorption Chiller using Natural Gas
+                    units: GJ
+                    name: valid3
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: false
+                    trackingInstrument: null
+                    activationDate: '2023-12-13'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: false
+                    updatedAt: '2026-07-10 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a29db54c-1253-4f92-be82-cabb6e42bf0b
+                        type: buildings
+                      links:
+                        self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b
+                  links:
+                    self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters/cc0ffdc1-5653-43d0-8773-ab56e5419f31
+                - id: b32b22bf-9a6e-421b-97e0-eb2221f67904
+                  type: meters
+                  attributes:
+                    estarMeterId: 87581006
+                    meterType: Wood
+                    units: GJ
+                    name: Wood
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: true
+                    renewableOffsite: true
+                    trackingInstrument: null
+                    activationDate: '2023-12-11'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: true
+                    updatedAt: '2026-06-20 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a29db54c-1253-4f92-be82-cabb6e42bf0b
+                        type: buildings
+                      links:
+                        self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b
+                  links:
+                    self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters/b32b22bf-9a6e-421b-97e0-eb2221f67904
+                - id: de71b945-0772-4b89-94e7-a62d85e103cc
+                  type: meters
+                  attributes:
+                    estarMeterId: 82873615
+                    meterType: Wood
+                    units: GJ
+                    name: Wood2
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: true
+                    renewableOffsite: false
+                    trackingInstrument: null
+                    activationDate: '2024-11-26'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: true
+                    updatedAt: '2026-06-19 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a29db54c-1253-4f92-be82-cabb6e42bf0b
+                        type: buildings
+                      links:
+                        self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b
+                  links:
+                    self: /portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters/de71b945-0772-4b89-94e7-a62d85e103cc
+                links:
+                  self: /core/v0/portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters?size=5&page=3
+                  first: /core/v0/portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters?size=5&page=1
+                  last: /core/v0/portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters?size=5&page=8
+                  next: /core/v0/portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters?size=5&page=4
+                  prev: /core/v0/portfolios/c8d5f56e-8ca9-4346-bc9c-8c36c2bcbbd7/buildings/a29db54c-1253-4f92-be82-cabb6e42bf0b/meters?size=5&page=2
+                meta:
+                  page:
+                    number: 3
+                    size: 100
+                    totalPages: 8
+                    totalElements: 730
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find building d7b2f3e6-8a4e-418f-bec5-e0359e57c886 in portfolio bc3a3951-4c18-4102-aadb-8db890e10461
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}:
+    delete:
+      summary: Deletes a specific meter for a specified building
+      tags:
+      - Energy and Water Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: 'Example: 30d9d10b-0641-49e6-a32a-6a9b015a5439'
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: c0ceaaed-e398-467a-824f-0d495711f823'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 60f03d17-f43e-4ca0-9637-c1edd074fd30'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Meter Deleted Successfully
+          content:
+            application/vnd.api+json:
+              example: ''
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find meter 970b0094-3041-49b7-9cde-deeb95c4ee2e in building 9247a193-def1-4c7c-8ebc-328764d40bc7 in portfolio 88820fb6-74a9-48bf-9de7-a35c8cf5785e
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    get:
+      summary: Returns details of a specific meter (energy or water) for a specified building
+      tags:
+      - Energy and Water Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>5df7c5b7-18d2-425c-ad66-6542d59654a6</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 2db61e3e-8061-469e-a4b2-4ca15caa392f'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 545a9dcb-acf7-4c99-b7d2-4245c995cccf'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific meter
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: c2d7ff32-c515-4cc9-b896-9509af49ed79
+                  type: meters
+                  attributes:
+                    estarMeterId: 16369838
+                    meterType: Electric
+                    units: kBtu (thousand Btu)
+                    name: Electric Grid Meter2
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: false
+                    trackingInstrument: null
+                    activationDate: '2024-11-20'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: true
+                    updatedAt: '2026-05-11 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: f80b87d5-88f6-4145-98f6-67c0671cfed8
+                        type: buildings
+                      links:
+                        self: /portfolios/165c45f7-b9fb-401e-b922-77d43767086c/buildings/f80b87d5-88f6-4145-98f6-67c0671cfed8
+                links:
+                  self: /portfolios/165c45f7-b9fb-401e-b922-77d43767086c/buildings/f80b87d5-88f6-4145-98f6-67c0671cfed8/meters/c2d7ff32-c515-4cc9-b896-9509af49ed79
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find meter fda52464-75b7-473d-9f87-c6b00e1ec8a2 in building 15e6430b-21e3-483b-aada-a705ef47003b in portfolio 6ce65e81-3105-41cf-8c82-2ba5de8960b2
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    patch:
+      summary: Updates a specific meter for a specified building
+      tags:
+      - Energy and Water Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>7f3dea66-3051-41f5-91d0-b88e44d2cb3a</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 7467f8e5-155c-4fbf-95ab-b79e06d6ece5'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: e095d364-96c0-4521-8086-a48db78d1f8e'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio / Building Specific Meter Updated
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 570a687f-0199-4846-acbb-76b85d968169
+                  type: meters
+                  attributes:
+                    estarMeterId: null
+                    meterType: Electric
+                    units: kBtu (thousand Btu)
+                    name: Electric Grid Meter
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: true
+                    renewableOffsite: false
+                    trackingInstrument: null
+                    activationDate: '2025-04-14'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    updatedAt: '2025-09-18 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: 65f1ea23-cc33-4234-bc60-66747997349e
+                        type: buildings
+                      links:
+                        self: /portfolios/3dc5fb4f-5c3a-4e72-9280-34c0ce055bc6/buildings/65f1ea23-cc33-4234-bc60-66747997349e
+                  links:
+                    self: portfolios/3dc5fb4f-5c3a-4e72-9280-34c0ce055bc6/buildings/65f1ea23-cc33-4234-bc60-66747997349e/meters/570a687f-0199-4846-acbb-76b85d968169
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find meter 16cd41c1-b7c1-4790-a7e0-17555df674c7 for building 189d906e-ad65-4dd6-9479-a866ed177506 in portfolio 5c16648b-3d51-4307-9871-ef8f2edb51d6
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: string
+                    attributes:
+                      type: object
+                      properties:
+                        units:
+                          type: string
+                        name:
+                          type: string
+                        mode:
+                          type: string
+                        servesExteriorAreas:
+                          type: boolean
+                        renewableOffsite:
+                          type: boolean
+                        trackingInstrument:
+                          type: string
+                        activationDate:
+                          type: string
+                        deactivationDate:
+                          type: string
+                        autoActivationDate:
+                          type: boolean
+                        intermittent:
+                          type: boolean
+                  required:
+                  - id
+                  - type
+              example:
+                data:
+                  id: 37a1139b-c907-4e31-b280-786e5fcf062d
+                  type: meters
+                  attributes:
+                    units: kWh (thousand Watt-hours)
+                    name: Updated Meter
+                    mode: TENANT_PAID_BY_TENANT
+                    servesExteriorAreas: true
+                    renewableOffsite: true
+                    trackingInstrument: Non-grid-connected low-carbon heat, steam, or cooling generation owned by company
+                    activationDate: '2025-05-11'
+                    deactivationDate: '2025-12-25'
+                    autoActivationDate: false
+                    intermittent: true
+        required: true
+        description: Request body used to update a specific meter
+  /core/v0/portfolios/{portfolio_id}/meters:
+    get:
+      summary: Returns a list of meters (energy or water) for a specified portfolio
+      tags:
+      - Energy and Water Meters
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>8fb14065-cd01-41bb-9e90-0974d2293c60</em>"
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for Energy & Water Meters that were updated at or after the set date and UTC time.</li>\n                                <li>servesExteriorAreas==true will query for only those meters that serve exterior areas.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund list of meters
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: e5a17bd8-e790-48c3-a948-90902c7ca420
+                  type: meters
+                  attributes:
+                    estarMeterId: 14970793
+                    meterType: Electric
+                    units: kBtu (thousand Btu)
+                    name: Electric Grid Meter2
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: true
+                    trackingInstrument: null
+                    activationDate: '2025-02-24'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: false
+                    updatedAt: '2026-02-28 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a001ea49-002f-4dd7-8c96-c836e910a8a5
+                        type: buildings
+                      links:
+                        self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5
+                  links:
+                    self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters/e5a17bd8-e790-48c3-a948-90902c7ca420
+                - id: 712a264c-de26-44cc-a965-a1923f393403
+                  type: meters
+                  attributes:
+                    estarMeterId: 65023820
+                    meterType: Electric on Site Wind
+                    units: kWh (thousand Watt-hours)
+                    name: wind1
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: false
+                    trackingInstrument: Grid-connected low-carbon electricity generation owned by company; no instruments created
+                    activationDate: '2025-02-14'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    updatedAt: '2025-10-27 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a001ea49-002f-4dd7-8c96-c836e910a8a5
+                        type: buildings
+                      links:
+                        self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5
+                  links:
+                    self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters/712a264c-de26-44cc-a965-a1923f393403
+                - id: 3fed7ce1-a834-4caa-8ab6-04abfd80429c
+                  type: meters
+                  attributes:
+                    estarMeterId: 33768298
+                    meterType: District Chilled Water - Absorption Chiller using Natural Gas
+                    units: GJ
+                    name: valid3
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: false
+                    trackingInstrument: null
+                    activationDate: '2023-11-26'
+                    deactivationDate: null
+                    autoActivationDate: false
+                    currency: USD
+                    intermittent: false
+                    updatedAt: '2025-11-24 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a001ea49-002f-4dd7-8c96-c836e910a8a5
+                        type: buildings
+                      links:
+                        self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5
+                  links:
+                    self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters/3fed7ce1-a834-4caa-8ab6-04abfd80429c
+                - id: 92d2e896-4087-4ea7-ac46-1ed94a9aef8d
+                  type: meters
+                  attributes:
+                    estarMeterId: 19693723
+                    meterType: Wood
+                    units: GJ
+                    name: Wood
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: false
+                    trackingInstrument: null
+                    activationDate: '2023-07-29'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: true
+                    updatedAt: '2025-08-24 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a001ea49-002f-4dd7-8c96-c836e910a8a5
+                        type: buildings
+                      links:
+                        self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5
+                  links:
+                    self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters/92d2e896-4087-4ea7-ac46-1ed94a9aef8d
+                - id: 24ef8a5a-cd22-42f8-b582-1c4d164392fd
+                  type: meters
+                  attributes:
+                    estarMeterId: 63092522
+                    meterType: Wood
+                    units: GJ
+                    name: Wood2
+                    mode: TENANT_PAID_BY_LANDLORD
+                    servesExteriorAreas: false
+                    renewableOffsite: false
+                    trackingInstrument: null
+                    activationDate: '2025-02-19'
+                    deactivationDate: null
+                    autoActivationDate: true
+                    currency: USD
+                    intermittent: true
+                    updatedAt: '2025-08-29 00:00:00'
+                  relationships:
+                    building:
+                      data:
+                        id: a001ea49-002f-4dd7-8c96-c836e910a8a5
+                        type: buildings
+                      links:
+                        self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5
+                  links:
+                    self: /portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters/24ef8a5a-cd22-42f8-b582-1c4d164392fd
+                links:
+                  self: /core/v0/portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters?size=5&page=3
+                  first: /core/v0/portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters?size=5&page=1
+                  last: /core/v0/portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters?size=5&page=8
+                  next: /core/v0/portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters?size=5&page=4
+                  prev: /core/v0/portfolios/0ff695db-2697-4147-9d42-b96aaccea027/buildings/a001ea49-002f-4dd7-8c96-c836e910a8a5/meters?size=5&page=2
+                meta:
+                  page:
+                    number: 3
+                    size: 100
+                    totalPages: 8
+                    totalElements: 730
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find portfolio 228df829-1e01-4c0a-aa0a-a721f1bfdd7c
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

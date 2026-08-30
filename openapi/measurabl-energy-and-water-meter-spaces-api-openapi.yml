@@ -1,0 +1,697 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Core Energy and Water Meter Spaces API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a `GET /core/v0/portfolios` request (under the Portfolios section) to get a list of available portfolios.
+
+    3. Obtain the proper portfolio_id (id) in which you need to get/create data for.
+
+    4. This `portfolio_id` will be required for all other reoccurring requests.
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Release Notes](https://api.measurabl.com/release_notes)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+    * [Code Examples](https://github.com/Measurabl/measurabl_api_code_samples)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Energy and Water Meter Spaces
+paths:
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/spaces:
+    get:
+      summary: Returns a list of spaces a specified energy or water meter serves
+      tags:
+      - Energy and Water Meter Spaces
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>abbc676c-47a1-4790-bf1d-a60a2ccce6c9</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 03972683-b67f-44b3-bb25-edd874e7f3c8'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 57aa12d4-f834-4808-9eeb-512ba50338e2'
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.\n                  <ul>\n                    <li>updatedAt=ge=2022-11-01T00:00 will query for meter spaces that were updated at or after the set date and UTC time.</li>\n                    <li>propertyType==Office will query for meter spaces that have the specified propertyType.</li>\n                  </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund / Building list of spaces the specified meter serves
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 07911585-8dae-442e-bfc5-5537568bef75
+                  type: spaces
+                  attributes:
+                    propertyType: Financial Office
+                    name: Office B
+                    common: true
+                    floorAreaSqFt: 9791
+                    allocation: 25
+                    estarSpaceId: 39613944
+                    customized: false
+                  relationships:
+                    building:
+                      data:
+                        id: ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                        type: buildings
+                      links:
+                        self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                  links:
+                    self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/spaces/07911585-8dae-442e-bfc5-5537568bef75
+                - id: f63f2613-1ea0-4778-99dd-4890d0b1d564
+                  type: spaces
+                  attributes:
+                    propertyType: Office
+                    name: Building Use
+                    common: false
+                    floorAreaSqFt: 7368
+                    allocation: 25
+                    estarSpaceId: 99184337
+                    customized: true
+                  relationships:
+                    building:
+                      data:
+                        id: ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                        type: buildings
+                      links:
+                        self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                  links:
+                    self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/spaces/f63f2613-1ea0-4778-99dd-4890d0b1d564
+                - id: 6c18fcfa-f98e-41aa-8b7c-0816cc3b01a3
+                  type: spaces
+                  attributes:
+                    propertyType: Financial Office
+                    name: Building Use A
+                    common: false
+                    floorAreaSqFt: 6725
+                    allocation: 19
+                    estarSpaceId: 44581940
+                    customized: false
+                  relationships:
+                    building:
+                      data:
+                        id: ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                        type: buildings
+                      links:
+                        self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                  links:
+                    self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/spaces/6c18fcfa-f98e-41aa-8b7c-0816cc3b01a3
+                - id: 5b4d5755-a88a-425b-a86c-9f644de7d42a
+                  type: spaces
+                  attributes:
+                    propertyType: Financial Office
+                    name: Building Use C
+                    common: true
+                    floorAreaSqFt: 9444
+                    allocation: 6
+                    estarSpaceId: 75962915
+                    customized: true
+                  relationships:
+                    building:
+                      data:
+                        id: ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                        type: buildings
+                      links:
+                        self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                  links:
+                    self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/spaces/5b4d5755-a88a-425b-a86c-9f644de7d42a
+                - id: bc857b19-7902-414e-9c9a-9248d89c048e
+                  type: spaces
+                  attributes:
+                    propertyType: Financial Office
+                    name: Building Use D
+                    common: true
+                    floorAreaSqFt: 890
+                    allocation: 14
+                    estarSpaceId: 28715959
+                    customized: false
+                  relationships:
+                    building:
+                      data:
+                        id: ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                        type: buildings
+                      links:
+                        self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1
+                  links:
+                    self: /portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/spaces/bc857b19-7902-414e-9c9a-9248d89c048e
+                links:
+                  self: /core/v0/portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/meters/e629523f-afb0-4963-a8ba-83da537eb5d1/spaces?size=5&page=3
+                  first: /core/v0/portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/meters/e629523f-afb0-4963-a8ba-83da537eb5d1/spaces?size=5&page=1
+                  last: /core/v0/portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/meters/e629523f-afb0-4963-a8ba-83da537eb5d1/spaces?size=5&page=5
+                  next: /core/v0/portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/meters/e629523f-afb0-4963-a8ba-83da537eb5d1/spaces?size=5&page=4
+                  prev: /core/v0/portfolios/1d5cf283-59b8-4886-bc59-17208f9f44e5/buildings/ff9b7f79-8e05-42f7-b59f-bcbe15bcffd1/meters/e629523f-afb0-4963-a8ba-83da537eb5d1/spaces?size=5&page=2
+                meta:
+                  page:
+                    number: 3
+                    size: 100
+                    totalPages: 5
+                    totalElements: 420
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find meter b379fb96-08ad-49c4-9ef2-8c025bf90a11 in building 4ba526ee-45d0-4a29-a5aa-b57049ff7168 in portfolio 611194eb-949c-421a-bb2a-af03d38baa3f
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/meters/{meter_id}/relationships:
+    patch:
+      summary: Assigns an existing energy or water meter to a specified space or list of spaces
+      tags:
+      - Energy and Water Meter Spaces
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>2b3c84b1-30e1-4e2c-bb7a-836b300e84e4</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 039e095e-4475-481e-9cfb-29b82869d8bd'
+        required: true
+        schema:
+          type: string
+      - name: meter_id
+        in: path
+        description: 'Example: 87c8c19d-a6cb-44f5-a1a6-37dd0aaecc64'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Meter Assigned Successfully to the Specified Space(s)
+          content:
+            application/vnd.api+json:
+              example: ''
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find meter 9e6fbbc3-2c48-427e-a4db-2bd583a44599 in building cd4ec81c-2327-45bf-a7c9-5f4b329da1c0 in portfolio 6bf13d77-d40a-4900-b11b-aa9fd7eda5f6
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: string
+                  required:
+                  - id
+                  - type
+              example:
+                data:
+                - type: spaces
+                  id: 11ea9df3-374a-4d65-a694-be58d06651f4
+        required: true
+        description: Request body used to assign an existing meter to a specified space or list of spaces
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

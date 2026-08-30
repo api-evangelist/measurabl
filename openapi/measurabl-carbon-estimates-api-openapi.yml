@@ -1,0 +1,1655 @@
+openapi: 3.2.0
+info:
+  title: ESGx Buildings Carbon Estimates API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret)
+
+    2. Make a `POST /insights/v0/energy_estimates` request with at least one building
+
+    3. Take note of the `id` for the first estimate record
+
+    4. Check the status of the energy estimate with `GET /insights/v0/energy_estimates/{id}`
+
+    5. Keep polling until the status says `JOB_SUCCESS`
+
+    6. Check out the results of the estimate in the `absoluteEstimates` and `intensityEstimates` fields!
+
+
+    ### Response Format
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/insights/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Carbon Estimates
+paths:
+  /insights/v0/carbon_estimate_batches:
+    get:
+      summary: Returns all carbon estimates batches
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of carbon estimate batches
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: e9446651-d9d2-47cc-ab1f-c0f981ea7188
+                  type: carbonEstimateBatches
+                  attributes:
+                    estimateType: carbon
+                    status: STARTING
+                    timePeriod: '2024'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:42.571Z'
+                    updatedAt: '2026-07-16T13:20:42.571Z'
+                - id: 2a88af68-a543-47c3-a1ea-9e327de2f764
+                  type: carbonEstimateBatches
+                  attributes:
+                    estimateType: carbon
+                    status: STARTING
+                    timePeriod: '2023'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:42.574Z'
+                    updatedAt: '2026-07-16T13:20:42.574Z'
+                meta:
+                  totalCount: 2
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 2
+                links:
+                  self: /insights/v0/carbon_estimate_batches?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/carbon_estimate_batches/{id}/carbon_estimates:
+    get:
+      summary: Returns all carbon estimates for a given batch
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>'
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of carbon estimates
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: cda747b1-74d3-4c46-b47d-e2767bc6cdbc
+                  type: carbonEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:54.599Z'
+                    updatedAt: '2026-07-16T13:20:54.599Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: f9a118a3-f02f-48c8-8660-3e83665541f1
+                        type: carbonEstimateBatches
+                    building:
+                      data:
+                        id: fb872ecf-b040-4749-8d6e-a24a02a0dd13
+                        type: buildings
+                - id: d9cb138b-f954-45c4-b923-acdff9c7a66a
+                  type: carbonEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:54.621Z'
+                    updatedAt: '2026-07-16T13:20:54.621Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: f9a118a3-f02f-48c8-8660-3e83665541f1
+                        type: carbonEstimateBatches
+                    building:
+                      data:
+                        id: ff323d10-b7da-48e9-acd7-4de08cabc731
+                        type: buildings
+                - id: a373cb31-f91c-43ff-84ab-3ed91342cfa2
+                  type: carbonEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:54.643Z'
+                    updatedAt: '2026-07-16T13:20:54.643Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: f9a118a3-f02f-48c8-8660-3e83665541f1
+                        type: carbonEstimateBatches
+                    building:
+                      data:
+                        id: dd5e6c91-eb01-4479-bad8-936ec7a29d3a
+                        type: buildings
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/carbon_estimate_batches/f9a118a3-f02f-48c8-8660-3e83665541f1/carbon_estimates?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/carbon_estimate_batches/export:
+    post:
+      summary: Requests a CSV download for the given Carbon Estimate batches
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - JOB_SUCCESS
+      responses:
+        '200':
+          description: Export successfully created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 985ad29b-fce8-4fd5-9d77-ddc3d83db0db
+                  type: exports
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    createdAt: '2026-07-16T13:20:55.222Z'
+                    updatedAt: '2026-07-16T13:20:55.222Z'
+                    permalink: http://localhost:3000/insights/v0/exports/0698b5d5-eac4-4865-92fc-760f1102e6cb/download
+                  relationships:
+                    estimateBatches:
+                      data:
+                      - id: 082caae3-203f-4dfb-b2d0-02e73f6598e3
+                        type: energyEstimateBatches
+                      - id: e9c74e65-00c9-40b4-8aff-1bea933c2b5e
+                        type: energyEstimateBatches
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                batchIds:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - b0d6486a-9398-42c6-9182-14eaba92d739
+                  - dacb11f7-3b69-409c-9565-ce05f9869cf1
+  /insights/v0/carbon_estimate_batches/{id}:
+    get:
+      summary: Returns carbon estimate batch
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Carbon estimate batch record
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: c68303e8-418b-46ad-8b17-a91216563080
+                  type: carbonEstimateBatches
+                  attributes:
+                    estimateType: carbon
+                    status: STARTING
+                    timePeriod: '2025'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:55.311Z'
+                    updatedAt: '2026-07-16T13:20:55.311Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Carbon estimate batch record belonging to another app
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/carbon_estimate_batches/upload:
+    post:
+      summary: Uploads a file to create new carbon estimate(s)
+      description: 'Upload an Excel file of carbon estimate records to be processed.
+
+        '
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: timePeriod
+        in: query
+        schema:
+          type: string
+          description: 'A timePeriod to apply for all estimates in the batch. The valid values for timePeriod are: ["T-12", "2025", "2024", "2023", "2022", "2021"]''
+
+            '
+          enum:
+          - T-12
+          - '2025'
+          - '2024'
+          - '2023'
+          - '2022'
+          - '2021'
+        required: true
+      responses:
+        '200':
+          description: Carbon estimate batch successfully created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 45a13954-c7e2-4e55-8ef4-b4cb2667ed34
+                  type: carbonEstimateBatches
+                  attributes:
+                    estimateType: carbon
+                    status: STARTING
+                    timePeriod: '2025'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:55.746Z'
+                    updatedAt: '2026-07-16T13:20:55.756Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: invalid time period
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: 'Time period requested: 3023 is not included in the list T-12, 2025, 2024, 2023, 2022, 2021; Requesting app: Bogisich and Sons'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                estimate_batch_file:
+                  type: string
+                  format: binary
+                  description: 'An Excel XLSX file containing the buildings you would like carbon estimates for.
+
+
+                    <br>
+
+                    When requesting data on buildings for the first time, the Excel Worksheet must be named ''Buildings''.
+
+
+                    <br>
+
+                    Building information is required for each estimate. Other fields are optional.
+
+
+                    The field ''clientMetadata'' is available for storing arbitrary JSON, this allows storing identifiers from your system and other metadata as part of the carbon estimate record.
+
+
+                    <br>
+
+                    When requesting data on existing buildings i.e. you have the Building IDs, the Excel Worksheet must be named ''MSR Building IDs'' and may only contain a single column named ''MSR Building ID''.
+
+
+                    '
+        required: true
+  /insights/v0/carbon_estimates:
+    get:
+      summary: Returns all carbon estimates
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of carbon estimates
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 20f40e2c-913f-4ef0-8f2d-a73d5c47557b
+                  type: carbonEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:56.183Z'
+                    updatedAt: '2026-07-16T13:20:56.183Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 9c5bfef5-31ec-42bd-b3d1-8afc5b390470
+                        type: carbonEstimateBatches
+                    building:
+                      data:
+                        id: 5c0e576c-d7f1-4341-8409-34227c624f6d
+                        type: buildings
+                - id: 4b191a9f-01e4-46b6-9322-5d8efc893ee8
+                  type: carbonEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:56.206Z'
+                    updatedAt: '2026-07-16T13:20:56.206Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: edea9e73-561a-4434-b22d-93d25db8baf7
+                        type: carbonEstimateBatches
+                    building:
+                      data:
+                        id: 3517930d-53e9-409e-9611-e9c1c7dd15e0
+                        type: buildings
+                - id: 7321a2c3-eaa3-43f4-8798-51e1776b7358
+                  type: carbonEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:56.231Z'
+                    updatedAt: '2026-07-16T13:20:56.231Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: bfbadd8e-157c-4750-a28b-88a11f0a8ed8
+                        type: carbonEstimateBatches
+                    building:
+                      data:
+                        id: 97c9d41a-f814-46a2-924a-b8392660716d
+                        type: buildings
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/carbon_estimates?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    post:
+      summary: Creates new carbon estimate(s)
+      description: 'Create new carbon estimate records to be processed. The response will include those records, including IDs that can be used to access the carbon estimate(s).
+
+
+        There is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.
+
+
+        Please note: You can process larger collections of Buildings via the file upload endpoint.
+
+
+        Coverage: Global
+
+        '
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Carbon estimate(s) successfully created
+          content:
+            application/vnd.api+json:
+              examples:
+                With MSR Building ID:
+                  value:
+                    data:
+                    - id: a38c7f29-0720-47c7-baf4-5e87dfae91bb
+                      type: carbonEstimates
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:20:57.548Z'
+                        updatedAt: '2026-07-16T13:20:57.564Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: c6ca71ac-d497-4fca-af95-1f89917be2d1
+                            type: carbonEstimateBatches
+                        building:
+                          data:
+                            id: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                            type: buildings
+                    - id: 3a0c79cc-4e57-47c9-953b-ddc86d580504
+                      type: carbonEstimates
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:20:57.548Z'
+                        updatedAt: '2026-07-16T13:20:57.584Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: c6ca71ac-d497-4fca-af95-1f89917be2d1
+                            type: carbonEstimateBatches
+                        building:
+                          data:
+                            id: 7a0c1cb2-85bc-49b2-b61c-801e11659494
+                            type: buildings
+                With Building Custom ID:
+                  value:
+                    data:
+                    - id: c541cc4e-0f7e-410c-9228-cef5a084fc90
+                      type: carbonEstimates
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:20:57.692Z'
+                        updatedAt: '2026-07-16T13:20:57.710Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: dd4ad0c4-a2f6-436c-88d4-c4c6a5f266fd
+                            type: carbonEstimateBatches
+                        building:
+                          data:
+                            id: 353b286a-59be-4a3d-95c6-1203a6a91119
+                            type: buildings
+                With Coordinates:
+                  value:
+                    data:
+                    - id: 277ac81b-3ead-4ddb-b2f4-18f1f05fc115
+                      type: carbonEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:20:57.797Z'
+                        updatedAt: '2026-07-16T13:20:57.797Z'
+                        requestedLatitude: '40.766276'
+                        requestedLongitude: '-73.9834504'
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: a8f7b468-e8a3-4bed-aed8-5eef8784fa17
+                            type: carbonEstimateBatches
+                        building:
+                          data: null
+                With Full Address Data:
+                  value:
+                    data:
+                    - id: 23b11baa-5091-485b-aa8b-140d64330e80
+                      type: carbonEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:20:57.899Z'
+                        updatedAt: '2026-07-16T13:20:57.899Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: c606a079-a620-47fd-96d8-0a281e3844f2
+                            type: carbonEstimateBatches
+                        building:
+                          data: null
+                    - id: 2a233957-2d7a-4958-9974-b4880fb0c24c
+                      type: carbonEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:20:57.899Z'
+                        updatedAt: '2026-07-16T13:20:57.899Z'
+                        requestedLatitude: '39.15600199'
+                        requestedLongitude: '-84.4202312'
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: c606a079-a620-47fd-96d8-0a281e3844f2
+                            type: carbonEstimateBatches
+                        building:
+                          data: null
+                    - id: f14c0687-091e-4868-813c-843059c91223
+                      type: carbonEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:20:57.899Z'
+                        updatedAt: '2026-07-16T13:20:57.899Z'
+                        requestedLatitude: '51.372512'
+                        requestedLongitude: '-104.778923199'
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: c606a079-a620-47fd-96d8-0a281e3844f2
+                            type: carbonEstimateBatches
+                        building:
+                          data: null
+                    - id: 5151991f-37fe-4ec1-8872-7574cc988b3f
+                      type: carbonEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:20:57.899Z'
+                        updatedAt: '2026-07-16T13:20:57.899Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: c606a079-a620-47fd-96d8-0a281e3844f2
+                            type: carbonEstimateBatches
+                        building:
+                          data: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '413':
+          description: too many estimates in request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '413'
+                  title: Payload too large
+                  detail: Only 100 estimates can be created in a single request.
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timePeriod:
+                  type: string
+                  enum:
+                  - T-12
+                  - '2025'
+                  - '2024'
+                  - '2023'
+                  - '2022'
+                  - '2021'
+                estimates:
+                  type: array
+                  items:
+                    oneOf:
+                    - $ref: '#/components/schemas/request_body_msr_building_id'
+                    - $ref: '#/components/schemas/request_body_building_custom_id'
+                    - $ref: '#/components/schemas/request_body_coordinates_with_client_metadata'
+                    - $ref: '#/components/schemas/request_body_building_info_with_client_metadata'
+            examples:
+              With MSR Building ID:
+                summary: With MSR Building ID
+                value:
+                  timePeriod: '2023'
+                  estimates:
+                  - building:
+                      msrBuildingId: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                  - building:
+                      msrBuildingId: 7a0c1cb2-85bc-49b2-b61c-801e11659494
+              With Building Custom ID:
+                summary: With Building Custom ID
+                value:
+                  timePeriod: '2023'
+                  estimates:
+                  - building:
+                      buildingCustomId: your-custom-building-id
+              With Coordinates:
+                summary: With Coordinates
+                value:
+                  timePeriod: '2023'
+                  estimates:
+                  - building:
+                      latitude: 40.766276
+                      longitude: -73.9834504
+                      primaryPropertyType: Office
+                      yearBuilt: 2006
+                      grossFloorArea: 703796
+                      grossFloorAreaUnits: sq ft
+              With Full Address Data:
+                summary: With Full Address Data
+                value:
+                  estimates:
+                  - building:
+                      addressLine1: 29 East High St.
+                      addressLine2: null
+                      city: Lawrenceburg
+                      stateOrProvince: IN
+                      postalCode: '47025'
+                      country: United States
+                      primaryPropertyType: Food Sales & Service
+                      yearBuilt: 1890
+                      grossFloorArea: 3000
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: 4460 Orkney Ave.
+                      addressLine2: null
+                      city: Cincinnati
+                      stateOrProvince: OH
+                      postalCode: '45209'
+                      country: United States
+                      primaryPropertyType: Fitness Center/Health Club/Gym
+                      yearBuilt: 2019
+                      grossFloorArea: 12950
+                      grossFloorAreaUnits: sq ft
+                      longitude: -84.4202312
+                      latitude: 39.15600199
+                      buildingCustomId: building-123456
+                      buildingClientMetadata:
+                        foo: bar
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: null
+                      addressLine2: null
+                      city: Centennial
+                      stateOrProvince: CO
+                      postalCode: '80112'
+                      country: United States
+                      primaryPropertyType: Warehouse/Storage - Other
+                      yearBuilt: 2019
+                      grossFloorArea: 12950
+                      grossFloorAreaUnits: sq ft
+                      latitude: 51.372512
+                      longitude: -104.778923199
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      msrBuildingId: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                      addressLine1: null
+                      addressLine2: null
+                      city: Centennial
+                      stateOrProvince: CO
+                      postalCode: '80112'
+                      country: United States
+                      primaryPropertyType: Warehouse/Storage - Other
+                      yearBuilt: 2019
+                      grossFloorArea: 12950
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: Midwest Analysis
+                  timePeriod: '2023'
+        description: 'The carbon estimates to be created.<br>
+
+          <br>
+
+          Time Period is required for each request and must be a valid year.<br>
+
+          The valid values for timePeriod are: T-12, 2025, 2024, 2023, 2022, 2021.<br>
+
+          <br>
+
+          Building information is required for each estimate and can be provided in one of four ways:
+
+          - Building UUID (msrBuildingId)
+
+          - Building Custom ID (buildingCustomId)
+
+          - Coordinates and additional building information (latitude, longitude, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+          - Full address and additional building information (addressLine1, city, stateOrProvince, postalCode, country, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+
+          The preferred method is to use the msrBuildingId or buildingCustomId if available. If neither is available, using coordinates is preferred over full address data.<br>
+
+
+          Optional fields:
+
+          - **customId** is available for storing a custom identifier for the estimate; this allows storing identifiers from your system as part of the carbon _estimate_ record.
+
+          - **buildingCustomId** is available for storing a custom identifier for the building; this allows storing identifiers from your system as part of the _building_ record.
+
+          - **clientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the carbon _estimate_ record.
+
+          - **buildingClientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the _building_ record.
+
+          '
+  /insights/v0/carbon_estimates/{id}:
+    get:
+      summary: Retrieves an existing carbon estimate
+      description: 'Provides access to the data for the carbon estimate record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Carbon Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Carbon estimate with scope breakout (PCAF)
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: a3b6f063-a9a0-4cf5-b786-73aeaa62c3aa
+                  type: carbonEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:58.151Z'
+                    updatedAt: '2026-07-16T13:20:58.151Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                    annualAbsoluteEstimate: null
+                    absoluteEstimateUnits: null
+                    annualIntensityEstimate: null
+                    confidenceLabel: high
+                    confidenceDescription: Eius et velit dolor.
+                    intensityEstimateUnits: kgCO₂e/ft²
+                    requestedAddressLine1: ''
+                    requestedAddressLine2: ''
+                    requestedCity: ''
+                    requestedStateOrProvince: ''
+                    requestedPostalCode: ''
+                    requestedCountry: ''
+                    requestedPropertyType: ''
+                    latitude: '-37.7281491018'
+                    longitude: '11.1867735462'
+                    appliedPropertyType: null
+                    monthlyIntensityEstimates: null
+                    monthlyAbsoluteEstimates: null
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 7ce373e2-7228-49f0-9728-2e09141c20f9
+                        type: carbonEstimateBatches
+                    building:
+                      data:
+                        id: cbfdc2cf-4b1e-4b63-8dca-7a32a0513772
+                        type: buildings
+                    benchmarkLookup:
+                      data: null
+                included: []
+              schema:
+                $ref: '#/components/schemas/json_api'
+              examples:
+                Processed Successfully:
+                  value:
+                    data:
+                      id: 8e05412f-8612-4853-96ff-6c92c7ede4d9
+                      type: carbonEstimates
+                      attributes:
+                        status: SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:20:58.298Z'
+                        updatedAt: '2026-07-16T13:20:58.298Z'
+                        requestedLatitude: '20.4037051189'
+                        requestedLongitude: '102.9261258963'
+                        startingMonth: 2025-07
+                        endingMonth: 2026-06
+                        annualAbsoluteEstimate: 5989853.1656163
+                        absoluteEstimateUnits: MTCO2e
+                        annualIntensityEstimate: 367.160302
+                        confidenceLabel: moderate
+                        confidenceDescription: The carbon estimate is generated from an energy estimate. The average energy estimate error for properties in this category is anticipated to be <= 26.1%.
+                        intensityEstimateUnits: kgCO₂e/m²
+                        requestedAddressLine1: 859 Collier Valleys
+                        requestedAddressLine2: null
+                        requestedCity: East Dannie
+                        requestedStateOrProvince: OH
+                        requestedPostalCode: 17167-2243
+                        requestedCountry: United States
+                        requestedPropertyType: Other
+                        latitude: '-67.7322022672'
+                        longitude: '101.6989310822'
+                        appliedPropertyType: Other
+                        buildingCustomId: '123456'
+                        buildingClientMetadata:
+                          foo: bar
+                        monthlyIntensityEstimates:
+                        - 51.3742537
+                        - 3.4910418
+                        - 51.2088552
+                        - 14.9580159
+                        - 16.3058606
+                        - 44.4497757
+                        - 28.5284252
+                        - 35.377119
+                        - 35.3827679
+                        - 1.0180275
+                        - 39.0797122
+                        - 45.9864473
+                        monthlyAbsoluteEstimates:
+                        - 838119.5751964
+                        - 56952.8552047
+                        - 835421.2631273
+                        - 244025.0719785
+                        - 266013.8099372
+                        - 725153.6401976
+                        - 465412.7291333
+                        - 577142.3185582
+                        - 577234.4758508
+                        - 16608.1007114
+                        - 637546.4243986
+                        - 750222.9013223
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: 8a4b7d27-c197-4a70-a77c-10f78dad3ef3
+                            type: carbonEstimateBatches
+                        building:
+                          data:
+                            id: c29fb66d-bce4-4c9f-9ce8-ac2580d077d0
+                            type: buildings
+                        benchmarkLookup:
+                          data:
+                            id: 574a296f-4908-49a3-ad5d-3f24870b167e
+                            type: benchmarkLookup
+                    included:
+                    - id: 574a296f-4908-49a3-ad5d-3f24870b167e
+                      type: benchmarkLookups
+                      attributes:
+                        createdAt: '2026-07-16T13:20:58.290Z'
+                        updatedAt: '2026-07-16T13:20:58.290Z'
+                        year: '2021'
+                        benchmarkPropertyType: Other
+                        continent: North America
+                        continentSubregion: North America
+                        countryCode: US
+                        countrySubregion: Midwest
+                        stateProvincePrefecture: OH
+                        intensityBenchmarkUnits: kgCO2e/ft2
+                        globalMeanIntensity: '59.1213640087'
+                        globalFirstQuartileIntensity: '51.5780079466'
+                        globalSecondQuartileIntensity: '66.0082069498'
+                        globalThirdQuartileIntensity: '15.6099215614'
+                        globalFifteenthPercentileIntensity: '98.1957488025'
+                        globalThirtiethPercentileIntensity: '13.7919010834'
+                        continentMeanIntensity: '24.1126239524'
+                        continentFirstQuartileIntensity: '54.3227645265'
+                        continentSecondQuartileIntensity: '23.4587919961'
+                        continentThirdQuartileIntensity: '29.6685324229'
+                        continentFifteenthPercentileIntensity: '12.6527137247'
+                        continentThirtiethPercentileIntensity: '97.8989195096'
+                        continentSubregionMeanIntensity: '99.6500319679'
+                        continentSubregionFirstQuartileIntensity: '82.3162300723'
+                        continentSubregionSecondQuartileIntensity: '64.3273640944'
+                        continentSubregionThirdQuartileIntensity: '64.4597524189'
+                        continentSubregionFifteenthPercentileIntensity: There is not enough data to benchmark your building at this level
+                        continentSubregionThirtiethPercentileIntensity: There is not enough data to benchmark your building at this level
+                        countryMeanIntensity: '67.9262876003'
+                        countryFirstQuartileIntensity: '87.5738884609'
+                        countrySecondQuartileIntensity: '60.6487769469'
+                        countryThirdQuartileIntensity: '34.8267964329'
+                        countryFifteenthPercentileIntensity: '52.0805053426'
+                        countryThirtiethPercentileIntensity: '54.2959516903'
+                        countrySubregionMeanIntensity: '96.7847776442'
+                        countrySubregionFirstQuartileIntensity: '33.6941583229'
+                        countrySubregionSecondQuartileIntensity: '23.6838199776'
+                        countrySubregionThirdQuartileIntensity: '56.1516076842'
+                        countrySubregionFifteenthPercentileIntensity: '97.3401936293'
+                        countrySubregionThirtiethPercentileIntensity: '79.0814333006'
+                        stateProvincePrefectureMeanIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureFirstQuartileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureSecondQuartileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureThirdQuartileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureFifteenthPercentileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureThirtiethPercentileIntensity: There is not enough data to benchmark your building at this level
+                With Scope Breakout:
+                  value:
+                    data:
+                      id: 5033b7b4-c4f6-4584-845f-dd083b831bb0
+                      type: carbonEstimates
+                      attributes:
+                        status: SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:20:58.454Z'
+                        updatedAt: '2026-07-16T13:20:58.454Z'
+                        requestedLatitude: '68.7204095361'
+                        requestedLongitude: '-87.0101971648'
+                        startingMonth: 2025-07
+                        endingMonth: 2026-06
+                        annualAbsoluteEstimate: 5077342.4890783
+                        absoluteEstimateUnits: MTCO2e
+                        annualIntensityEstimate: 55.199905
+                        confidenceLabel: moderate
+                        confidenceDescription: The carbon estimate is generated from an energy estimate. The average energy estimate error for properties in this category is anticipated to be <= 26.1%.
+                        intensityEstimateUnits: kgCO₂e/m²
+                        requestedAddressLine1: 9152 Brekke Springs
+                        requestedAddressLine2: Suite 367
+                        requestedCity: South Lavonne
+                        requestedStateOrProvince: OH
+                        requestedPostalCode: '99718'
+                        requestedCountry: United States
+                        requestedPropertyType: Other
+                        latitude: '-81.28161459'
+                        longitude: '43.5839098672'
+                        appliedPropertyType: Other
+                        buildingCustomId: '123456'
+                        buildingClientMetadata:
+                          foo: bar
+                        monthlyIntensityEstimates:
+                        - 0.7783039
+                        - 6.4920187
+                        - 10.673097
+                        - 1.0213827
+                        - 1.9915122
+                        - 6.1162558
+                        - 7.9956969
+                        - 3.6042791
+                        - 4.2376421
+                        - 0.4258364
+                        - 8.0814159
+                        - 3.7824643
+                        monthlyAbsoluteEstimates:
+                        - 71589.1697188
+                        - 597142.3747067
+                        - 981722.1385105
+                        - 93947.8027503
+                        - 183181.2865839
+                        - 562579.3289485
+                        - 735452.1992025
+                        - 331525.199615
+                        - 389782.5556493
+                        - 39168.8621793
+                        - 743336.7203789
+                        - 347914.8508346
+                        pcafDataQualityScore: 3
+                        annualIntensityCarbonEstimateScope1: 45.0591748
+                        annualIntensityCarbonEstimateScope2: 234.4178383
+                        annualIntensityCarbonEstimateScope3: 129.7005571
+                        annualAbsoluteCarbonEstimateScope1: 685.4418114
+                        annualAbsoluteCarbonEstimateScope2: 3355.6624943
+                        annualAbsoluteCarbonEstimateScope3: 1409.2791645
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: 3e82ad32-4f03-4c5e-8af0-1227d0971918
+                            type: carbonEstimateBatches
+                        building:
+                          data:
+                            id: 0f69d67c-3704-4066-b75f-8b4787e6dc82
+                            type: buildings
+                        benchmarkLookup:
+                          data:
+                            id: 7673257e-9bf5-4a6d-8aff-493fdde91561
+                            type: benchmarkLookup
+                    included:
+                    - id: 7673257e-9bf5-4a6d-8aff-493fdde91561
+                      type: benchmarkLookups
+                      attributes:
+                        createdAt: '2026-07-16T13:20:58.445Z'
+                        updatedAt: '2026-07-16T13:20:58.445Z'
+                        year: '2021'
+                        benchmarkPropertyType: Other
+                        continent: North America
+                        continentSubregion: North America
+                        countryCode: US
+                        countrySubregion: Midwest
+                        stateProvincePrefecture: OH
+                        intensityBenchmarkUnits: kgCO2e/ft2
+                        globalMeanIntensity: '66.1196019227'
+                        globalFirstQuartileIntensity: '43.6415872479'
+                        globalSecondQuartileIntensity: '15.1747317742'
+                        globalThirdQuartileIntensity: '34.6838775526'
+                        globalFifteenthPercentileIntensity: '19.9082711743'
+                        globalThirtiethPercentileIntensity: '23.1461691872'
+                        continentMeanIntensity: '48.3969105136'
+                        continentFirstQuartileIntensity: '50.6172983326'
+                        continentSecondQuartileIntensity: '18.8675357232'
+                        continentThirdQuartileIntensity: '34.6029161641'
+                        continentFifteenthPercentileIntensity: '18.5751413259'
+                        continentThirtiethPercentileIntensity: '36.1115111716'
+                        continentSubregionMeanIntensity: '57.0959452459'
+                        continentSubregionFirstQuartileIntensity: '80.0399452631'
+                        continentSubregionSecondQuartileIntensity: '41.9887561228'
+                        continentSubregionThirdQuartileIntensity: '85.6321068975'
+                        continentSubregionFifteenthPercentileIntensity: There is not enough data to benchmark your building at this level
+                        continentSubregionThirtiethPercentileIntensity: There is not enough data to benchmark your building at this level
+                        countryMeanIntensity: '10.6699696172'
+                        countryFirstQuartileIntensity: '24.7894590626'
+                        countrySecondQuartileIntensity: '29.0601504093'
+                        countryThirdQuartileIntensity: '25.5754582429'
+                        countryFifteenthPercentileIntensity: '87.5617981631'
+                        countryThirtiethPercentileIntensity: '76.1024595523'
+                        countrySubregionMeanIntensity: '52.0352592017'
+                        countrySubregionFirstQuartileIntensity: '94.8303945762'
+                        countrySubregionSecondQuartileIntensity: '25.8413873128'
+                        countrySubregionThirdQuartileIntensity: '34.0300207469'
+                        countrySubregionFifteenthPercentileIntensity: '83.9136517546'
+                        countrySubregionThirtiethPercentileIntensity: '20.2436485747'
+                        stateProvincePrefectureMeanIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureFirstQuartileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureSecondQuartileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureThirdQuartileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureFifteenthPercentileIntensity: There is not enough data to benchmark your building at this level
+                        stateProvincePrefectureThirtiethPercentileIntensity: There is not enough data to benchmark your building at this level
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: ID is not found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    request_body_coordinates_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    request_body_building_info_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            addressLine1:
+              type: string
+            addressLine2:
+              type:
+              - string
+              - 'null'
+              example: null
+            city:
+              type: string
+            stateOrProvince:
+              type: string
+            postalCode:
+              type: string
+            country:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    request_body_building_custom_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            buildingCustomId:
+              type: string
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    request_body_msr_building_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            msrBuildingId:
+              type: string
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

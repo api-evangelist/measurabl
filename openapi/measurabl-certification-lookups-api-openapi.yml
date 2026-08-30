@@ -1,0 +1,1682 @@
+openapi: 3.2.0
+info:
+  title: ESGx Buildings Certification Lookups API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret)
+
+    2. Make a `POST /insights/v0/energy_estimates` request with at least one building
+
+    3. Take note of the `id` for the first estimate record
+
+    4. Check the status of the energy estimate with `GET /insights/v0/energy_estimates/{id}`
+
+    5. Keep polling until the status says `JOB_SUCCESS`
+
+    6. Check out the results of the estimate in the `absoluteEstimates` and `intensityEstimates` fields!
+
+
+    ### Response Format
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/insights/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Certification Lookups
+paths:
+  /insights/v0/certification_lookup_batches:
+    get:
+      summary: Returns all certification lookup batches
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of certification lookup batches
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: c4308483-7ff2-4014-8d09-bc3ba20d4de4
+                  type: certificationLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:42.996Z'
+                    updatedAt: '2026-07-16T13:20:42.996Z'
+                - id: 2d2ed3bb-4aa0-49f1-9880-109f28c6a739
+                  type: certificationLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:43.000Z'
+                    updatedAt: '2026-07-16T13:20:43.000Z'
+                meta:
+                  totalCount: 2
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 2
+                links:
+                  self: /insights/v0/certification_lookup_batches?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/certification_lookup_batches/{id}/certification_lookups:
+    get:
+      summary: Returns all certification lookups for a given batch
+      description: 'Provides access to the data for all the certification lookups in a given certification lookup batch record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>'
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of certification lookups
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: dab479f4-41e0-4a4c-b3f7-6daef91e59e3
+                  type: certificationLookups
+                  attributes:
+                    status: GEOLOCATION_SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:58.923Z'
+                    updatedAt: '2026-07-16T13:20:58.923Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    statuses: {}
+                  relationships:
+                    certificationLookupBatch:
+                      data:
+                        id: 8bfd9af5-1a75-450d-8a4a-dd9902577ee9
+                        type: certificationLookupBatches
+                    building:
+                      data:
+                        id: 63a7d9e0-663b-40d8-8961-ecff073f6231
+                        type: buildings
+                    leedCertificationResponses:
+                      data: []
+                    breeamCertificationResponses:
+                      data: []
+                    casbeeCertificationResponses:
+                      data: []
+                    greenStarCertificationResponses:
+                      data: []
+                - id: ce0ba04d-6c6e-4019-bcdd-b1427abfd9bd
+                  type: certificationLookups
+                  attributes:
+                    status: GEOLOCATION_SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:58.947Z'
+                    updatedAt: '2026-07-16T13:20:58.947Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    statuses: {}
+                  relationships:
+                    certificationLookupBatch:
+                      data:
+                        id: 8bfd9af5-1a75-450d-8a4a-dd9902577ee9
+                        type: certificationLookupBatches
+                    building:
+                      data:
+                        id: e89c2a18-07e1-40d8-b07f-a18ab9ca6db1
+                        type: buildings
+                    leedCertificationResponses:
+                      data: []
+                    breeamCertificationResponses:
+                      data: []
+                    casbeeCertificationResponses:
+                      data: []
+                    greenStarCertificationResponses:
+                      data: []
+                - id: 7d203e9b-1e7a-4865-bed3-13c8f29b8f2d
+                  type: certificationLookups
+                  attributes:
+                    status: GEOLOCATION_SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:20:58.970Z'
+                    updatedAt: '2026-07-16T13:20:58.970Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    statuses: {}
+                  relationships:
+                    certificationLookupBatch:
+                      data:
+                        id: 8bfd9af5-1a75-450d-8a4a-dd9902577ee9
+                        type: certificationLookupBatches
+                    building:
+                      data:
+                        id: 73bf2c72-9464-463c-a112-cb667ac4b2c1
+                        type: buildings
+                    leedCertificationResponses:
+                      data: []
+                    breeamCertificationResponses:
+                      data: []
+                    casbeeCertificationResponses:
+                      data: []
+                    greenStarCertificationResponses:
+                      data: []
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/certification_lookup_batches/8bfd9af5-1a75-450d-8a4a-dd9902577ee9/certification_lookups?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/certification_lookup_batches/export:
+    post:
+      summary: Requests a CSV download for the given Certification Lookups batches
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - JOB_SUCCESS
+      responses:
+        '200':
+          description: Export successfully created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 57a10d6e-8171-470f-a19a-909c1d62a83e
+                  type: exports
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    createdAt: '2026-07-16T13:20:59.683Z'
+                    updatedAt: '2026-07-16T13:20:59.683Z'
+                    permalink: http://localhost:3000/insights/v0/exports/57a10d6e-8171-470f-a19a-909c1d62a83e/download
+                  relationships:
+                    certificationLookupBatches:
+                      data:
+                      - id: 99b48b5f-930e-40d1-bb3f-3be7e9944ff7
+                        type: certificationLookupBatches
+                      - id: 1d79694b-5556-4a2d-b2d3-759f03fe7252
+                        type: certificationLookupBatches
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                batchIds:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - b0d6486a-9398-42c6-9182-14eaba92d739
+                  - dacb11f7-3b69-409c-9565-ce05f9869cf1
+  /insights/v0/certification_lookup_batches/{id}:
+    get:
+      summary: Returns certification lookup batch
+      description: 'Provides access to the data for the certification lookup batch record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Certification Lookup batch record
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 7c301d2c-d9ef-43b6-8e92-1ae49b8c3aad
+                  type: certificationLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:59.765Z'
+                    updatedAt: '2026-07-16T13:20:59.765Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Certification Lookup batch record belonging to another app
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/certification_lookup_batches/upload:
+    post:
+      summary: Uploads a file to create new certification lookup(s)
+      description: 'Upload an Excel file of certification lookup records to be processed.
+
+        '
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Certification lookup batch successfully created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 223ed5f8-19ae-40fa-845b-0e115afc3863
+                  type: certificationLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:21:00.129Z'
+                    updatedAt: '2026-07-16T13:21:00.138Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: missing file upload
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: 'Excel file required in certification_lookup_batch_file
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                certification_lookup_batch_file:
+                  type: string
+                  format: binary
+                  description: 'An Excel XLSX file containing the buildings you would like certification lookups for.
+
+
+                    <br>
+
+                    When requesting data on buildings for the first time, the Excel Worksheet must be named ''Buildings''.
+
+
+                    <br>
+
+                    Building information is required for each certification lookup. Other fields are optional.
+
+
+                    The field ''clientMetadata'' is available for storing arbitrary JSON, this allows storing identifiers from your system and other metadata as part of the certification lookup record.
+
+
+                    <br>
+
+                    When requesting data on existing buildings i.e. you have the Building IDs, the Excel Worksheet must be named ''MSR Building IDs'' and may only contain a single column named ''MSR Building ID''.
+
+
+                    '
+        required: true
+  /insights/v0/certification_lookups:
+    post:
+      summary: Creates new certification lookup(s)
+      description: 'Create new certification lookup records to be processed. The response will include those records, including IDs that can be used to access the certification lookup(s).
+
+
+        There is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.
+
+
+        Please note: You can process larger collections of Buildings via the file upload endpoint.
+
+
+        Coverage: Global
+
+        '
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Certification Lookups(s) successfully created
+          content:
+            application/vnd.api+json:
+              examples:
+                With MSR Building ID:
+                  value:
+                    data:
+                    - id: a8101b97-e8a2-4d2d-af95-a75e6f0c59f0
+                      type: certificationLookups
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:21:06.119Z'
+                        updatedAt: '2026-07-16T13:21:06.134Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        statuses:
+                          breeamCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          casbeeCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          greenStarCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          leedCertifications:
+                            status: SKIPPED
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: a8f4d599-f782-4b6b-9fe1-de78a6771d59
+                            type: certificationLookupBatches
+                        building:
+                          data:
+                            id: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                            type: buildings
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                    - id: ba4a332a-7ed7-453d-8d07-a8c24bac9749
+                      type: certificationLookups
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:21:06.119Z'
+                        updatedAt: '2026-07-16T13:21:06.196Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        statuses:
+                          breeamCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          casbeeCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          greenStarCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          leedCertifications:
+                            status: SKIPPED
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: a8f4d599-f782-4b6b-9fe1-de78a6771d59
+                            type: certificationLookupBatches
+                        building:
+                          data:
+                            id: 041cd656-eda8-47aa-9c5a-cc0cdbd13f87
+                            type: buildings
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                With Building Custom ID:
+                  value:
+                    data:
+                    - id: c1e55d95-c1d8-4a52-b4c0-2a0077c9b60e
+                      type: certificationLookups
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:21:06.360Z'
+                        updatedAt: '2026-07-16T13:21:06.377Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        statuses:
+                          breeamCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          casbeeCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          greenStarCertifications:
+                            status: GEOLOCATION_SUCCEEDED
+                          leedCertifications:
+                            status: SKIPPED
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: f993033e-89a8-4a98-b7a5-4e35d48b5169
+                            type: certificationLookupBatches
+                        building:
+                          data:
+                            id: a4228677-1a46-4828-9825-71653e33a2d8
+                            type: buildings
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                With Coordinates:
+                  value:
+                    data:
+                    - id: 05d847c6-42e2-46ec-8b84-4f490d2742eb
+                      type: certificationLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:21:06.528Z'
+                        updatedAt: '2026-07-16T13:21:06.528Z'
+                        requestedLatitude: '40.766276'
+                        requestedLongitude: '-73.9834504'
+                        statuses:
+                          breeamCertifications:
+                            status: PROCESSING
+                          casbeeCertifications:
+                            status: PROCESSING
+                          greenStarCertifications:
+                            status: PROCESSING
+                          leedCertifications:
+                            status: PROCESSING
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: 29cdad73-c502-4e84-9b8f-8c111b134343
+                            type: certificationLookupBatches
+                        building:
+                          data: null
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                With Full Address Data:
+                  value:
+                    data:
+                    - id: f7f27d4f-c232-4c68-9d1c-aa8786f59f11
+                      type: certificationLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:21:06.706Z'
+                        updatedAt: '2026-07-16T13:21:06.706Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        statuses:
+                          breeamCertifications:
+                            status: PROCESSING
+                          casbeeCertifications:
+                            status: PROCESSING
+                          greenStarCertifications:
+                            status: PROCESSING
+                          leedCertifications:
+                            status: PROCESSING
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: 38744a92-9824-4bae-9cf4-78b4a5aed847
+                            type: certificationLookupBatches
+                        building:
+                          data: null
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                    - id: bbde30d6-56fe-4852-90b4-17d08838df1f
+                      type: certificationLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:21:06.706Z'
+                        updatedAt: '2026-07-16T13:21:06.706Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        statuses:
+                          breeamCertifications:
+                            status: PROCESSING
+                          casbeeCertifications:
+                            status: PROCESSING
+                          greenStarCertifications:
+                            status: PROCESSING
+                          leedCertifications:
+                            status: PROCESSING
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: 38744a92-9824-4bae-9cf4-78b4a5aed847
+                            type: certificationLookupBatches
+                        building:
+                          data: null
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                    - id: baef12df-feaf-4338-8f6f-144e23136d78
+                      type: certificationLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: LEXINGTON REALTY TRUST
+                        createdAt: '2026-07-16T13:21:06.706Z'
+                        updatedAt: '2026-07-16T13:21:06.706Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        statuses:
+                          breeamCertifications:
+                            status: PROCESSING
+                          casbeeCertifications:
+                            status: PROCESSING
+                          greenStarCertifications:
+                            status: PROCESSING
+                          leedCertifications:
+                            status: PROCESSING
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: 38744a92-9824-4bae-9cf4-78b4a5aed847
+                            type: certificationLookupBatches
+                        building:
+                          data: null
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                    - id: 7911c23a-b517-43d8-8311-e71d04e021eb
+                      type: certificationLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: LEXINGTON REALTY TRUST
+                        createdAt: '2026-07-16T13:21:06.706Z'
+                        updatedAt: '2026-07-16T13:21:06.706Z'
+                        requestedLatitude: '39.7512621258'
+                        requestedLongitude: '-104.9983851568'
+                        statuses:
+                          breeamCertifications:
+                            status: PROCESSING
+                          casbeeCertifications:
+                            status: PROCESSING
+                          greenStarCertifications:
+                            status: PROCESSING
+                          leedCertifications:
+                            status: PROCESSING
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: 38744a92-9824-4bae-9cf4-78b4a5aed847
+                            type: certificationLookupBatches
+                        building:
+                          data: null
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+                    - id: 5c6a987e-bd07-4c5c-8359-31dacb1b5ce9
+                      type: certificationLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: LEXINGTON REALTY TRUST
+                        createdAt: '2026-07-16T13:21:06.706Z'
+                        updatedAt: '2026-07-16T13:21:06.706Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        statuses:
+                          breeamCertifications:
+                            status: PROCESSING
+                          casbeeCertifications:
+                            status: PROCESSING
+                          greenStarCertifications:
+                            status: PROCESSING
+                          leedCertifications:
+                            status: PROCESSING
+                      relationships:
+                        certificationLookupBatch:
+                          data:
+                            id: 38744a92-9824-4bae-9cf4-78b4a5aed847
+                            type: certificationLookupBatches
+                        building:
+                          data: null
+                        leedCertificationResponses:
+                          data: []
+                        breeamCertificationResponses:
+                          data: []
+                        casbeeCertificationResponses:
+                          data: []
+                        greenStarCertificationResponses:
+                          data: []
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '413':
+          description: too many certification lookups in request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '413'
+                  title: Payload too large
+                  detail: Only 100 certification lookups can be created in a single request.
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                certificationLookups:
+                  type: array
+                  items:
+                    oneOf:
+                    - $ref: '#/components/schemas/request_body_msr_building_id'
+                    - $ref: '#/components/schemas/request_body_building_custom_id'
+                    - $ref: '#/components/schemas/request_body_coordinates_with_client_metadata'
+                    - $ref: '#/components/schemas/request_body_building_info_with_client_metadata'
+            examples:
+              With MSR Building ID:
+                summary: With MSR Building ID
+                value:
+                  certificationLookups:
+                  - building:
+                      msrBuildingId: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                  - building:
+                      msrBuildingId: 041cd656-eda8-47aa-9c5a-cc0cdbd13f87
+              With Building Custom ID:
+                summary: With Building Custom ID
+                value:
+                  certificationLookups:
+                  - building:
+                      buildingCustomId: your-custom-building-id
+              With Coordinates:
+                summary: With Coordinates
+                value:
+                  certificationLookups:
+                  - building:
+                      latitude: 40.766276
+                      longitude: -73.9834504
+                      primaryPropertyType: Office
+                      yearBuilt: 2006
+                      grossFloorArea: 703796
+                      grossFloorAreaUnits: sq ft
+              With Full Address Data:
+                summary: With Full Address Data
+                value:
+                  certificationLookups:
+                  - building:
+                      addressLine1: 29 East High St.
+                      addressLine2: null
+                      city: Lawrenceburg
+                      stateOrProvince: IN
+                      postalCode: '47025'
+                      country: United States
+                      primaryPropertyType: Other - Other
+                      yearBuilt: 1890
+                      grossFloorArea: 3000
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: 4460 Orkney Ave.
+                      addressLine2: null
+                      city: Cincinnati
+                      stateOrProvince: OH
+                      postalCode: '45209'
+                      country: United States
+                      primaryPropertyType: Fitness Center/Health Club/Gym
+                      yearBuilt: 2019
+                      grossFloorArea: 12950
+                      grossFloorAreaUnits: sq ft
+                      buildingCustomId: building-123456
+                      buildingClientMetadata:
+                        foo: bar
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: 1021 Tyger Lake Road
+                      addressLine2: null
+                      city: Spartanburg
+                      stateOrProvince: SC
+                      postalCode: '29301'
+                      country: United States
+                      primaryPropertyType: Other
+                      yearBuilt: 2019
+                      grossFloorArea: 213200
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: LEXINGTON REALTY TRUST
+                  - building:
+                      addressLine1: null
+                      addressLine2: null
+                      city: Littleton
+                      stateOrProvince: CO
+                      postalCode: '80127'
+                      country: United States
+                      primaryPropertyType: Warehouse/Storage - Self-Storage Facility
+                      yearBuilt: 2019
+                      grossFloorArea: 213200
+                      grossFloorAreaUnits: sq ft
+                      latitude: 39.7512621258
+                      longitude: -104.9983851568
+                    clientMetadata:
+                      project: LEXINGTON REALTY TRUST
+                  - building:
+                      msrBuildingId: 71bbbe33-4a5a-4a06-8ce4-85d41df042f9
+                      addressLine1: null
+                      addressLine2: null
+                      city: Littleton
+                      stateOrProvince: CO
+                      postalCode: '80127'
+                      country: United States
+                      primaryPropertyType: Warehouse/Storage - Self-Storage Facility
+                      yearBuilt: 2019
+                      grossFloorArea: 213200
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: LEXINGTON REALTY TRUST
+        description: 'The certification lookups to be created.<br>
+
+          <br>
+
+          Building information is required for each certification lookup and can be provided in one of four ways:
+
+          - Building UUID (msrBuildingId)
+
+          - Building Custom ID (buildingCustomId)
+
+          - Coordinates and additional building information (latitude, longitude, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+          - Full address and additional building information (addressLine1, city, stateOrProvince, postalCode, country, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+
+          The preferred method is to use the msrBuildingId or buildingCustomId if available. If neither is available, using coordinates is preferred over full address data.<br>
+
+
+          Optional fields:
+
+          - **customId** is available for storing a custom identifier for the estimate; this allows storing identifiers from your system as part of the certification _lookup_ record.
+
+          - **buildingCustomId** is available for storing a custom identifier for the building; this allows storing identifiers from your system as part of the _building_ record.
+
+          - **clientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the certification _lookup_ record.
+
+          - **buildingClientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the _building_ record.
+
+          '
+    get:
+      summary: Returns all certification lookups
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of certification lookups
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 32ba4df7-2d13-4c1c-a880-462daba96ef0
+                  type: certificationLookups
+                  attributes:
+                    status: GEOLOCATION_SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:21:07.201Z'
+                    updatedAt: '2026-07-16T13:21:07.201Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    statuses: {}
+                  relationships:
+                    certificationLookupBatch:
+                      data:
+                        id: 57a689cb-135e-49f7-9148-042189dc7f71
+                        type: certificationLookupBatches
+                    building:
+                      data:
+                        id: 2c8d7358-fe6e-4c91-ad9a-dc01f134c74b
+                        type: buildings
+                    leedCertificationResponses:
+                      data: []
+                    breeamCertificationResponses:
+                      data: []
+                    casbeeCertificationResponses:
+                      data: []
+                    greenStarCertificationResponses:
+                      data: []
+                - id: 04f40284-f9ab-43fa-ab42-98c60cced69f
+                  type: certificationLookups
+                  attributes:
+                    status: GEOLOCATION_SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:21:07.225Z'
+                    updatedAt: '2026-07-16T13:21:07.225Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    statuses: {}
+                  relationships:
+                    certificationLookupBatch:
+                      data:
+                        id: a6e9ef08-aa02-4d9d-babf-46f6f81769dc
+                        type: certificationLookupBatches
+                    building:
+                      data:
+                        id: 04806f02-c7f5-4343-9a2e-e5f19297b004
+                        type: buildings
+                    leedCertificationResponses:
+                      data: []
+                    breeamCertificationResponses:
+                      data: []
+                    casbeeCertificationResponses:
+                      data: []
+                    greenStarCertificationResponses:
+                      data: []
+                - id: 55168d0c-40d0-4424-a562-4c75232ce932
+                  type: certificationLookups
+                  attributes:
+                    status: GEOLOCATION_SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:21:07.249Z'
+                    updatedAt: '2026-07-16T13:21:07.249Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    statuses: {}
+                  relationships:
+                    certificationLookupBatch:
+                      data:
+                        id: 9590a259-94b4-498f-b88c-ba10461e2422
+                        type: certificationLookupBatches
+                    building:
+                      data:
+                        id: ec3a202d-fea3-4c40-89b1-fe36c1fded98
+                        type: buildings
+                    leedCertificationResponses:
+                      data: []
+                    breeamCertificationResponses:
+                      data: []
+                    casbeeCertificationResponses:
+                      data: []
+                    greenStarCertificationResponses:
+                      data: []
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/certification_lookups?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/certification_lookups/{id}:
+    get:
+      summary: Retrieves an existing certification lookup
+      description: 'Provides access to the data for the certification lookup record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Certification Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Certification Lookup has been processed successfully
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 358d2fd5-0be2-44e3-b05f-020cbd73bbbc
+                  type: certificationLookups
+                  attributes:
+                    status: JOB_SUCCESS
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:21:08.545Z'
+                    updatedAt: '2026-07-16T13:21:08.545Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    statuses:
+                      breeamCertifications:
+                        status: JOB_SUCCESS
+                      casbeeCertifications:
+                        status: JOB_SUCCESS
+                      greenStarCertifications:
+                        status: JOB_SUCCESS
+                      leedCertifications:
+                        status: JOB_SUCCESS
+                    requestedAddressLine1: 696 Watsica Place
+                    requestedAddressLine2: null
+                    requestedCity: West Nathanael
+                    requestedStateOrProvince: ID
+                    requestedPostalCode: '36301'
+                    requestedCountry: ''
+                    latitude: '82.5130488945'
+                    longitude: '-142.5493594743'
+                    requestedPropertyType: Laboratory
+                    buildingCustomId: '123456'
+                    buildingClientMetadata:
+                      foo: bar
+                  relationships:
+                    certificationLookupBatch:
+                      data:
+                        id: 3a3df06e-0d21-46a9-a3ed-48e1fe37b1cc
+                        type: certificationLookupBatches
+                    building:
+                      data:
+                        id: 7293b88e-e092-4707-bbdb-b4cf93b65658
+                        type: buildings
+                    leedCertificationResponses:
+                      data:
+                      - id: 0daf9680-2a36-45a3-ae94-98b9ea8e629e
+                        type: leedCertificationResponses
+                    breeamCertificationResponses:
+                      data:
+                      - id: 218db5b8-7494-49e9-80a6-53a3e8ecf79a
+                        type: breeamCertificationResponses
+                    casbeeCertificationResponses:
+                      data:
+                      - id: 80e560ad-0950-446a-a327-5c7173e063e1
+                        type: casbeeCertificationResponses
+                    greenStarCertificationResponses:
+                      data:
+                      - id: cba15cf0-bda3-4e18-8804-3177a785e1bf
+                        type: greenStarCertificationResponses
+                included:
+                - id: 218db5b8-7494-49e9-80a6-53a3e8ecf79a
+                  type: breeamCertificationResponses
+                  attributes:
+                    assessor: Shields LLC
+                    buildingName: Paradise Place
+                    certBody: BRE Global
+                    certNo: BREEAM-0012-3456
+                    city: North Quianaville
+                    companyName: Farrell, Krajcik and Fritsch
+                    contactEmailAddress: mae_robel@hermann-dibbert.example
+                    country: China
+                    county: ''
+                    description: Residential
+                    developer: Shields-Mraz
+                    distance: 0
+                    firstSubSectionNo: ''
+                    latitude: '37.64929469854134'
+                    longitude: '-122.41119418102008'
+                    notes: 'Stage: Final<br />Score(%): 36.2<br />Cert. date: 10/11/2025'
+                    postCode: '40264'
+                    projectType: Other buildings/Mixed use
+                    rating: Pass
+                    regAddressLine1: 8860 Jaqueline Stream
+                    regAddressLine2: Suite 211
+                    regAddressLine3: ''
+                    regContact: ''
+                    regEmailAddress: long.schoen@lebsack-stoltenberg.test
+                    regFaxNumber: 397-280-7141
+                    regTelNumber: (473) 565 3229
+                    regWebAddress: http://zulauf-hermiston.example/veta.carter
+                    scheme: International
+                    score: 39
+                    stage: Interim
+                    standard: '2013 New Construction: Offices'
+                    createdAt: '2026-07-16T13:21:08.308Z'
+                    updatedAt: '2026-07-16T13:21:08.560Z'
+                - id: cba15cf0-bda3-4e18-8804-3177a785e1bf
+                  type: greenStarCertificationResponses
+                  attributes:
+                    greenStarBuildingName: null
+                    applicantCompany: Lynch Inc
+                    applicantsSector: Government
+                    assessors: Wilson Beatty
+                    assetType: Hotel
+                    carbonPositive: true
+                    finalRating: 4
+                    finalScore: 67
+                    localCouncil: Lavernton Council
+                    milestoneStatus: Registered
+                    projectNumber: '744165'
+                    projectStatus: Completed
+                    ratingTool: Green Star - Design & As Built
+                    toolFamily: Green Star
+                    totalGfa: '148995.0'
+                    certificationDate: '2026-05-02'
+                    expirationDate: '2028-11-05'
+                    practicalCompletionDate: '2026-04-02'
+                    registeredDate: '2026-02-14'
+                    createdAt: '2026-07-16T13:21:08.539Z'
+                    updatedAt: '2026-07-16T13:21:08.564Z'
+                - id: 0daf9680-2a36-45a3-ae94-98b9ea8e629e
+                  type: leedCertificationResponses
+                  attributes:
+                    gbigBuildingId: 22907
+                    gbigBuildingName: 2 Bryant St
+                    activityName: Perkins+Will San Francisco Studio
+                    certificationType: 2014 ENERGY STAR National Building Competition
+                    level: Participant
+                    buildingSizeInSquareFeet: 40095
+                    projectSizeInSquareFeet: 44220
+                    projectSpaceUse: Office
+                    awardedDate: '2022-11-02'
+                    registeredDate: null
+                    createdAt: '2026-07-16T13:21:08.365Z'
+                    updatedAt: '2026-07-16T13:21:08.566Z'
+                - id: 80e560ad-0950-446a-a327-5c7173e063e1
+                  type: casbeeCertificationResponses
+                  attributes:
+                    casbeeId: '49444'
+                    casbeeBuildingName: Weber and Sons
+                    primaryPropertyType: Newspapers
+                    certificationBody: Christiansen-Carroll
+                    certificationNumber: '4012411128'
+                    applicant: Swift, Pollich and Bernier
+                    constructionSite: Suite 899 34242 Jacinto Forks, West Karrieshire, TX 71812
+                    certificationType: 6th generation
+                    rank: air traffic controller
+                    distanceFromCoordinates: '56.485454'
+                    grossFloorAreaInSquareFeet: null
+                    certificationDate: '2026-04-05'
+                    expirationDate: '2026-08-10'
+                    createdAt: '2026-07-16T13:21:08.439Z'
+                    updatedAt: '2026-07-16T13:21:08.562Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: ID is not found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    request_body_coordinates_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    request_body_building_info_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            addressLine1:
+              type: string
+            addressLine2:
+              type:
+              - string
+              - 'null'
+              example: null
+            city:
+              type: string
+            stateOrProvince:
+              type: string
+            postalCode:
+              type: string
+            country:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    request_body_building_custom_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            buildingCustomId:
+              type: string
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    request_body_msr_building_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            msrBuildingId:
+              type: string
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

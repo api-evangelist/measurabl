@@ -1,0 +1,1313 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Core Waste Meter Readings API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a `GET /core/v0/portfolios` request (under the Portfolios section) to get a list of available portfolios.
+
+    3. Obtain the proper portfolio_id (id) in which you need to get/create data for.
+
+    4. This `portfolio_id` will be required for all other reoccurring requests.
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Release Notes](https://api.measurabl.com/release_notes)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+    * [Code Examples](https://github.com/Measurabl/measurabl_api_code_samples)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Waste Meter Readings
+paths:
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings:
+    post:
+      summary: Creates a waste meter reading for a specified building
+      tags:
+      - Waste Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>50960f84-7c85-4448-a330-f743ef2ccb52</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 124c0183-645c-418b-a3b0-7a2227da5d5f'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: 7d033756-fa66-47cf-82c2-91b0f1cced9c'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Creates a Portfolio or Fund / Building specific waste meter reading
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 11ed39c9-b11f-afbb-ba22-0242ac120002
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2026-08-19'
+                    toDate: '2026-09-19'
+                    cost: 1200.0
+                    quantity: 1234.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 0.0
+                    incinerationPct: 50.0
+                    wtePct: 50.0
+                    unknownPct: 0.0
+                    updatedAt: '2026-02-22 16:09:23'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: 23ad90eb-ae5f-4c09-856f-c7a7d4ab922b
+                        type: wasteMeters
+                      links:
+                        self: /portfolios/c9ece25d-81cb-47a0-b997-2003a3e9fb97/buildings/c133f769-af4d-42ca-90ac-2bf3a4e09843/waste-meters/23ad90eb-ae5f-4c09-856f-c7a7d4ab922b
+                links:
+                  self: /portfolios/c9ece25d-81cb-47a0-b997-2003a3e9fb97/buildings/c133f769-af4d-42ca-90ac-2bf3a4e09843/waste-meters/23ad90eb-ae5f-4c09-856f-c7a7d4ab922b/readings/9ab09e6e-e0cf-4082-ba11-3d435276e9de
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find waste meter 2a5e5304-ea7c-47f7-854d-08aaeb3413d0 in building f899b046-2a36-4889-910d-e707f5aae942 in portfolio beef68b8-3179-453e-a63f-7a9764e81b7d
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    attributes:
+                      type: object
+                      properties:
+                        fromDate:
+                          type: string
+                        toDate:
+                          type: string
+                        cost:
+                          type: decimal
+                        quantity:
+                          type: decimal
+                        timesEmptied:
+                          type: decimal
+                        avgPercentFull:
+                          type: decimal
+                        landfillPct:
+                          type: decimal
+                        incinerationPct:
+                          type: decimal
+                        wtePct:
+                          type: decimal
+                        unknownPct:
+                          type: decimal
+                      required:
+                      - fromDate
+                      - toDate
+                      - cost
+                      - landfillPct
+                      - incinerationPct
+                      - wtePct
+                      - unknownPct
+              example:
+                data:
+                  type: wasteMeterReadings
+                  attributes:
+                    fromDate: '2022-03-01'
+                    toDate: '2022-04-01'
+                    cost: 1200.0
+                    quantity: 1234.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 0
+                    incinerationPct: 50
+                    wtePct: 50
+                    unknownPct: 0
+        required: true
+        description: Request body used to create a waste meter reading associated with a waste meter
+    get:
+      summary: Returns a list of waste meter readings for a specified waste meter and building
+      tags:
+      - Waste Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>1e57a075-bb0e-4ace-960c-7f659037579e</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: e692b1fd-8817-433e-9369-63779ac56ea1'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: c2b5f5eb-d979-4587-b7c8-6728a2f566a7'
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>updatedAt=ge=2022-10-14T00:00 will query for waste meter readings updated at or after the set date and time.</li>\n                                <li>cost=ge=50 will query for waste meter readings with the cost attribute value greater than or equal to 50.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific waste meter readings list
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 810e03f4-6b20-4d9f-9eb6-e0de229a5faa
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-01-01'
+                    toDate: '2018-02-01'
+                    cost: 43
+                    quantity: 2.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 50.0
+                    incinerationPct: 25.0
+                    wtePct: 25.0
+                    unknownPct: 0.0
+                    updatedAt: '2026-04-01 06:07:50'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: 86752597-efb6-4f4f-9dcc-3e1222924e3f
+                        type: wasteMeters
+                      links:
+                        self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f
+                  links:
+                    self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings/810e03f4-6b20-4d9f-9eb6-e0de229a5faa
+                - id: c9309006-3685-45e1-9e38-7ab5060839da
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-02-01'
+                    toDate: '2018-03-01'
+                    cost: 3
+                    quantity: 2.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 50.0
+                    incinerationPct: 25.0
+                    wtePct: 25.0
+                    unknownPct: 0.0
+                    updatedAt: '2025-11-26 23:52:30'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: 86752597-efb6-4f4f-9dcc-3e1222924e3f
+                        type: wasteMeters
+                      links:
+                        self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f
+                  links:
+                    self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings/c9309006-3685-45e1-9e38-7ab5060839da
+                - id: baf3b72b-5bd2-4725-8d99-625da7aee630
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-04-01'
+                    toDate: '2018-05-01'
+                    cost: 197
+                    quantity: 2.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 50.0
+                    incinerationPct: 25.0
+                    wtePct: 25.0
+                    unknownPct: 0.0
+                    updatedAt: '2025-10-17 03:49:52'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: 86752597-efb6-4f4f-9dcc-3e1222924e3f
+                        type: wasteMeters
+                      links:
+                        self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f
+                  links:
+                    self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings/baf3b72b-5bd2-4725-8d99-625da7aee630
+                - id: c8791989-4012-4e89-b0f1-431ed0676359
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-01-01'
+                    toDate: '2018-02-01'
+                    cost: 151
+                    quantity: 2.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 50.0
+                    incinerationPct: 25.0
+                    wtePct: 25.0
+                    unknownPct: 0.0
+                    updatedAt: '2026-06-16 18:44:25'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: 86752597-efb6-4f4f-9dcc-3e1222924e3f
+                        type: wasteMeters
+                      links:
+                        self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f
+                  links:
+                    self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings/c8791989-4012-4e89-b0f1-431ed0676359
+                - id: f0c6526b-df14-4c3a-b5c9-d612413d6119
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2018-02-01'
+                    toDate: '2018-03-01'
+                    cost: 50
+                    quantity: 2.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 50.0
+                    incinerationPct: 25.0
+                    wtePct: 25.0
+                    unknownPct: 0.0
+                    updatedAt: '2026-03-28 11:29:10'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: 86752597-efb6-4f4f-9dcc-3e1222924e3f
+                        type: wasteMeters
+                      links:
+                        self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f
+                  links:
+                    self: /portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings/f0c6526b-df14-4c3a-b5c9-d612413d6119
+                links:
+                  self: /core/v0/portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings?size=5&page=3
+                  first: /core/v0/portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings?size=5&page=1
+                  last: /core/v0/portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings?size=5&page=5
+                  next: /core/v0/portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings?size=5&page=4
+                  prev: /core/v0/portfolios/415e728a-af44-41d1-9ed3-e42052057ab1/buildings/3461bfa5-4e9e-4419-a7fa-712930a6831b/waste-meters/86752597-efb6-4f4f-9dcc-3e1222924e3f/readings?size=5&page=2
+                meta:
+                  page:
+                    number: 3
+                    size: 100
+                    totalPages: 5
+                    totalElements: 420
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find waste meter ac845234-f165-4ddf-ba5b-c0a6c6cd610a in building 81aff2a3-a22f-468c-9e79-a7d5e31809bc in portfolio c05a3502-0990-499e-ad58-08bf6df0acd7
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/waste_meters/{waste_meter_id}/readings/{waste_meter_reading_id}:
+    delete:
+      summary: Deletes a specific waste meter reading for a specified waste meter and building
+      tags:
+      - Waste Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>411bc8cc-1599-41c6-bde0-026bfa52df6b</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 13cc5e72-7a7a-4d66-b13d-2859bfbba4d0'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: d6484baa-adec-47fb-ae3d-48d2db9a6ee5'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_reading_id
+        in: path
+        description: 'Example: e981b586-477e-46e3-9b96-f40c1cbf9eec'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Waste Meter Reading Deleted Successfully
+          content:
+            application/vnd.api+json:
+              example: ''
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find reading ba46d76a-2c33-4f7b-94ed-5f69592d064f for waste meter abeaf329-5fe9-4c91-9a5d-032847877643 in building 67f7dab8-ff9f-448b-b2cf-9d5ee246c676 in portfolio ba37ebbf-8974-45f3-a17b-f5ac04a2ea9a
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    get:
+      summary: Returns details of a specific waste meter reading for a specified waste meter and building
+      tags:
+      - Waste Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>8e6f37da-2df7-4925-9724-b6fc9b8e51e3</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 86a3fc90-9373-40da-a14e-f31cc44df3d3'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: 06b69ed6-a772-4cb0-b2cb-1f62dce1d595'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_reading_id
+        in: path
+        description: 'Example: bbc32c66-f85c-463f-8fde-30f5a6f646f6'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific waste meter readings list
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 1728d5b0-3f4c-4af1-a847-9f7fddee312f
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2026-11-28'
+                    toDate: '2026-12-28'
+                    cost: 39
+                    quantity: 2.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 50.0
+                    incinerationPct: 25.0
+                    wtePct: 25.0
+                    unknownPct: 0.0
+                    updatedAt: '2025-12-23 16:39:16'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: e8e95975-53cb-497a-b756-64f69a7b2792
+                        type: waste-meters
+                      links:
+                        self: /portfolios/1d97c3b7-3d36-4367-9b83-89a0550f8590/buildings/7a230a98-53fb-431e-afab-10c2bbc68ea1/waste-meters/e8e95975-53cb-497a-b756-64f69a7b2792
+                  links:
+                    self: portfolios/1d97c3b7-3d36-4367-9b83-89a0550f8590/buildings/7a230a98-53fb-431e-afab-10c2bbc68ea1/waste-meters/e8e95975-53cb-497a-b756-64f69a7b2792/readings/1728d5b0-3f4c-4af1-a847-9f7fddee312f
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find reading 981dcaa7-cac0-4a77-87f4-a36791294fe1 for waste meter 662402ec-aa5b-4707-b27d-75b85f85c74f in building 80890e7a-37dc-459b-861c-b53f7ab11684 in portfolio 2a29ad3f-74e8-4402-b524-724c42742157
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    patch:
+      summary: Updates a specific waste meter reading for a specified building
+      tags:
+      - Waste Meter Readings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>fd6dbf39-a76e-4117-952c-8aa9032cca8b</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: d2fa3087-b192-4042-b80d-e05a3a0879c5'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_id
+        in: path
+        description: 'Example: 871673d6-0b78-4938-a661-e085ee1e2207'
+        required: true
+        schema:
+          type: string
+      - name: waste_meter_reading_id
+        in: path
+        description: 'Example: 83c083ca-3a9c-4935-ab54-952502894c01'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio / Building / Waste Meter Specific Waste Meter Reading Updated
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 7144a6e5-b932-4b88-968c-f53814106988
+                  type: wasteMeterReadings
+                  attributes:
+                    estarMeterReadingId: null
+                    fromDate: '2026-05-05'
+                    toDate: '2026-06-05'
+                    cost: 1200.0
+                    quantity: 1234.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 0.0
+                    incinerationPct: 50.0
+                    wtePct: 50.0
+                    unknownPct: 0.0
+                    updatedAt: '2026-02-09 13:52:46'
+                  relationships:
+                    waste-meter:
+                      data:
+                        id: f2cce382-aca6-45e1-9a62-119939b757b4
+                        type: wasteMeters
+                      links:
+                        self: /portfolios/863bedb7-1159-497d-a373-5783b888a5ac/buildings/3996d432-d7a4-499f-8914-fb99725b0b16/waste-meters/f2cce382-aca6-45e1-9a62-119939b757b4
+                links:
+                  self: /portfolios/863bedb7-1159-497d-a373-5783b888a5ac/buildings/3996d432-d7a4-499f-8914-fb99725b0b16/waste-meters/f2cce382-aca6-45e1-9a62-119939b757b4/readings/7144a6e5-b932-4b88-968c-f53814106988
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find reading f3c3a089-5b4e-4ac0-99ea-6a03761ad219 for waste meter ab904681-bb52-4e87-950b-ce427ccb5687 in building a82b42f8-967a-49be-a3c8-db13ef2fd54d in portfolio d92bf499-b0d8-4f10-a44a-203077484c6e
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: string
+                    attributes:
+                      type: object
+                      properties:
+                        fromDate:
+                          type: string
+                        toDate:
+                          type: string
+                        cost:
+                          type: decimal
+                        quantity:
+                          type: decimal
+                        timesEmptied:
+                          type: decimal
+                        avgPercentFull:
+                          type: decimal
+                        landfillPct:
+                          type: decimal
+                        incinerationPct:
+                          type: decimal
+                        wtePct:
+                          type: decimal
+                        unknownPct:
+                          type: decimal
+                      required:
+                      - id
+                      - type
+              example:
+                data:
+                  id: 2dc22960-2de3-480b-9863-f667f8d82448
+                  type: wasteMeterReadings
+                  attributes:
+                    fromDate: '2022-03-01'
+                    toDate: '2022-04-01'
+                    cost: 1200.0
+                    quantity: 1234.0
+                    timesEmptied: null
+                    avgPercentFull: null
+                    landfillPct: 0
+                    incinerationPct: 50
+                    wtePct: 50
+                    unknownPct: 0
+        required: true
+        description: Request body used to update a specific waste meter reading associated with a waste meter
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

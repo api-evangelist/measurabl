@@ -1,0 +1,790 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Portfolios API
+  version: v0
+  description: 'Operations tagged Portfolios across 2 of this provider''s published API definitions: measurabl-core-openapi.yml, measurabl-partners-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+- url: https://api.measurabl.com/partners/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Portfolios
+paths:
+  /core/v0/portfolios:
+    post:
+      summary: Creates a new portfolio for a specified account
+      tags:
+      - Portfolios
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Portfolios created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 62e6ebc9-ceb4-4ed2-b547-c058add4451c
+                  type: portfolios
+                  attributes:
+                    name: Example Portfolio
+                    createdAt: '2026-07-16T13:21:42Z'
+                    updatedAt: '2026-07-16T13:21:42Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Internal Server Error
+                  detail: Bad Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized AppType or Product required for this request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too Many Requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Bad Gateway
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Account not found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Account not found
+                  detail: The specified account does not exist
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    attributes:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                      required:
+                      - name
+              example:
+                data:
+                  type: portfolios
+                  attributes:
+                    name: New Portfolio Name
+        required: true
+        description: Request body used to create a portfolio for an account
+    get:
+      summary: Returns a list of portfolios for a specified account
+      tags:
+      - Portfolios
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Return list of account portfolios
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 0e393177-8571-4b52-93ea-2bd16dbfc205
+                  type: portfolios
+                  attributes:
+                    name: Test Portfolio
+                    createdAt: '2026-07-16T13:21:43Z'
+                    updatedAt: '2026-07-16T13:21:43Z'
+                  relationships:
+                    primaryUser:
+                      data:
+                        id: 62ac308d-6796-4c6a-817f-ba545db4b68f
+                        type: users
+                included:
+                - id: 62ac308d-6796-4c6a-817f-ba545db4b68f
+                  type: users
+                  attributes:
+                    email: erasmo@example.example
+                    firstName: ExampleUser
+                    lastName: Test
+                    createdAt: '2026-07-16T13:21:43Z'
+                    updatedAt: '2026-07-16T13:21:43Z'
+                meta:
+                  total_count: 2
+                  item_count: 2
+                  page_count: 1
+                  current_page: 1
+                  prev_page: null
+                  next_page: null
+                  last_page: 1
+                  from_record: 1
+                  to_record: 2
+                links:
+                  self: /api/v1/core/accounts/267a1bd2-ea8f-48fb-8a82-8b5109c06908/portfolios
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Internal Server Error
+                  detail: Bad Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized AppType or Product required for this request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too Many Requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Bad Gateway
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Account not found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Account not found
+                  detail: The specified account does not exist
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    servers:
+    - url: https://api.measurabl.com/core/v0
+      description: Base URL declared by the provider in apis.yml (roadmap#122).
+  /core/v0/portfolios/{portfolio_id}:
+    patch:
+      summary: Update a specific portfolio's name for a specified account
+      tags:
+      - Portfolios
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: 'Example: 74d75229-efad-4ef7-898e-607ad832796d'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolios Updated
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 8069c37d-ba84-4109-8d86-7f4da9270a6b
+                  type: portfolios
+                  attributes:
+                    name: New Portfolio Name
+                    createdAt: '2026-07-16T13:16:44.547Z'
+                    updatedAt: '2026-07-16T13:21:44.547Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: An internal error has occurred
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized AppType or Product required for this request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too Many Requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Bad Gateway
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Account not found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Account not found
+                  detail: The specified account does not exist
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      type: string
+                    attributes:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                      required:
+                      - name
+              example:
+                data:
+                  id: a5750181-57f7-4e04-9bb8-8b5c092507b0
+                  type: portfolios
+                  attributes:
+                    name: Updated Portfolio Name
+        required: true
+        description: Request body used to update a portfolio
+    servers:
+    - url: https://api.measurabl.com/core/v0
+      description: Base URL declared by the provider in apis.yml (roadmap#122).
+  /partners/v0/portfolios:
+    get:
+      summary: Returns the portfolios that a partner can access
+      tags:
+      - Portfolios
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of portfolios
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: caa54ae2405bb71d14a4c992b3864337
+                  type: portfolios
+                  attributes:
+                    name: ACME Co.
+                    createdAt: '2014-06-05T03:55:36.000Z'
+                    updatedAt: '2019-03-28T00:04:32.000Z'
+                meta:
+                  totalCount: 1
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 1
+                links:
+                  self: /partners/v0/portfolios?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too Many Requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    servers:
+    - url: https://api.measurabl.com/partners/v0
+      description: Base URL declared by the provider in apis.yml (roadmap#122).
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}
+x-refined-from:
+- measurabl-core-openapi.yml
+- measurabl-partners-openapi.yml

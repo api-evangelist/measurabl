@@ -1,0 +1,964 @@
+openapi: 3.2.0
+info:
+  title: Measurabl Core Ratings API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret).
+
+    2. Make a `GET /core/v0/portfolios` request (under the Portfolios section) to get a list of available portfolios.
+
+    3. Obtain the proper portfolio_id (id) in which you need to get/create data for.
+
+    4. This `portfolio_id` will be required for all other reoccurring requests.
+
+
+    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+
+    * [Release Notes](https://api.measurabl.com/release_notes)
+
+    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+
+    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+
+    * [Code Examples](https://github.com/Measurabl/measurabl_api_code_samples)
+
+
+    ### Response Format
+
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Ratings
+paths:
+  /core/v0/portfolios/{portfolio_id}/ratings:
+    get:
+      summary: Returns a list of all ratings for a specified portfolio
+      tags:
+      - Ratings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>bb5c780e-09ab-42e0-940c-3d9d6188c2b7</em>"
+        required: true
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: "Filter by any attribute available via the endpoint.<br>\n                              <ul>\n                                <li>ratingDate=ge=2022-11-01 will query for buildings with Ratings dated at or after the set date.</li>\n                                <li>isWholeBuilding==true will query for only those ratings that apply to an entire building.</li>\n                              </ul>"
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund list of ratings
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: b084384f-3b73-40db-937c-ba2cb8faf875
+                  type: ratings
+                  attributes:
+                    ratingType: BBC Effinergie
+                    ratingName: A Rating
+                    score: 51
+                    ratingDate: '2026-05-08'
+                    expirationDate: '2027-01-06'
+                    notes: some notes
+                    importedAt: '2026-01-07 02:14:42'
+                    importState: CONFIRMED
+                    updatedAt: '2025-08-15 13:11:00'
+                    isWholeBuilding: true
+                  relationships:
+                    building:
+                      data:
+                        id: afab09c6-d4ab-4769-b6f1-9ffa0dd73f93
+                        type: buildings
+                      links:
+                        self: /portfolios/0ebe9ee9-0638-4691-9403-3f74e9aeb260/buildings/afab09c6-d4ab-4769-b6f1-9ffa0dd73f93
+                  links:
+                    self: /portfolios/0ebe9ee9-0638-4691-9403-3f74e9aeb260/buildings/afab09c6-d4ab-4769-b6f1-9ffa0dd73f93/ratings/b084384f-3b73-40db-937c-ba2cb8faf875
+                - id: 8ce17634-4580-46b6-b24b-0ff4e787ea37
+                  type: ratings
+                  attributes:
+                    ratingType: OTHER
+                    ratingName: null
+                    score: 76
+                    ratingDate: '2026-02-14'
+                    expirationDate: '2027-01-05'
+                    notes: null
+                    importedAt: null
+                    importState: null
+                    updatedAt: '2026-03-19 12:18:41'
+                    isWholeBuilding: true
+                  relationships:
+                    building:
+                      data:
+                        id: afab09c6-d4ab-4769-b6f1-9ffa0dd73f93
+                        type: buildings
+                      links:
+                        self: /portfolios/0ebe9ee9-0638-4691-9403-3f74e9aeb260/buildings/afab09c6-d4ab-4769-b6f1-9ffa0dd73f93
+                  links:
+                    self: /portfolios/0ebe9ee9-0638-4691-9403-3f74e9aeb260/buildings/afab09c6-d4ab-4769-b6f1-9ffa0dd73f93/ratings/b084384f-3b73-40db-937c-ba2cb8faf875
+                links:
+                  self: /core/v0/portfolios/0ebe9ee9-0638-4691-9403-3f74e9aeb260/buildings/afab09c6-d4ab-4769-b6f1-9ffa0dd73f93/ratings?size=2&page=2
+                  first: /core/v0/portfolios/0ebe9ee9-0638-4691-9403-3f74e9aeb260/buildings/afab09c6-d4ab-4769-b6f1-9ffa0dd73f93/ratings?size=2&page=1
+                meta:
+                  page:
+                    number: 1
+                    size: 2
+                    totalPages: 1
+                    totalElements: 2
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find building 8fb6c331-6d34-4f0c-8c62-c26f0302f35c in portfolio 3911e215-90f6-4146-83cd-532115c9122b
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings/{rating_id}:
+    delete:
+      summary: Deletes a specific rating assigned to a specified building
+      tags:
+      - Ratings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID for the parent portfolio<br>\n                              Example: <em>318c4d3d-de20-4d70-bcf6-cce3812daf67</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 4c1385b9-0452-422f-92f3-3e2e3c83cfe0'
+        required: true
+        schema:
+          type: string
+      - name: rating_id
+        in: path
+        description: 'Example: 4d8cc3cf-ff61-4138-9437-a3132149a141'
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Rating Deleted Successfully
+          content:
+            application/vnd.api+json:
+              example: ''
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find rating 63ddc65b-5266-4fc4-82fa-77ad885618b4 in building b10cc7ff-3de9-4d72-bcdb-5d6ca12cecb4 in portfolio dc893756-24f7-4d6f-be28-930f4699f551
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    get:
+      summary: Returns a specific rating for a specified building
+      tags:
+      - Ratings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>3cc51c77-e386-4f25-86f3-387ba231f618</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 20445565-8aa0-4fcf-b9e5-e9c61e1f6d7e'
+        required: true
+        schema:
+          type: string
+      - name: rating_id
+        in: path
+        description: 'Example: 77ed95a8-65a4-4fee-b957-6af941320cec'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific Rating
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 2463e117-9b87-440d-b2dc-94de83495169
+                  type: ratings
+                  attributes:
+                    ratingType: BBC Effinergie
+                    ratingName: A Rating
+                    score: 35
+                    ratingDate: '2026-03-13'
+                    expirationDate: '2026-09-03'
+                    notes: some notes
+                    importedAt: '2026-04-21 21:35:25'
+                    importState: CONFIRMED
+                    updatedAt: '2026-04-11 13:19:40'
+                    isWholeBuilding: false
+                  relationships:
+                    building:
+                      data:
+                        id: 177af71c-8198-4bed-9185-f79ddba930b4
+                        type: buildings
+                      links:
+                        self: /portfolios/2f80920d-2c8a-4350-be3d-12c975f35182/buildings/177af71c-8198-4bed-9185-f79ddba930b4
+                  links:
+                    self: /portfolios/2f80920d-2c8a-4350-be3d-12c975f35182/buildings/177af71c-8198-4bed-9185-f79ddba930b4/ratings/2463e117-9b87-440d-b2dc-94de83495169
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find rating 904aadf7-aa20-490e-aaff-4d55a1a10ed6 in building 72f14b1c-526d-4834-a7a1-fd914f1ade4e in portfolio b0e3e50e-6f20-4ce6-ab9d-616f9c8c10f6
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /core/v0/portfolios/{portfolio_id}/buildings/{building_id}/ratings:
+    get:
+      summary: Returns a list of ratings for the specified building
+      tags:
+      - Ratings
+      security:
+      - OAuth2: []
+      parameters:
+      - name: portfolio_id
+        in: path
+        description: "UUID of either the parent portfolio or fund<br>\n                              Example: <em>36f897c5-f700-4dd1-8c4a-38c4ae90419e</em>"
+        required: true
+        schema:
+          type: string
+      - name: building_id
+        in: path
+        description: 'Example: 8e6f99d7-f1e2-4ca7-be08-43091696d8c5'
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        default: 1
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: The max page size is limited to 200 returned results
+        default: 25
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Portfolio or Fund / Building specific rating list
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 3be072e9-d07f-4966-9fba-3e5522c72a61
+                  type: ratings
+                  attributes:
+                    ratingType: BBC Effinergie
+                    ratingName: A Rating
+                    score: 12
+                    ratingDate: '2026-01-27'
+                    expirationDate: '2026-12-27'
+                    notes: some notes
+                    importedAt: '2026-01-31 05:33:39'
+                    importState: CONFIRMED
+                    updatedAt: '2026-01-11 12:31:53'
+                    isWholeBuilding: false
+                  relationships:
+                    building:
+                      data:
+                        id: 64f31895-b292-475e-b15a-14f8770e7773
+                        type: buildings
+                      links:
+                        self: /portfolios/94c207d7-1026-4af3-82f8-79a17436804b/buildings/64f31895-b292-475e-b15a-14f8770e7773
+                  links:
+                    self: /portfolios/94c207d7-1026-4af3-82f8-79a17436804b/buildings/64f31895-b292-475e-b15a-14f8770e7773/ratings/3be072e9-d07f-4966-9fba-3e5522c72a61
+                - id: 71317f16-c012-44c3-9f09-68b9d10ed23a
+                  type: ratings
+                  attributes:
+                    ratingType: OTHER
+                    ratingName: null
+                    score: 67
+                    ratingDate: '2026-04-19'
+                    expirationDate: '2026-08-30'
+                    notes: null
+                    importedAt: null
+                    importState: null
+                    updatedAt: '2025-12-14 16:49:22'
+                    isWholeBuilding: true
+                  relationships:
+                    building:
+                      data:
+                        id: 64f31895-b292-475e-b15a-14f8770e7773
+                        type: buildings
+                      links:
+                        self: /portfolios/94c207d7-1026-4af3-82f8-79a17436804b/buildings/64f31895-b292-475e-b15a-14f8770e7773
+                  links:
+                    self: /portfolios/94c207d7-1026-4af3-82f8-79a17436804b/buildings/64f31895-b292-475e-b15a-14f8770e7773/ratings/3be072e9-d07f-4966-9fba-3e5522c72a61
+                links:
+                  self: /core/v0/portfolios/94c207d7-1026-4af3-82f8-79a17436804b/buildings/64f31895-b292-475e-b15a-14f8770e7773/ratings?size=2&page=2
+                  first: /core/v0/portfolios/94c207d7-1026-4af3-82f8-79a17436804b/buildings/64f31895-b292-475e-b15a-14f8770e7773/ratings?size=2&page=1
+                meta:
+                  page:
+                    number: 2
+                    size: 2
+                    totalPages: 2
+                    totalElements: 6
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Not Found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Could not find building 2c44c279-c605-440d-9b62-ec75d925d12d in portfolio 3249bc8d-cd1d-4027-a288-555bc092c703
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '401':
+          description: Unauthorized Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '401'
+                  title: Unauthorized
+                  detail: Unauthorized Request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: An invalid UUID parameter was submitted with the request (portfolio_id)
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '500':
+          description: Internal Error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '500'
+                  title: Internal Server Error
+                  detail: An error occurred with the request
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '503':
+          description: Service Unavailable
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '503'
+                  title: Service Unavailable
+                  detail: A Measurabl Server is currently unavailable, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '408':
+          description: Request Timeout
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '408'
+                  title: Request Timeout
+                  detail: The request you made has timed out
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '429':
+          description: Too many requests
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '429'
+                  title: Too Many Requests
+                  detail: Rate Limit Exceeded
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

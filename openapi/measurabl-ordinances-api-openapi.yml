@@ -1,0 +1,368 @@
+openapi: 3.2.0
+info:
+  title: ESGx Buildings Ordinances API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret)
+
+    2. Make a `POST /insights/v0/energy_estimates` request with at least one building
+
+    3. Take note of the `id` for the first estimate record
+
+    4. Check the status of the energy estimate with `GET /insights/v0/energy_estimates/{id}`
+
+    5. Keep polling until the status says `JOB_SUCCESS`
+
+    6. Check out the results of the estimate in the `absoluteEstimates` and `intensityEstimates` fields!
+
+
+    ### Response Format
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/insights/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Ordinances
+paths:
+  /insights/v0/ordinances:
+    get:
+      summary: Returns a list of ordinances
+      description: 'Returns a list of all ordinances.
+
+
+        Coverage: United States and Canada
+
+        '
+      tags:
+      - Ordinances
+      security:
+      - OAuth2: []
+      responses:
+        '200':
+          description: List of ordinances
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: a9dc5e49-03c1-5586-a904-c6521b430e2c
+                  type: ordinances
+                  attributes:
+                    stateOrProvince: CA
+                    censusDivision: null
+                    longName: California Assembly Bill 802 Energy Efficiency
+                    shortName: AB802
+                    url: http://www.energy.ca.gov/benchmarking/
+                    minFloorAreaInSqFt: 50000
+                    maxFloorAreaInSqFt: null
+                    complianceType: ENVIRONMENTAL
+                    startYear: N/A
+                    annualDueDate: '2026-06-01'
+                - id: 41b83771-bb89-500b-8bd9-eafc26f888cb
+                  type: ordinances
+                  attributes:
+                    stateOrProvince: TX
+                    censusDivision: Austin city
+                    longName: Austin Energy Conservation Audit and Disclosure
+                    shortName: Austin Commercial
+                    url: https://austinenergy.com/ae/energy-efficiency/ecad-ordinance/energy-conservation-audit-and-disclosure-ordinance
+                    minFloorAreaInSqFt: 10000
+                    maxFloorAreaInSqFt: null
+                    complianceType: PERFORMANCE
+                    startYear: N/A
+                    annualDueDate: '2026-06-01'
+                - id: 46d90f05-dbfc-5066-9bc1-15b76bcfed03
+                  type: ordinances
+                  attributes:
+                    stateOrProvince: MA
+                    censusDivision: Boston city
+                    longName: Boston Building Energy Reporting and Disclosure
+                    shortName: Boston
+                    url: http://www.cityofboston.gov/eeos/reporting/
+                    minFloorAreaInSqFt: 35000
+                    maxFloorAreaInSqFt: null
+                    complianceType: DISCLOSURE
+                    startYear: N/A
+                    annualDueDate: '2026-05-15'
+                meta:
+                  totalCount: 3
+                  itemCount: 100
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/ordinances
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '502':
+          description: Internal server error
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '502'
+                  title: Bad Gateway
+                  detail: A Measurabl Server is down, please try again later
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

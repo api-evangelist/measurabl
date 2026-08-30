@@ -1,0 +1,1377 @@
+openapi: 3.2.0
+info:
+  title: ESGx Buildings Ordinance Lookups API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret)
+
+    2. Make a `POST /insights/v0/energy_estimates` request with at least one building
+
+    3. Take note of the `id` for the first estimate record
+
+    4. Check the status of the energy estimate with `GET /insights/v0/energy_estimates/{id}`
+
+    5. Keep polling until the status says `JOB_SUCCESS`
+
+    6. Check out the results of the estimate in the `absoluteEstimates` and `intensityEstimates` fields!
+
+
+    ### Response Format
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/insights/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Ordinance Lookups
+paths:
+  /insights/v0/ordinance_lookup_batches:
+    get:
+      summary: Returns all ordinance lookup batches
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of ordinance lookup batches
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 0194cb75-b59f-425e-b765-c4a8b3af6974
+                  type: ordinanceLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:49.394Z'
+                    updatedAt: '2026-07-16T13:20:49.394Z'
+                - id: 36709638-e341-4413-bc5b-a4b6a529b333
+                  type: ordinanceLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:49.397Z'
+                    updatedAt: '2026-07-16T13:20:49.397Z'
+                meta:
+                  totalCount: 2
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 2
+                links:
+                  self: /insights/v0/ordinance_lookup_batches?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/ordinance_lookup_batches/export:
+    post:
+      summary: Requests a CSV download for the given Ordinance Lookup batches
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - JOB_SUCCESS
+      responses:
+        '200':
+          description: empty batch ids list
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 50212abd-5e0f-4349-b6d6-947f26abac0c
+                  type: exports
+                  attributes:
+                    status: JOB_SUCCESS
+                    error: No batches found
+                    createdAt: '2026-07-16T13:22:14.228Z'
+                    updatedAt: '2026-07-16T13:22:14.231Z'
+                    permalink: http://localhost:3000/insights/v0/exports/50212abd-5e0f-4349-b6d6-947f26abac0c/download
+                  relationships: {}
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                batchIds:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - b0d6486a-9398-42c6-9182-14eaba92d739
+                  - dacb11f7-3b69-409c-9565-ce05f9869cf1
+  /insights/v0/ordinance_lookup_batches/{id}/ordinance_lookups:
+    get:
+      summary: Returns all ordinance lookups for a given batch
+      description: 'Provides access to the data for all the ordinance lookups in a given ordinance lookup batch record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>'
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of ordinance lookups
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 81de1832-fec2-415f-89d8-08779355be6a
+                  type: ordinanceLookups
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:14.328Z'
+                    updatedAt: '2026-07-16T13:22:14.328Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                  relationships:
+                    ordinanceLookupBatch:
+                      data:
+                        id: 7dd203ff-12ef-4687-8dcd-2f29ee44d178
+                        type: ordinanceLookupBatches
+                    building:
+                      data:
+                        id: 93adade5-c1d7-4b45-a058-60d42ebcd4d4
+                        type: buildings
+                    ordinanceResponses:
+                      data: []
+                - id: 040b2f40-cf44-49f6-a69c-c698c8921cee
+                  type: ordinanceLookups
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:14.349Z'
+                    updatedAt: '2026-07-16T13:22:14.349Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                  relationships:
+                    ordinanceLookupBatch:
+                      data:
+                        id: 7dd203ff-12ef-4687-8dcd-2f29ee44d178
+                        type: ordinanceLookupBatches
+                    building:
+                      data:
+                        id: f31677f1-af87-4e3a-88cd-f85eb995566e
+                        type: buildings
+                    ordinanceResponses:
+                      data: []
+                - id: 710da4ec-44c5-4cef-be2c-e74ae2e614a4
+                  type: ordinanceLookups
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:14.371Z'
+                    updatedAt: '2026-07-16T13:22:14.371Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                  relationships:
+                    ordinanceLookupBatch:
+                      data:
+                        id: 7dd203ff-12ef-4687-8dcd-2f29ee44d178
+                        type: ordinanceLookupBatches
+                    building:
+                      data:
+                        id: 31badbaa-4504-41e2-bcad-25335eb9ff4f
+                        type: buildings
+                    ordinanceResponses:
+                      data: []
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/ordinance_lookup_batches/7dd203ff-12ef-4687-8dcd-2f29ee44d178/ordinance_lookups?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/ordinance_lookup_batches/{id}:
+    get:
+      summary: Returns ordinance lookup batch
+      description: 'Provides access to the data for the ordinance lookup batch record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Ordinance Lookup batch record
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: fc9af880-21af-4fd7-979d-8fa4a4848664
+                  type: ordinanceLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:22:14.762Z'
+                    updatedAt: '2026-07-16T13:22:14.762Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Ordinance Lookup batch record belonging to another app
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/ordinance_lookup_batches/upload:
+    post:
+      summary: Uploads a file to create new ordinance lookup(s)
+      description: 'Upload an Excel file of ordinance lookup records to be processed. The response will include the ordinance lookup batch record, including the ID that can be used to access the ordinance lookup batch or its ordinance lookups.
+
+        '
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Ordinance lookup batch successfully created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 442482d9-a5d5-42e0-92e1-de7ff08a6f64
+                  type: ordinanceLookupBatches
+                  attributes:
+                    status: STARTING
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:22:15.130Z'
+                    updatedAt: '2026-07-16T13:22:15.139Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: missing file upload
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: 'Excel file required in ordinance_lookup_batch_file
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ordinance_lookup_batch_file:
+                  type: string
+                  format: binary
+                  description: 'An Excel XLSX file containing the buildings you would like ordinance lookups for.
+
+
+                    <br>
+
+                    When requesting data on buildings for the first time, the Excel Worksheet must be named ''Buildings''.
+
+
+                    <br>
+
+                    Building information is required for each ordinance lookup. Other fields are optional.
+
+
+                    The field ''clientMetadata'' is available for storing arbitrary JSON, this allows storing identifiers from your system and other metadata as part of the ordinance lookup record.
+
+
+                    <br>
+
+                    When requesting data on existing buildings i.e. you have the Building IDs, the Excel Worksheet must be named ''MSR Building IDs'' and may only contain a single column named ''MSR Building ID''.
+
+
+                    '
+        required: true
+  /insights/v0/ordinance_lookups:
+    post:
+      summary: Creates new ordinance lookup(s)
+      description: 'Create new ordinance lookup records to be processed. The response will include those records, including IDs that can be used to access the ordinance lookup(s).
+
+
+        There is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.
+
+
+        Please note: You can process larger collections of Buildings via the file upload endpoint.
+
+
+        Coverage: United States and Canada
+
+        '
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Ordinance Lookups(s) successfully created
+          content:
+            application/vnd.api+json:
+              examples:
+                With MSR Building ID:
+                  value:
+                    data:
+                    - id: bb6e4bdb-1988-4411-afd1-d623994149a6
+                      type: ordinanceLookups
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:16.477Z'
+                        updatedAt: '2026-07-16T13:22:16.490Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: 72bd2b01-b3a0-4e1a-aec3-ec7738e4525a
+                            type: ordinanceLookupBatches
+                        building:
+                          data:
+                            id: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                            type: buildings
+                        ordinanceResponses:
+                          data: []
+                    - id: a747a93a-7058-43fd-b869-332e37bc2db1
+                      type: ordinanceLookups
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:16.477Z'
+                        updatedAt: '2026-07-16T13:22:16.504Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: 72bd2b01-b3a0-4e1a-aec3-ec7738e4525a
+                            type: ordinanceLookupBatches
+                        building:
+                          data:
+                            id: b4a87aea-bbd0-4d7b-a50e-b1f7861c511e
+                            type: buildings
+                        ordinanceResponses:
+                          data: []
+                With Building Custom ID:
+                  value:
+                    data:
+                    - id: 02f6f4dc-8827-4963-a7e2-6f78537cc56b
+                      type: ordinanceLookups
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:16.609Z'
+                        updatedAt: '2026-07-16T13:22:16.626Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: 7272b94c-985c-4189-9db9-773aa9fdc46f
+                            type: ordinanceLookupBatches
+                        building:
+                          data:
+                            id: e5d326bf-255a-464c-9e7b-1e9f1ee72984
+                            type: buildings
+                        ordinanceResponses:
+                          data: []
+                With Coordinates:
+                  value:
+                    data:
+                    - id: 7eea0b12-fec0-4ff2-a7fc-ced1a0d9123d
+                      type: ordinanceLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:16.716Z'
+                        updatedAt: '2026-07-16T13:22:16.716Z'
+                        requestedLatitude: '40.766276'
+                        requestedLongitude: '-73.9834504'
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: f0319fd7-a0b1-4735-bc4e-1984a265da10
+                            type: ordinanceLookupBatches
+                        building:
+                          data: null
+                        ordinanceResponses:
+                          data: []
+                With Full Address Data:
+                  value:
+                    data:
+                    - id: 50f7795c-1d6f-4b76-86fe-ece43a6ae425
+                      type: ordinanceLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:16.822Z'
+                        updatedAt: '2026-07-16T13:22:16.822Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: 9854df61-cd14-4799-ad61-8c1a7b7c0067
+                            type: ordinanceLookupBatches
+                        building:
+                          data: null
+                        ordinanceResponses:
+                          data: []
+                    - id: 11d238de-5b59-4719-b6da-0b01e5d317fb
+                      type: ordinanceLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:16.822Z'
+                        updatedAt: '2026-07-16T13:22:16.822Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: 9854df61-cd14-4799-ad61-8c1a7b7c0067
+                            type: ordinanceLookupBatches
+                        building:
+                          data: null
+                        ordinanceResponses:
+                          data: []
+                    - id: 5c817073-ab4d-4c7b-a163-354c2551b78e
+                      type: ordinanceLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:16.822Z'
+                        updatedAt: '2026-07-16T13:22:16.822Z'
+                        requestedLatitude: '39.751262'
+                        requestedLongitude: '-104.998385'
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: 9854df61-cd14-4799-ad61-8c1a7b7c0067
+                            type: ordinanceLookupBatches
+                        building:
+                          data: null
+                        ordinanceResponses:
+                          data: []
+                    - id: bc09ace4-fe8c-49df-81da-4b000824a194
+                      type: ordinanceLookups
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:16.822Z'
+                        updatedAt: '2026-07-16T13:22:16.822Z'
+                        requestedLatitude: '39.751262'
+                        requestedLongitude: '-104.998385'
+                      relationships:
+                        ordinanceLookupBatch:
+                          data:
+                            id: 9854df61-cd14-4799-ad61-8c1a7b7c0067
+                            type: ordinanceLookupBatches
+                        building:
+                          data: null
+                        ordinanceResponses:
+                          data: []
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '413':
+          description: too many ordinance lookups in request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '413'
+                  title: Payload too large
+                  detail: Only 100 ordinance lookups can be created in a single request.
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ordinanceLookups:
+                  type: array
+                  items:
+                    oneOf:
+                    - $ref: '#/components/schemas/request_body_msr_building_id'
+                    - $ref: '#/components/schemas/request_body_building_custom_id'
+                    - $ref: '#/components/schemas/request_body_coordinates_with_client_metadata'
+                    - $ref: '#/components/schemas/request_body_building_info_with_client_metadata'
+            examples:
+              With MSR Building ID:
+                summary: With MSR Building ID
+                value:
+                  ordinanceLookups:
+                  - building:
+                      msrBuildingId: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                  - building:
+                      msrBuildingId: b4a87aea-bbd0-4d7b-a50e-b1f7861c511e
+              With Building Custom ID:
+                summary: With Building Custom ID
+                value:
+                  ordinanceLookups:
+                  - building:
+                      buildingCustomId: your-custom-building-id
+              With Coordinates:
+                summary: With Coordinates
+                value:
+                  ordinanceLookups:
+                  - building:
+                      latitude: 40.766276
+                      longitude: -73.9834504
+                      primaryPropertyType: Office
+                      yearBuilt: 2006
+                      grossFloorArea: 703796
+                      grossFloorAreaUnits: sq ft
+              With Full Address Data:
+                summary: With Full Address Data
+                value:
+                  ordinanceLookups:
+                  - building:
+                      addressLine1: 20 W 34th St
+                      addressLine2: null
+                      city: New York
+                      stateOrProvince: NY
+                      postalCode: '10001'
+                      country: United States
+                      primaryPropertyType: Other
+                      yearBuilt: 1930
+                      grossFloorArea: 2734030
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: 200 East Colfax Ave
+                      addressLine2: null
+                      city: Denver
+                      stateOrProvince: CO
+                      postalCode: '80203'
+                      country: United States
+                      primaryPropertyType: Other
+                      yearBuilt: 1901
+                      grossFloorArea: 268806
+                      grossFloorAreaUnits: sq ft
+                      buildingCustomId: building-123456
+                      buildingClientMetadata:
+                        foo: bar
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: null
+                      addressLine2: null
+                      city: Denver
+                      stateOrProvince: CO
+                      postalCode: '80202'
+                      country: United States
+                      primaryPropertyType: Retail - Other
+                      yearBuilt: 2019
+                      grossFloorArea: 10250
+                      grossFloorAreaUnits: sq ft
+                      latitude: 39.751262
+                      longitude: -104.998385
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      msrBuildingId: e413fe4d-9da0-4e5b-97cd-2f19009d057d
+                      addressLine1: null
+                      addressLine2: null
+                      city: Denver
+                      stateOrProvince: CO
+                      postalCode: '80202'
+                      country: United States
+                      primaryPropertyType: Retail - Other
+                      yearBuilt: 2019
+                      grossFloorArea: 10250
+                      grossFloorAreaUnits: sq ft
+                      latitude: 39.751262
+                      longitude: -104.998385
+                    clientMetadata:
+                      project: Midwest Analysis
+        description: 'The ordinance lookups to be created.<br>
+
+          <br>
+
+          Building information is required for each ordinance lookup and can be provided in one of four ways:
+
+          - Building UUID (msrBuildingId)
+
+          - Building Custom ID (buildingCustomId)
+
+          - Coordinates and additional building information (latitude, longitude, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+          - Full address and additional building information (addressLine1, city, stateOrProvince, postalCode, country, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+
+          The preferred method is to use the msrBuildingId or buildingCustomId if available. If neither is available, using coordinates is preferred over full address data.<br>
+
+
+          Optional fields:
+
+          - **customId** is available for storing a custom identifier for the estimate; this allows storing identifiers from your system as part of the ordinance _lookup_ record.
+
+          - **buildingCustomId** is available for storing a custom identifier for the building; this allows storing identifiers from your system as part of the _building_ record.
+
+          - **clientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the ordinance _lookup_ record.
+
+          - **buildingClientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the _building_ record.
+
+          '
+    get:
+      summary: Returns all ordinance lookups
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of ordinance lookups
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: a7188ed1-9952-4306-9434-174864203f6d
+                  type: ordinanceLookups
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:17.097Z'
+                    updatedAt: '2026-07-16T13:22:17.097Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                  relationships:
+                    ordinanceLookupBatch:
+                      data:
+                        id: 29d21ea9-9a8c-4e6f-86e8-d4c1eff23189
+                        type: ordinanceLookupBatches
+                    building:
+                      data:
+                        id: cb998258-1c8b-47bb-ac53-385e565f17b9
+                        type: buildings
+                    ordinanceResponses:
+                      data:
+                      - id: c6322c1b-d956-5f65-8883-7b9bcf167838
+                        type: ordinanceResponses
+                - id: a5ee21e2-adb8-4110-a4de-65862f38658b
+                  type: ordinanceLookups
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:17.134Z'
+                    updatedAt: '2026-07-16T13:22:17.134Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                  relationships:
+                    ordinanceLookupBatch:
+                      data:
+                        id: e0f9be8c-8098-4629-9915-8dbf610819b2
+                        type: ordinanceLookupBatches
+                    building:
+                      data:
+                        id: 578bf7d1-5f68-4e29-9b32-158ea7309871
+                        type: buildings
+                    ordinanceResponses:
+                      data:
+                      - id: b16e858d-fb62-5477-b467-1bf1e98ecb59
+                        type: ordinanceResponses
+                - id: a482ca37-ba81-4066-a041-5521e2504960
+                  type: ordinanceLookups
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:17.170Z'
+                    updatedAt: '2026-07-16T13:22:17.170Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                  relationships:
+                    ordinanceLookupBatch:
+                      data:
+                        id: 58cfc195-f5e5-4559-affc-e2c3e8e0d756
+                        type: ordinanceLookupBatches
+                    building:
+                      data:
+                        id: 32e10277-619d-4eef-9fdb-f15714cbe6be
+                        type: buildings
+                    ordinanceResponses:
+                      data:
+                      - id: a49c2bbb-84d2-548f-8211-fa9d91503304
+                        type: ordinanceResponses
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/ordinance_lookups?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/ordinance_lookups/{id}:
+    get:
+      summary: Retrieves an existing ordinance lookup
+      description: 'Provides access to the data for the ordinance lookup record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Ordinance Lookups
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Ordinance Lookup has been processed successfully
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 8e16bf3c-9296-4bc3-a611-971fc1209fde
+                  type: ordinanceLookups
+                  attributes:
+                    status: SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:17.685Z'
+                    updatedAt: '2026-07-16T13:22:17.685Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    requestedAddressLine1: 48052 Strosin Ports
+                    requestedAddressLine2: null
+                    requestedCity: Kshlerinport
+                    requestedStateOrProvince: MS
+                    requestedPostalCode: '45776'
+                    requestedCountry: United States
+                    latitude: '-61.6281449309'
+                    longitude: '-24.2378401825'
+                    requestedPropertyType: Hotel
+                    appliedPropertyType: Hotel
+                  relationships:
+                    ordinanceLookupBatch:
+                      data:
+                        id: bf373c93-ad48-477b-98c1-8abdd08bd6ac
+                        type: ordinanceLookupBatches
+                    building:
+                      data:
+                        id: 75b40dc6-a0f4-47f4-a2e5-62064de1c664
+                        type: buildings
+                    ordinanceResponses:
+                      data:
+                      - id: a9f9f753-6712-5256-b2bd-77c921bd173e
+                        type: ordinanceResponses
+                included:
+                - id: a9f9f753-6712-5256-b2bd-77c921bd173e
+                  type: ordinanceResponses
+                  attributes:
+                    stateOrProvince: WA
+                    censusDivision: Seattle city
+                    longName: Seattle Council Bill 116731
+                    shortName: Seattle
+                    url: http://www.seattle.gov/environment/buildings-and-energy/energy-benchmarking-and-reporting
+                    minFloorAreaInSqFt: 20000
+                    maxFloorAreaInSqFt: null
+                    complianceType: PERFORMANCE
+                    startYear: 2026
+                    annualDueDate: '2026-07-01'
+                    createdAt: '2026-07-16T13:22:17.666Z'
+                    updatedAt: '2026-07-16T13:22:17.687Z'
+                  relationships:
+                    ordinanceLookup:
+                      data:
+                        id: 8e16bf3c-9296-4bc3-a611-971fc1209fde
+                        type: ordinanceLookup
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: ID is not found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    request_body_coordinates_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    request_body_building_info_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            addressLine1:
+              type: string
+            addressLine2:
+              type:
+              - string
+              - 'null'
+              example: null
+            city:
+              type: string
+            stateOrProvince:
+              type: string
+            postalCode:
+              type: string
+            country:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    request_body_building_custom_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            buildingCustomId:
+              type: string
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    request_body_msr_building_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            msrBuildingId:
+              type: string
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}

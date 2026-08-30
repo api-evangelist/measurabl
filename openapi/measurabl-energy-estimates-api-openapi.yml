@@ -1,0 +1,1483 @@
+openapi: 3.2.0
+info:
+  title: ESGx Buildings Energy Estimates API
+  version: v0
+  description: '## Quick Start Guide
+
+
+    1. Authorize using your client credentials (key and secret)
+
+    2. Make a `POST /insights/v0/energy_estimates` request with at least one building
+
+    3. Take note of the `id` for the first estimate record
+
+    4. Check the status of the energy estimate with `GET /insights/v0/energy_estimates/{id}`
+
+    5. Keep polling until the status says `JOB_SUCCESS`
+
+    6. Check out the results of the estimate in the `absoluteEstimates` and `intensityEstimates` fields!
+
+
+    ### Response Format
+
+    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
+
+    '
+servers:
+- url: https://api.measurabl.com/insights/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+tags:
+- name: Energy Estimates
+paths:
+  /insights/v0/energy_estimate_batches:
+    get:
+      summary: Returns all energy estimates batches
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of energy estimate batches
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 737aa27d-d3d5-49c2-b5d3-2ea2c79fb787
+                  type: energyEstimateBatches
+                  attributes:
+                    estimateType: energy
+                    status: STARTING
+                    timePeriod: '2021'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:43.414Z'
+                    updatedAt: '2026-07-16T13:20:43.414Z'
+                - id: e690bc38-7d53-4662-9e74-12567242974c
+                  type: energyEstimateBatches
+                  attributes:
+                    estimateType: energy
+                    status: STARTING
+                    timePeriod: '2025'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:20:43.416Z'
+                    updatedAt: '2026-07-16T13:20:43.416Z'
+                meta:
+                  totalCount: 2
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 2
+                links:
+                  self: /insights/v0/energy_estimate_batches?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/energy_estimate_batches/{id}/energy_estimates:
+    get:
+      summary: Returns all energy estimates for a given batch
+      description: 'Provides access to the data for all the energy estimates in a given energy estimate batch record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>d271f75a-6d88-4344-a1cd-bfe6a82cb2a0</em>'
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of energy estimates
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 39fac5b9-1750-4218-beb9-d130e08dcd55
+                  type: energyEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:08.939Z'
+                    updatedAt: '2026-07-16T13:22:08.939Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 42411ce2-0412-4993-a1b4-8284e7724277
+                        type: energyEstimateBatches
+                    building:
+                      data:
+                        id: 05cb480e-43dd-4a46-afd0-032b1052c185
+                        type: buildings
+                - id: dca6d477-e342-423b-9b96-f964eca74268
+                  type: energyEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:08.959Z'
+                    updatedAt: '2026-07-16T13:22:08.959Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 42411ce2-0412-4993-a1b4-8284e7724277
+                        type: energyEstimateBatches
+                    building:
+                      data:
+                        id: f03227d8-c31e-43cc-bffe-bcaecb5adfd9
+                        type: buildings
+                - id: 6915621c-c343-49c7-b4b3-37faf0023302
+                  type: energyEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:08.980Z'
+                    updatedAt: '2026-07-16T13:22:08.980Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 42411ce2-0412-4993-a1b4-8284e7724277
+                        type: energyEstimateBatches
+                    building:
+                      data:
+                        id: 7276cd31-b52b-4e16-9546-c4ad10c0cbe3
+                        type: buildings
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/energy_estimate_batches/42411ce2-0412-4993-a1b4-8284e7724277/energy_estimates?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/energy_estimate_batches/export:
+    post:
+      summary: Requests a CSV download for the given Energy Estimate batches
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - JOB_SUCCESS
+      responses:
+        '200':
+          description: Export successfully created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: d8757b15-de6a-4660-a812-14bd1e2d8f69
+                  type: exports
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    createdAt: '2026-07-16T13:22:09.527Z'
+                    updatedAt: '2026-07-16T13:22:09.527Z'
+                    permalink: http://localhost:3000/insights/v0/exports/5d75214d-a2c5-46cf-94dc-0677373a1974/download
+                  relationships:
+                    estimateBatches:
+                      data:
+                      - id: 94b96756-2f4b-4290-9aa7-3942ad920e30
+                        type: energyEstimateBatches
+                      - id: 16cc6239-c8eb-4f0a-930f-633ad8b43839
+                        type: energyEstimateBatches
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                batchIds:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - b0d6486a-9398-42c6-9182-14eaba92d739
+                  - dacb11f7-3b69-409c-9565-ce05f9869cf1
+  /insights/v0/energy_estimate_batches/{id}:
+    get:
+      summary: Returns energy estimate batch
+      description: 'Provides access to the data for the energy estimate batch record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        description: 'Example: <em>ee433e27-9d53-4c54-90c2-b57e3d2a6f98</em>'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Energy estimate batch record
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 25efef21-6bfd-4fa9-b785-72c1a17e7ca9
+                  type: energyEstimateBatches
+                  attributes:
+                    estimateType: energy
+                    status: STARTING
+                    timePeriod: '2025'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:22:09.606Z'
+                    updatedAt: '2026-07-16T13:22:09.606Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: Energy estimate batch record belonging to another app
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+  /insights/v0/energy_estimate_batches/upload:
+    post:
+      summary: Uploads a file to create new energy estimate(s)
+      description: 'Upload an Excel file of energy estimate records to be processed. The response will include the estimate batch record, including the ID that can be used to access the estimate batch or its energy estimates.
+
+        '
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: timePeriod
+        in: query
+        schema:
+          type: string
+          description: 'A timePeriod to apply for all estimates in the batch. The valid values for timePeriod are: ["T-12", "2025", "2024", "2023", "2022", "2021"]''
+
+            '
+          enum:
+          - T-12
+          - '2025'
+          - '2024'
+          - '2023'
+          - '2022'
+          - '2021'
+        required: true
+      responses:
+        '200':
+          description: Energy estimate batch successfully created
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 5503b9b5-2dba-4d98-948b-2aab07e9b30e
+                  type: energyEstimateBatches
+                  attributes:
+                    estimateType: energy
+                    status: STARTING
+                    timePeriod: '2025'
+                    errorMessage: null
+                    createdAt: '2026-07-16T13:22:09.957Z'
+                    updatedAt: '2026-07-16T13:22:09.967Z'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '400':
+          description: invalid time period
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '400'
+                  title: Bad Request
+                  detail: 'Time period requested: 3023 is not included in the list T-12, 2025, 2024, 2023, 2022, 2021; Requesting app: Spencer, Gerhold and Beahan'
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                estimate_batch_file:
+                  type: string
+                  format: binary
+                  description: 'An Excel XLSX file containing the buildings you would like energy estimates for.
+
+
+                    <br>
+
+                    When requesting data on buildings for the first time, the Excel Worksheet must be named ''Buildings''.
+
+
+                    <br>
+
+                    Building information is required for each estimate. Other fields are optional.
+
+
+                    The field ''clientMetadata'' is available for storing arbitrary JSON, this allows storing identifiers from your system and other metadata as part of the energy estimate record.
+
+
+                    <br>
+
+                    When requesting data on existing buildings i.e. you have the Building IDs, the Excel Worksheet must be named ''MSR Building IDs'' and may only contain a single column named ''MSR Building ID''.
+
+
+                    '
+        required: true
+  /insights/v0/energy_estimates:
+    get:
+      summary: Returns all energy estimates
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: list of energy estimates
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                - id: 11a69532-86a1-4754-9880-22372a20847d
+                  type: energyEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:10.424Z'
+                    updatedAt: '2026-07-16T13:22:10.424Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 3eb18d93-e346-460f-9283-46154681394a
+                        type: energyEstimateBatches
+                    building:
+                      data:
+                        id: db98a7b4-6133-47bb-8a37-b90c45208d28
+                        type: buildings
+                - id: 21cdc528-76a3-4073-bc3e-3ca6520e0822
+                  type: energyEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:10.448Z'
+                    updatedAt: '2026-07-16T13:22:10.448Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 95667358-2d73-4451-b25f-a3e50fdb20d9
+                        type: energyEstimateBatches
+                    building:
+                      data:
+                        id: 19a5cfd5-2c90-437f-83b0-7a1fb58598f7
+                        type: buildings
+                - id: 67f593c9-165d-427a-abb4-86e57d227e91
+                  type: energyEstimates
+                  attributes:
+                    status: PROCESSING
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:10.474Z'
+                    updatedAt: '2026-07-16T13:22:10.474Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 643171b3-df06-470f-814e-661d08502840
+                        type: energyEstimateBatches
+                    building:
+                      data:
+                        id: 528010fe-c6b9-45b8-a2c4-182686ba4e8e
+                        type: buildings
+                meta:
+                  totalCount: 3
+                  itemCount: 5
+                  pageCount: 1
+                  currentPage: 1
+                  prevPage: null
+                  nextPage: null
+                  lastPage: 1
+                  fromRecord: 1
+                  toRecord: 3
+                links:
+                  self: /insights/v0/energy_estimates?page=1&pageSize=5
+                  prev: null
+                  next: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: when requesting an overflow page
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: 'The page requested was not found
+
+                    The last page available is 1
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: unauthorized request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: 'A valid auth token is required.
+
+                    POST to ''/token'' with a valid ''key'' and ''secret'' to get an auth token.
+
+                    '
+              schema:
+                $ref: '#/components/schemas/json_api'
+    post:
+      summary: Creates new energy estimate(s)
+      description: 'Create new energy estimate records to be processed. The response will include those records, including IDs that can be used to access the energy estimate(s).
+
+
+        There is a limit of 100 buildings per request. If you have over 100 buildings, please create separate requests in increments of 100 buildings or fewer.
+
+
+        Please note: You can process larger collections of Buildings via the file upload endpoint.
+
+
+        Coverage: Global
+
+        '
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters: []
+      responses:
+        '200':
+          description: Energy estimate(s) successfully created
+          content:
+            application/vnd.api+json:
+              examples:
+                With MSR Building ID:
+                  value:
+                    data:
+                    - id: c849d07d-bace-437c-b186-7f52677a436c
+                      type: energyEstimates
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:11.780Z'
+                        updatedAt: '2026-07-16T13:22:11.796Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: 3f3493da-a2e9-419d-8663-6899aa3320ec
+                            type: energyEstimateBatches
+                        building:
+                          data:
+                            id: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                            type: buildings
+                    - id: 93581db2-b517-487a-9489-c6cbb875ab53
+                      type: energyEstimates
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:11.780Z'
+                        updatedAt: '2026-07-16T13:22:11.812Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: 3f3493da-a2e9-419d-8663-6899aa3320ec
+                            type: energyEstimateBatches
+                        building:
+                          data:
+                            id: b76bce9f-09a5-4568-8567-dd7f1d9390af
+                            type: buildings
+                With Building Custom ID:
+                  value:
+                    data:
+                    - id: ea4fffb9-49c9-4545-92de-8bd7e82e8968
+                      type: energyEstimates
+                      attributes:
+                        status: GEOLOCATION_SUCCEEDED
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:11.927Z'
+                        updatedAt: '2026-07-16T13:22:11.944Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: 96f7f1cc-9e7c-4da2-ba4c-e8404addf05a
+                            type: energyEstimateBatches
+                        building:
+                          data:
+                            id: 79936ea3-f62b-418b-862c-50cdad48b5fe
+                            type: buildings
+                With Coordinates:
+                  value:
+                    data:
+                    - id: ee33cea1-160e-45b3-aa72-304acebabc36
+                      type: energyEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata: null
+                        createdAt: '2026-07-16T13:22:12.032Z'
+                        updatedAt: '2026-07-16T13:22:12.032Z'
+                        requestedLatitude: '40.766276'
+                        requestedLongitude: '-73.9834504'
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: 7ec7b4ae-1027-45bf-a524-87e90e9374e6
+                            type: energyEstimateBatches
+                        building:
+                          data: null
+                With Full Address Data:
+                  value:
+                    data:
+                    - id: 3f3b39dc-ca00-46dc-9733-9e36943ad51e
+                      type: energyEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:12.135Z'
+                        updatedAt: '2026-07-16T13:22:12.135Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: f3d86c4b-6f5b-45e7-b653-17286e7b48e9
+                            type: energyEstimateBatches
+                        building:
+                          data: null
+                    - id: 0bb6666c-632f-4314-8767-c3c5c578e350
+                      type: energyEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:12.135Z'
+                        updatedAt: '2026-07-16T13:22:12.135Z'
+                        requestedLatitude: '39.15600199'
+                        requestedLongitude: '-84.4202312'
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: f3d86c4b-6f5b-45e7-b653-17286e7b48e9
+                            type: energyEstimateBatches
+                        building:
+                          data: null
+                    - id: 52a15083-127a-40b6-ba04-3561440602ed
+                      type: energyEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:12.135Z'
+                        updatedAt: '2026-07-16T13:22:12.135Z'
+                        requestedLatitude: '39.4861121'
+                        requestedLongitude: '-104.7789231'
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: f3d86c4b-6f5b-45e7-b653-17286e7b48e9
+                            type: energyEstimateBatches
+                        building:
+                          data: null
+                    - id: 61158550-ae9b-460a-9676-77efcc3ff65a
+                      type: energyEstimates
+                      attributes:
+                        status: PROCESSING
+                        error: null
+                        customId: null
+                        clientMetadata:
+                          project: Midwest Analysis
+                        createdAt: '2026-07-16T13:22:12.135Z'
+                        updatedAt: '2026-07-16T13:22:12.135Z'
+                        requestedLatitude: null
+                        requestedLongitude: null
+                        startingMonth: 2023-01
+                        endingMonth: 2023-12
+                      relationships:
+                        estimateBatch:
+                          data:
+                            id: f3d86c4b-6f5b-45e7-b653-17286e7b48e9
+                            type: energyEstimateBatches
+                        building:
+                          data: null
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '413':
+          description: too many estimates in request
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '413'
+                  title: Payload too large
+                  detail: Only 100 estimates can be created in a single request.
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timePeriod:
+                  type: string
+                  enum:
+                  - T-12
+                  - '2025'
+                  - '2024'
+                  - '2023'
+                  - '2022'
+                  - '2021'
+                estimates:
+                  type: array
+                  items:
+                    oneOf:
+                    - $ref: '#/components/schemas/request_body_msr_building_id'
+                    - $ref: '#/components/schemas/request_body_building_custom_id'
+                    - $ref: '#/components/schemas/request_body_coordinates_with_client_metadata'
+                    - $ref: '#/components/schemas/request_body_building_info_with_client_metadata'
+            examples:
+              With MSR Building ID:
+                summary: With MSR Building ID
+                value:
+                  timePeriod: '2023'
+                  estimates:
+                  - building:
+                      msrBuildingId: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                  - building:
+                      msrBuildingId: b76bce9f-09a5-4568-8567-dd7f1d9390af
+              With Building Custom ID:
+                summary: With Building Custom ID
+                value:
+                  timePeriod: '2023'
+                  estimates:
+                  - building:
+                      buildingCustomId: your-custom-building-id
+              With Coordinates:
+                summary: With Coordinates
+                value:
+                  timePeriod: '2023'
+                  estimates:
+                  - building:
+                      latitude: 40.766276
+                      longitude: -73.9834504
+                      primaryPropertyType: Office
+                      yearBuilt: 2006
+                      grossFloorArea: 703796
+                      grossFloorAreaUnits: sq ft
+              With Full Address Data:
+                summary: With Full Address Data
+                value:
+                  estimates:
+                  - building:
+                      addressLine1: 29 East High St.
+                      addressLine2: null
+                      city: Lawrenceburg
+                      stateOrProvince: IN
+                      postalCode: '47025'
+                      country: United States
+                      primaryPropertyType: Food Sales & Service
+                      yearBuilt: 1890
+                      grossFloorArea: 3000
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: 4460 Orkney Ave.
+                      addressLine2: null
+                      city: Cincinnati
+                      stateOrProvince: OH
+                      postalCode: '45209'
+                      country: United States
+                      primaryPropertyType: Fitness Center/Health Club/Gym
+                      yearBuilt: 2019
+                      grossFloorArea: 12950
+                      grossFloorAreaUnits: sq ft
+                      longitude: -84.4202312
+                      latitude: 39.15600199
+                      buildingCustomId: building-123456
+                      buildingClientMetadata:
+                        foo: bar
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      addressLine1: null
+                      addressLine2: null
+                      city: Denver
+                      stateOrProvince: CO
+                      postalCode: '80112'
+                      country: United States
+                      primaryPropertyType: Education - K-12 School - Other
+                      yearBuilt: 2019
+                      grossFloorArea: 12950
+                      grossFloorAreaUnits: sq ft
+                      latitude: 39.4861121
+                      longitude: -104.7789231
+                    clientMetadata:
+                      project: Midwest Analysis
+                  - building:
+                      msrBuildingId: 9dcccad0-4afe-4e65-88d7-63fda2bdc467
+                      addressLine1: null
+                      addressLine2: null
+                      city: Centennial
+                      stateOrProvince: CO
+                      postalCode: '80112'
+                      country: United States
+                      primaryPropertyType: Warehouse/Storage - Other
+                      yearBuilt: 2019
+                      grossFloorArea: 12950
+                      grossFloorAreaUnits: sq ft
+                    clientMetadata:
+                      project: Midwest Analysis
+                  timePeriod: '2023'
+        description: 'The energy estimates to be created.<br>
+
+          <br>
+
+          Time Period is required for each request and must be a valid year.<br>
+
+          The valid values for timePeriod are: T-12, 2025, 2024, 2023, 2022, 2021.<br>
+
+          <br>
+
+          Building information is required for each estimate and can be provided in one of four ways:
+
+          - Building UUID (msrBuildingId)
+
+          - Building Custom ID (buildingCustomId)
+
+          - Coordinates and additional building information (latitude, longitude, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+          - Full address and additional building information (addressLine1, city, stateOrProvince, postalCode, country, primaryPropertyType, yearBuilt, grossFloorArea, grossFloorAreaUnits)
+
+
+          The preferred method is to use the msrBuildingId or buildingCustomId if available. If neither is available, using coordinates is preferred over full address data.<br>
+
+
+          Optional fields:
+
+          - **customId** is available for storing a custom identifier for the estimate; this allows storing identifiers from your system as part of the energy _estimate_ record.
+
+          - **buildingCustomId** is available for storing a custom identifier for the building; this allows storing identifiers from your system as part of the _building_ record.
+
+          - **clientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the energy _estimate_ record.
+
+          - **buildingClientMetadata** is available for storing arbitrary JSON metadata; this allows storing identifiers from your system and other metadata as part of the _building_ record.
+
+          '
+  /insights/v0/energy_estimates/{id}:
+    get:
+      summary: Retrieves an existing energy estimate
+      description: 'Provides access to the data for the energy estimate record once it completes processing. It can be polled while processing to see the current status.
+
+        '
+      tags:
+      - Energy Estimates
+      security:
+      - OAuth2: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Energy estimate has been processed successfully
+          content:
+            application/vnd.api+json:
+              example:
+                data:
+                  id: 2b11113e-5142-4872-8bd1-772f29554b4c
+                  type: energyEstimates
+                  attributes:
+                    status: SUCCEEDED
+                    error: null
+                    customId: null
+                    clientMetadata: null
+                    createdAt: '2026-07-16T13:22:12.481Z'
+                    updatedAt: '2026-07-16T13:22:12.481Z'
+                    requestedLatitude: null
+                    requestedLongitude: null
+                    startingMonth: 2025-07
+                    endingMonth: 2026-06
+                    annualAbsoluteEstimate: 6638225.3086223
+                    absoluteEstimateUnits: MWh
+                    annualIntensityEstimate: 5991.1780762
+                    confidenceLabel: moderate
+                    confidenceDescription: The average energy estimate error for properties in this category is anticipated to be <= 26.1%.
+                    intensityEstimateUnits: kWh/m²
+                    requestedAddressLine1: 483 Monty Corner
+                    requestedAddressLine2: Suite 418
+                    requestedCity: North Wyatt
+                    requestedStateOrProvince: OH
+                    requestedPostalCode: 16132-0002
+                    requestedCountry: United States
+                    requestedPropertyType: Other
+                    latitude: '6.3976680226'
+                    longitude: '-166.0066488623'
+                    appliedPropertyType: Other
+                    monthlyIntensityEstimates:
+                    - 429.1486005
+                    - 449.5358834
+                    - 529.1567854
+                    - 757.9140643
+                    - 127.265202
+                    - 713.0481834
+                    - 813.0989944
+                    - 314.1621152
+                    - 719.1475234
+                    - 278.2691359
+                    - 420.4973919
+                    - 439.9341964
+                    monthlyAbsoluteEstimates:
+                    - 475496.6493603
+                    - 498085.7588294
+                    - 586305.7182521
+                    - 839768.7832455
+                    - 141009.8438419
+                    - 790057.3872454
+                    - 900913.685742
+                    - 348091.6236805
+                    - 796815.4559194
+                    - 308322.202614
+                    - 465911.1102489
+                    - 487447.0896429
+                    buildingCustomId: '123456'
+                    buildingClientMetadata:
+                      foo: bar
+                  relationships:
+                    estimateBatch:
+                      data:
+                        id: 16394827-2244-45b9-8782-35815d4c45ee
+                        type: energyEstimateBatches
+                    building:
+                      data:
+                        id: 84e1cddc-b94b-4155-b58d-0e6255fd3109
+                        type: buildings
+                    benchmarkLookup:
+                      data:
+                        id: 93b121c0-fdb1-4111-aa4d-2435b66e1050
+                        type: benchmarkLookup
+                included:
+                - id: 93b121c0-fdb1-4111-aa4d-2435b66e1050
+                  type: benchmarkLookups
+                  attributes:
+                    createdAt: '2026-07-16T13:22:12.474Z'
+                    updatedAt: '2026-07-16T13:22:12.474Z'
+                    year: '2021'
+                    benchmarkPropertyType: Other
+                    continent: North America
+                    continentSubregion: North America
+                    countryCode: US
+                    countrySubregion: Midwest
+                    stateProvincePrefecture: OH
+                    intensityBenchmarkUnits: kWh/ft2
+                    globalMeanIntensity: '70.4530825458'
+                    globalFirstQuartileIntensity: '44.4565641824'
+                    globalSecondQuartileIntensity: '62.5959501256'
+                    globalThirdQuartileIntensity: '82.6533924736'
+                    globalFifteenthPercentileIntensity: '82.5603853463'
+                    globalThirtiethPercentileIntensity: '14.6752486281'
+                    continentMeanIntensity: '41.2156206097'
+                    continentFirstQuartileIntensity: '19.4822141919'
+                    continentSecondQuartileIntensity: '45.0204358863'
+                    continentThirdQuartileIntensity: '55.3480247168'
+                    continentFifteenthPercentileIntensity: '94.5318690454'
+                    continentThirtiethPercentileIntensity: '76.9414809162'
+                    continentSubregionMeanIntensity: '59.1293557681'
+                    continentSubregionFirstQuartileIntensity: '58.2413660351'
+                    continentSubregionSecondQuartileIntensity: '78.3921061127'
+                    continentSubregionThirdQuartileIntensity: '81.9305169374'
+                    continentSubregionFifteenthPercentileIntensity: There is not enough data to benchmark your building at this level
+                    continentSubregionThirtiethPercentileIntensity: There is not enough data to benchmark your building at this level
+                    countryMeanIntensity: '10.2043517662'
+                    countryFirstQuartileIntensity: '45.8830121812'
+                    countrySecondQuartileIntensity: '94.2336275081'
+                    countryThirdQuartileIntensity: '25.5848896659'
+                    countryFifteenthPercentileIntensity: '97.2330732137'
+                    countryThirtiethPercentileIntensity: '40.7855470335'
+                    countrySubregionMeanIntensity: '62.4243716083'
+                    countrySubregionFirstQuartileIntensity: '19.1356352731'
+                    countrySubregionSecondQuartileIntensity: '97.5274040024'
+                    countrySubregionThirdQuartileIntensity: '42.1057074687'
+                    countrySubregionFifteenthPercentileIntensity: '51.5690554899'
+                    countrySubregionThirtiethPercentileIntensity: '84.7705962491'
+                    stateProvincePrefectureMeanIntensity: There is not enough data to benchmark your building at this level
+                    stateProvincePrefectureFirstQuartileIntensity: There is not enough data to benchmark your building at this level
+                    stateProvincePrefectureSecondQuartileIntensity: There is not enough data to benchmark your building at this level
+                    stateProvincePrefectureThirdQuartileIntensity: There is not enough data to benchmark your building at this level
+                    stateProvincePrefectureFifteenthPercentileIntensity: There is not enough data to benchmark your building at this level
+                    stateProvincePrefectureThirtiethPercentileIntensity: There is not enough data to benchmark your building at this level
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '403':
+          description: when authenticated but not authorized
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '403'
+                  title: Forbidden
+                  detail: Access Denied
+              schema:
+                $ref: '#/components/schemas/json_api'
+        '404':
+          description: ID is not found
+          content:
+            application/vnd.api+json:
+              example:
+                errors:
+                - status: '404'
+                  title: Not Found
+                  detail: Page not found
+              schema:
+                $ref: '#/components/schemas/json_api'
+components:
+  schemas:
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    request_body_coordinates_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    request_body_building_info_with_client_metadata:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            name:
+              type: string
+            addressLine1:
+              type: string
+            addressLine2:
+              type:
+              - string
+              - 'null'
+              example: null
+            city:
+              type: string
+            stateOrProvince:
+              type: string
+            postalCode:
+              type: string
+            country:
+              type: string
+            primaryPropertyType:
+              type: string
+            yearBuilt:
+              type: integer
+            grossFloorArea:
+              type: integer
+            grossFloorAreaUnits:
+              type: string
+              enum:
+              - sf
+              - sm
+            latitude:
+              type: number
+            longitude:
+              type: number
+        clientMetadata:
+          type: object
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
+    request_body_building_custom_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            buildingCustomId:
+              type: string
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    empty:
+      description: Describes an empty to-one relationship.
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    error:
+      type: object
+      properties:
+        id:
+          description: A unique identifier for this particular occurrence of the problem.
+          type: string
+        links:
+          $ref: '#/components/schemas/links'
+        status:
+          description: The HTTP status code applicable to this problem, expressed as a string value.
+          type: string
+        code:
+          description: An application-specific error code, expressed as a string value.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem. It **SHOULD NOT** change from occurrence to occurrence of the problem, except for purposes of localization.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        source:
+          type: object
+          properties:
+            pointer:
+              description: A JSON Pointer [RFC6901] to the associated entity in the request document [e.g. '/data' for a primary data object, or '/data/attributes/title' for a specific attribute].
+              type: string
+            parameter:
+              description: A string indicating which query parameter caused the error.
+              type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    request_body_msr_building_id:
+      type: object
+      properties:
+        building:
+          type: object
+          properties:
+            msrBuildingId:
+              type: string
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.measurabl.com/token
+          scopes: {}
