@@ -211,6 +211,8 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
+  - Certification
+  tags_raw:
   - Certifications
   properties:
   - type: OpenAPI
@@ -442,6 +444,8 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
+  - Fund
+  tags_raw:
   - Funds
   properties:
   - type: OpenAPI
@@ -767,6 +771,8 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
+  - Space
+  tags_raw:
   - Spaces
   properties:
   - type: OpenAPI
