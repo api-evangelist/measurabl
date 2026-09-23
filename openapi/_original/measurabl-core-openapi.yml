@@ -282,6 +282,9 @@ components:
         clientCredentials:
           tokenUrl: https://api.measurabl.com/token
           scopes: {}
+servers:
+- url: https://api.measurabl.com/core/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 paths:
   /core/v0/portfolios/{portfolio_id}/buildings:
     post:

@@ -354,6 +354,9 @@ components:
         clientCredentials:
           tokenUrl: https://api.measurabl.com/token
           scopes: {}
+servers:
+- url: https://api.measurabl.com/insights/v0
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 paths:
   /insights/v0/buildings:
     post:

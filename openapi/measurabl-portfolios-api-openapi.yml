@@ -2,12 +2,7 @@ openapi: 3.2.0
 info:
   title: Measurabl Portfolios API
   version: v0
-  description: 'Operations tagged Portfolios across 2 of this provider''s published API definitions: measurabl-core-openapi.yml, measurabl-partners-openapi.yml. Each path carries the servers of the definition it was published in.'
-servers:
-- url: https://api.measurabl.com/core/v0
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
-- url: https://api.measurabl.com/partners/v0
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+  description: 'Operations tagged Portfolios across 2 of this provider''s published API definitions: measurabl-core-openapi.json, measurabl-partners-openapi.json. Each path carries the servers of the definition it was published in.'
 tags:
 - name: Portfolios
 paths:
@@ -151,6 +146,8 @@ paths:
                     name: New Portfolio Name
         required: true
         description: Request body used to create a portfolio for an account
+      operationId: postCoreV0Portfolios
+      x-operation-id-source: derived
     get:
       summary: Returns a list of portfolios for a specified account
       tags:
@@ -301,9 +298,8 @@ paths:
                     '
               schema:
                 $ref: '#/components/schemas/json_api'
-    servers:
-    - url: https://api.measurabl.com/core/v0
-      description: Base URL declared by the provider in apis.yml (roadmap#122).
+      operationId: getCoreV0Portfolios
+      x-operation-id-source: derived
   /core/v0/portfolios/{portfolio_id}:
     patch:
       summary: Update a specific portfolio's name for a specified account
@@ -453,9 +449,8 @@ paths:
                     name: Updated Portfolio Name
         required: true
         description: Request body used to update a portfolio
-    servers:
-    - url: https://api.measurabl.com/core/v0
-      description: Base URL declared by the provider in apis.yml (roadmap#122).
+      operationId: patchCoreV0PortfoliosByPortfolioId
+      x-operation-id-source: derived
   /partners/v0/portfolios:
     get:
       summary: Returns the portfolios that a partner can access
@@ -542,54 +537,10 @@ paths:
                     '
               schema:
                 $ref: '#/components/schemas/json_api'
-    servers:
-    - url: https://api.measurabl.com/partners/v0
-      description: Base URL declared by the provider in apis.yml (roadmap#122).
+      operationId: getPartnersV0Portfolios
+      x-operation-id-source: derived
 components:
   schemas:
-    success:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/data'
-        included:
-          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
-          type: array
-          items:
-            $ref: '#/components/schemas/resource'
-          uniqueItems: true
-        meta:
-          $ref: '#/components/schemas/meta'
-        links:
-          description: Link members related to the primary data.
-          allOf:
-          - $ref: '#/components/schemas/links'
-          - $ref: '#/components/schemas/pagination'
-        jsonapi:
-          $ref: '#/components/schemas/jsonapi'
-      additionalProperties: false
-    relationshipToOne:
-      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
-      anyOf:
-      - $ref: '#/components/schemas/empty'
-      - $ref: '#/components/schemas/linkage'
-    relationshipLinks:
-      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/link'
-        related:
-          $ref: '#/components/schemas/link'
-      additionalProperties: true
-    relationshipToMany:
-      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
-      type: array
-      items:
-        $ref: '#/components/schemas/linkage'
-      uniqueItems: true
     data:
       description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
       anyOf:
@@ -600,93 +551,24 @@ components:
           $ref: '#/components/schemas/resource'
         uniqueItems: true
       - description: null if the request is one that might correspond to a single resource, but doesn't currently.
-    pagination:
+    jsonapi:
+      description: An object describing the server's implementation
       type: object
       properties:
-        first:
-          description: The first page of data
+        version:
           type: string
-          format: uri-reference
-          x-nullable: true
-        last:
-          description: The last page of data
-          type: string
-          format: uri-reference
-          x-nullable: true
-        prev:
-          description: The previous page of data
-          type: string
-          format: uri-reference
-          x-nullable: true
-        next:
-          description: The next page of data
-          type: string
-          format: uri-reference
-          x-nullable: true
-    meta:
-      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
       type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
       additionalProperties: true
-    failure:
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/error'
-          uniqueItems: true
-        meta:
-          $ref: '#/components/schemas/meta'
-        jsonapi:
-          $ref: '#/components/schemas/jsonapi'
-        links:
-          $ref: '#/components/schemas/links'
-      additionalProperties: false
-    json_api:
-      oneOf:
-      - $ref: '#/components/schemas/success'
-      - $ref: '#/components/schemas/failure'
-      - $ref: '#/components/schemas/info'
-    link:
-      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
-      oneOf:
-      - description: A string containing the link's URL.
-        type:
-        - string
-        - 'null'
-        format: uri-reference
-      - type: object
-        required:
-        - href
-        properties:
-          href:
-            description: A string containing the link's URL.
-            type: string
-            format: uri-reference
-          meta:
-            $ref: '#/components/schemas/meta'
-    links:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/link'
-    empty:
-      description: Describes an empty to-one relationship.
-    linkage:
-      description: The 'type' and 'id' to non-empty members.
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-        id:
-          type: string
-        meta:
-          $ref: '#/components/schemas/meta'
-      additionalProperties: false
     error:
       type: object
       properties:
@@ -719,31 +601,80 @@ components:
         meta:
           $ref: '#/components/schemas/meta'
       additionalProperties: false
-    jsonapi:
-      description: An object describing the server's implementation
-      type: object
-      properties:
-        version:
-          type: string
-        meta:
-          $ref: '#/components/schemas/meta'
-      additionalProperties: false
-    attributes:
-      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
       type: object
       additionalProperties: true
-    info:
+    success:
       type: object
       required:
-      - meta
+      - data
       properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
         meta:
           $ref: '#/components/schemas/meta'
         links:
-          $ref: '#/components/schemas/links'
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
         jsonapi:
           $ref: '#/components/schemas/jsonapi'
       additionalProperties: false
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
     relationships:
       description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
       type: object
@@ -757,6 +688,64 @@ components:
           - $ref: '#/components/schemas/relationshipToMany'
         meta:
           $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    empty:
+      description: Describes an empty to-one relationship.
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
       additionalProperties: true
     resource:
       description: '''Resource objects'' appear in a JSON:API document to represent resources.'
@@ -778,6 +767,11 @@ components:
         meta:
           $ref: '#/components/schemas/meta'
       additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
   securitySchemes:
     OAuth2:
       type: oauth2
@@ -786,5 +780,5 @@ components:
           tokenUrl: https://api.measurabl.com/token
           scopes: {}
 x-refined-from:
-- measurabl-core-openapi.yml
-- measurabl-partners-openapi.yml
+- measurabl-core-openapi.json
+- measurabl-partners-openapi.json

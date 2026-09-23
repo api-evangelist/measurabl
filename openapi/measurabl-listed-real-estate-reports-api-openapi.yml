@@ -10,22 +10,17 @@ info:
     2. Make a request to get a list of available data_set files
 
 
-    * [Authentication](https://support.measurabl.com/hc/en-us/articles/15889532915085-How-do-I-authenticate-with-Measurabl-s-Core-API-)
+    * Authentication
 
-    * [Usage/Rate Limits](https://support.measurabl.com/hc/en-us/articles/15889355100429-Core-API-Usage-Rate-Limits)
+    * Usage/Rate Limits
 
-    * [Pagination & Filtering](https://support.measurabl.com/hc/en-us/articles/15889550313101-Core-API-Pagination-Filtering-Requests)
+    * Pagination & Filtering
 
 
     ### Response Format
 
 
-    Each endpoint response complies with the [JSON-API Specification](https://jsonapi.org/) which has many available [client libraries](https://jsonapi.org/implementations/#client-libraries).
-
-    '
-servers:
-- url: https://api.measurabl.com/insights/v0
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
+    Each endpoint response complies with the JSON-API Specification which has many available client libraries.'
 tags:
 - name: Listed Real Estate Reports
 paths:
@@ -34,9 +29,7 @@ paths:
       summary: Downloads the export file
       description: 'Provides a redirect to download the export file.
 
-        The url in the redirect has an expiration, typically of 5 minutes.
-
-        '
+        The url in the redirect has an expiration, typically of 5 minutes.'
       tags:
       - Listed Real Estate Reports
       security:
@@ -80,12 +73,12 @@ paths:
                     updatedAt: '2026-07-16T13:20:45.373Z'
                 meta:
                   message: The export is not ready yet. Check the status with http://www.example.com/insights/v0/listed_real_estate_reports/july-2021/building_level/t-12-carbon-estimates
+      operationId: getInsightsV0ListedRealEstateReportsByIdBuildingLevelByDataSetDownload
+      x-operation-id-source: derived
   /insights/v0/listed_real_estate_reports/{id}/building_level:
     get:
       summary: Retrieves the data sets available for a Listed Real Estate Report
-      description: 'Provides information about the company-level data sets for a given Listed Real Estate Report
-
-        '
+      description: Provides information about the company-level data sets for a given Listed Real Estate Report
       tags:
       - Listed Real Estate Reports
       security:
@@ -142,6 +135,8 @@ paths:
                   detail: Access Denied
               schema:
                 $ref: '#/components/schemas/json_api'
+      operationId: getInsightsV0ListedRealEstateReportsByIdBuildingLevel
+      x-operation-id-source: derived
   /insights/v0/listed_real_estate_reports/{id}/building_level/{data_set}:
     get:
       summary: Retrieves a Listed Real Estate Report Building Level Data Set
@@ -149,9 +144,7 @@ paths:
 
         The fileChecksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:
 
-        `openssl md5 -binary <filename> | base64`
-
-        '
+        `openssl md5 -binary | base64`'
       tags:
       - Listed Real Estate Reports
       security:
@@ -216,14 +209,14 @@ paths:
                   detail: Access Denied
               schema:
                 $ref: '#/components/schemas/json_api'
+      operationId: getInsightsV0ListedRealEstateReportsByIdBuildingLevelByDataSet
+      x-operation-id-source: derived
   /insights/v0/listed_real_estate_reports/{id}/company_level/{data_set}/download:
     get:
       summary: Downloads the export file
       description: 'Provides a redirect to download the export file.
 
-        The url in the redirect has an expiration, typically of 5 minutes.
-
-        '
+        The url in the redirect has an expiration, typically of 5 minutes.'
       tags:
       - Listed Real Estate Reports
       security:
@@ -267,12 +260,12 @@ paths:
                     updatedAt: '2026-07-16T13:20:47.046Z'
                 meta:
                   message: The export is not ready yet. Check the status with http://www.example.com/insights/v0/listed_real_estate_reports/july-2021/company_level/t-12-carbon-estimates
+      operationId: getInsightsV0ListedRealEstateReportsByIdCompanyLevelByDataSetDownload
+      x-operation-id-source: derived
   /insights/v0/listed_real_estate_reports/{id}/company_level:
     get:
       summary: Retrieves the company-level data sets for a Listed Real Estate Report
-      description: 'Provides information about the company-level data sets for a given Listed Real Estate Report
-
-        '
+      description: Provides information about the company-level data sets for a given Listed Real Estate Report
       tags:
       - Listed Real Estate Reports
       security:
@@ -329,6 +322,8 @@ paths:
                   detail: Access Denied
               schema:
                 $ref: '#/components/schemas/json_api'
+      operationId: getInsightsV0ListedRealEstateReportsByIdCompanyLevel
+      x-operation-id-source: derived
   /insights/v0/listed_real_estate_reports/{id}/company_level/{data_set}:
     get:
       summary: Retrieves a Listed Real Estate Report Company Level Data Set
@@ -336,9 +331,7 @@ paths:
 
         The fileChecksum provided is a Base64 encoded MD5 hash of the file. This can be checked using:
 
-        `openssl md5 -binary <filename> | base64`
-
-        '
+        `openssl md5 -binary | base64`'
       tags:
       - Listed Real Estate Reports
       security:
@@ -403,6 +396,8 @@ paths:
                   detail: Access Denied
               schema:
                 $ref: '#/components/schemas/json_api'
+      operationId: getInsightsV0ListedRealEstateReportsByIdCompanyLevelByDataSet
+      x-operation-id-source: derived
   /insights/v0/listed_real_estate_reports:
     get:
       summary: Returns all listed real estate reports
@@ -486,12 +481,12 @@ paths:
                     '
               schema:
                 $ref: '#/components/schemas/json_api'
+      operationId: getInsightsV0ListedRealEstateReports
+      x-operation-id-source: derived
   /insights/v0/listed_real_estate_reports/{id}:
     get:
       summary: Retrieves an existing listed real estate report
-      description: 'Provides access to the data for the listed real estate report.
-
-        '
+      description: Provides access to the data for the listed real estate report.
       tags:
       - Listed Real Estate Reports
       security:
@@ -546,51 +541,10 @@ paths:
                   detail: Access Denied
               schema:
                 $ref: '#/components/schemas/json_api'
+      operationId: getInsightsV0ListedRealEstateReportsById
+      x-operation-id-source: derived
 components:
   schemas:
-    success:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/data'
-        included:
-          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
-          type: array
-          items:
-            $ref: '#/components/schemas/resource'
-          uniqueItems: true
-        meta:
-          $ref: '#/components/schemas/meta'
-        links:
-          description: Link members related to the primary data.
-          allOf:
-          - $ref: '#/components/schemas/links'
-          - $ref: '#/components/schemas/pagination'
-        jsonapi:
-          $ref: '#/components/schemas/jsonapi'
-      additionalProperties: false
-    relationshipToOne:
-      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
-      anyOf:
-      - $ref: '#/components/schemas/empty'
-      - $ref: '#/components/schemas/linkage'
-    relationshipLinks:
-      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/link'
-        related:
-          $ref: '#/components/schemas/link'
-      additionalProperties: true
-    relationshipToMany:
-      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
-      type: array
-      items:
-        $ref: '#/components/schemas/linkage'
-      uniqueItems: true
     data:
       description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
       anyOf:
@@ -601,93 +555,24 @@ components:
           $ref: '#/components/schemas/resource'
         uniqueItems: true
       - description: null if the request is one that might correspond to a single resource, but doesn't currently.
-    pagination:
+    jsonapi:
+      description: An object describing the server's implementation
       type: object
       properties:
-        first:
-          description: The first page of data
+        version:
           type: string
-          format: uri-reference
-          x-nullable: true
-        last:
-          description: The last page of data
-          type: string
-          format: uri-reference
-          x-nullable: true
-        prev:
-          description: The previous page of data
-          type: string
-          format: uri-reference
-          x-nullable: true
-        next:
-          description: The next page of data
-          type: string
-          format: uri-reference
-          x-nullable: true
-    meta:
-      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
       type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
       additionalProperties: true
-    failure:
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/error'
-          uniqueItems: true
-        meta:
-          $ref: '#/components/schemas/meta'
-        jsonapi:
-          $ref: '#/components/schemas/jsonapi'
-        links:
-          $ref: '#/components/schemas/links'
-      additionalProperties: false
-    json_api:
-      oneOf:
-      - $ref: '#/components/schemas/success'
-      - $ref: '#/components/schemas/failure'
-      - $ref: '#/components/schemas/info'
-    link:
-      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
-      oneOf:
-      - description: A string containing the link's URL.
-        type:
-        - string
-        - 'null'
-        format: uri-reference
-      - type: object
-        required:
-        - href
-        properties:
-          href:
-            description: A string containing the link's URL.
-            type: string
-            format: uri-reference
-          meta:
-            $ref: '#/components/schemas/meta'
-    links:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/link'
-    empty:
-      description: Describes an empty to-one relationship.
-    linkage:
-      description: The 'type' and 'id' to non-empty members.
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-        id:
-          type: string
-        meta:
-          $ref: '#/components/schemas/meta'
-      additionalProperties: false
     error:
       type: object
       properties:
@@ -720,31 +605,80 @@ components:
         meta:
           $ref: '#/components/schemas/meta'
       additionalProperties: false
-    jsonapi:
-      description: An object describing the server's implementation
-      type: object
-      properties:
-        version:
-          type: string
-        meta:
-          $ref: '#/components/schemas/meta'
-      additionalProperties: false
-    attributes:
-      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
       type: object
       additionalProperties: true
-    info:
+    success:
       type: object
       required:
-      - meta
+      - data
       properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
         meta:
           $ref: '#/components/schemas/meta'
         links:
-          $ref: '#/components/schemas/links'
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
         jsonapi:
           $ref: '#/components/schemas/jsonapi'
       additionalProperties: false
+    pagination:
+      type: object
+      properties:
+        first:
+          description: The first page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        last:
+          description: The last page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        prev:
+          description: The previous page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+        next:
+          description: The next page of data
+          type: string
+          format: uri-reference
+          x-nullable: true
+    link:
+      description: 'A link **MUST** be represented as either: a string containing the link''s URL or a link object.'
+      oneOf:
+      - description: A string containing the link's URL.
+        type:
+        - string
+        - 'null'
+        format: uri-reference
+      - type: object
+        required:
+        - href
+        properties:
+          href:
+            description: A string containing the link's URL.
+            type: string
+            format: uri-reference
+          meta:
+            $ref: '#/components/schemas/meta'
     relationships:
       description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
       type: object
@@ -758,6 +692,64 @@ components:
           - $ref: '#/components/schemas/relationshipToMany'
         meta:
           $ref: '#/components/schemas/meta'
+      additionalProperties: true
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    info:
+      type: object
+      required:
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          $ref: '#/components/schemas/links'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    empty:
+      description: Describes an empty to-one relationship.
+    failure:
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
+      additionalProperties: false
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
       additionalProperties: true
     resource:
       description: '''Resource objects'' appear in a JSON:API document to represent resources.'
@@ -779,6 +771,11 @@ components:
         meta:
           $ref: '#/components/schemas/meta'
       additionalProperties: false
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
   securitySchemes:
     OAuth2:
       type: oauth2
