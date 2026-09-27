@@ -52,7 +52,7 @@ created: '2026-08-01'
 modified: '2026-08-01'
 tags:
 - ESG
-- Real-Estate
+- Real Estate
 - Sustainability
 - Carbon Accounting
 - Energy Management
@@ -76,6 +76,7 @@ tags_raw:
 - proptech
 - utility-data
 - capital-markets
+- Real-Estate
 apis:
 - aid: measurabl:measurabl-buildings-api
   name: Measurabl Buildings API
@@ -771,9 +772,11 @@ apis:
   humanURL: https://api.measurabl.com/api-docs/index.html?urls.primaryName=Measurabl+Core+API+Docs
   baseURL: https://api.measurabl.com/core/v0
   tags:
+  - Spaces
   - Space
   tags_raw:
   - Spaces
+  - Space
   properties:
   - type: OpenAPI
     url: openapi/measurabl-spaces-api-openapi.yml
