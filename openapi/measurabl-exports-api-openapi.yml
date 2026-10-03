@@ -222,128 +222,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    failure:
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/error'
-          uniqueItems: true
-        meta:
-          $ref: '#/components/schemas/meta'
-        jsonapi:
-          $ref: '#/components/schemas/jsonapi'
-        links:
-          $ref: '#/components/schemas/links'
-      additionalProperties: false
-    jsonapi:
-      description: An object describing the server's implementation
-      type: object
-      properties:
-        version:
-          type: string
-        meta:
-          $ref: '#/components/schemas/meta'
-      additionalProperties: false
-    attributes:
-      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
-      type: object
-      additionalProperties: true
-    meta:
-      description: Non-standard meta-information that can not be represented as an attribute or relationship.
-      type: object
-      additionalProperties: true
-    relationshipToOne:
-      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
-      anyOf:
-      - $ref: '#/components/schemas/empty'
-      - $ref: '#/components/schemas/linkage'
-    empty:
-      description: Describes an empty to-one relationship.
-    success:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/data'
-        included:
-          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
-          type: array
-          items:
-            $ref: '#/components/schemas/resource'
-          uniqueItems: true
-        meta:
-          $ref: '#/components/schemas/meta'
-        links:
-          description: Link members related to the primary data.
-          allOf:
-          - $ref: '#/components/schemas/links'
-          - $ref: '#/components/schemas/pagination'
-        jsonapi:
-          $ref: '#/components/schemas/jsonapi'
-      additionalProperties: false
-    relationshipLinks:
-      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
-      type: object
-      properties:
-        self:
-          $ref: '#/components/schemas/link'
-        related:
-          $ref: '#/components/schemas/link'
-      additionalProperties: true
-    links:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/link'
-    relationships:
-      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
-      type: object
-      properties:
-        links:
-          $ref: '#/components/schemas/relationshipLinks'
-        data:
-          description: Member, whose value represents 'resource linkage'.
-          oneOf:
-          - $ref: '#/components/schemas/relationshipToOne'
-          - $ref: '#/components/schemas/relationshipToMany'
-        meta:
-          $ref: '#/components/schemas/meta'
-      additionalProperties: true
-    relationshipToMany:
-      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
-      type: array
-      items:
-        $ref: '#/components/schemas/linkage'
-      uniqueItems: true
-    json_api:
-      oneOf:
-      - $ref: '#/components/schemas/success'
-      - $ref: '#/components/schemas/failure'
-      - $ref: '#/components/schemas/info'
-    resource:
-      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-        id:
-          type: string
-        attributes:
-          $ref: '#/components/schemas/attributes'
-        relationships:
-          $ref: '#/components/schemas/relationships'
-        links:
-          $ref: '#/components/schemas/links'
-        meta:
-          $ref: '#/components/schemas/meta'
-      additionalProperties: false
     error:
       type: object
       properties:
@@ -394,20 +272,70 @@ components:
             format: uri-reference
           meta:
             $ref: '#/components/schemas/meta'
-    linkage:
-      description: The 'type' and 'id' to non-empty members.
+    relationshipLinks:
+      description: A resource object **MAY** contain references to other resource objects ('relationships'). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.
+      type: object
+      properties:
+        self:
+          $ref: '#/components/schemas/link'
+        related:
+          $ref: '#/components/schemas/link'
+      additionalProperties: true
+    failure:
       type: object
       required:
-      - type
-      - id
+      - errors
       properties:
-        type:
-          type: string
-        id:
-          type: string
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+          uniqueItems: true
         meta:
           $ref: '#/components/schemas/meta'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+        links:
+          $ref: '#/components/schemas/links'
       additionalProperties: false
+    success:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+        included:
+          description: To reduce the number of HTTP requests, servers **MAY** allow responses that include related resources along with the requested primary resources. Such responses are called 'compound documents'.
+          type: array
+          items:
+            $ref: '#/components/schemas/resource'
+          uniqueItems: true
+        meta:
+          $ref: '#/components/schemas/meta'
+        links:
+          description: Link members related to the primary data.
+          allOf:
+          - $ref: '#/components/schemas/links'
+          - $ref: '#/components/schemas/pagination'
+        jsonapi:
+          $ref: '#/components/schemas/jsonapi'
+      additionalProperties: false
+    data:
+      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
+      anyOf:
+      - $ref: '#/components/schemas/resource'
+      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
+        type: array
+        items:
+          $ref: '#/components/schemas/resource'
+        uniqueItems: true
+      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    json_api:
+      oneOf:
+      - $ref: '#/components/schemas/success'
+      - $ref: '#/components/schemas/failure'
+      - $ref: '#/components/schemas/info'
     pagination:
       type: object
       properties:
@@ -431,6 +359,25 @@ components:
           type: string
           format: uri-reference
           x-nullable: true
+    relationshipToOne:
+      description: References to other resource objects in a to-one ('relationship'). Relationships can be specified by including a member in a resource's links object.
+      anyOf:
+      - $ref: '#/components/schemas/empty'
+      - $ref: '#/components/schemas/linkage'
+    relationships:
+      description: Members of the relationships object ('relationships') represent references from the resource object in which it's defined to other resource objects.
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/relationshipLinks'
+        data:
+          description: Member, whose value represents 'resource linkage'.
+          oneOf:
+          - $ref: '#/components/schemas/relationshipToOne'
+          - $ref: '#/components/schemas/relationshipToMany'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: true
     info:
       type: object
       required:
@@ -443,16 +390,69 @@ components:
         jsonapi:
           $ref: '#/components/schemas/jsonapi'
       additionalProperties: false
-    data:
-      description: The document's 'primary data' is a representation of the resource or collection of resources targeted by a request.
-      anyOf:
-      - $ref: '#/components/schemas/resource'
-      - description: An array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections.
-        type: array
-        items:
-          $ref: '#/components/schemas/resource'
-        uniqueItems: true
-      - description: null if the request is one that might correspond to a single resource, but doesn't currently.
+    links:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/link'
+    attributes:
+      description: Members of the attributes object ('attributes') represent information about the resource object in which it's defined.
+      type: object
+      additionalProperties: true
+    linkage:
+      description: The 'type' and 'id' to non-empty members.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    meta:
+      description: Non-standard meta-information that can not be represented as an attribute or relationship.
+      type: object
+      additionalProperties: true
+    resource:
+      description: '''Resource objects'' appear in a JSON:API document to represent resources.'
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/attributes'
+        relationships:
+          $ref: '#/components/schemas/relationships'
+        links:
+          $ref: '#/components/schemas/links'
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    relationshipToMany:
+      description: An array of objects each containing 'type' and 'id' members for to-many relationships.
+      type: array
+      items:
+        $ref: '#/components/schemas/linkage'
+      uniqueItems: true
+    jsonapi:
+      description: An object describing the server's implementation
+      type: object
+      properties:
+        version:
+          type: string
+        meta:
+          $ref: '#/components/schemas/meta'
+      additionalProperties: false
+    empty:
+      description: Describes an empty to-one relationship.
   securitySchemes:
     OAuth2:
       type: oauth2
