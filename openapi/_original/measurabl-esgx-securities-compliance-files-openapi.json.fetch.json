@@ -1,0 +1,12 @@
+{
+ "url": "https://api.measurabl.com/api-docs/esgx_securities_compliance_files/v0/swagger.json",
+ "requested_url": "https://api.measurabl.com/api-docs/esgx_securities_compliance_files/v0/swagger.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 11915,
+ "sha256": "0292a60eb50ccbea6d9c1258e923169a6b73373d772f3e1e6fdabff9545c94a1",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

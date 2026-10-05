@@ -1,0 +1,12 @@
+{
+ "url": "https://api.measurabl.com/api-docs/partners/v0/swagger.json",
+ "requested_url": "https://api.measurabl.com/api-docs/partners/v0/swagger.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 34748,
+ "sha256": "2d46a3d421396a747fa2d855d73790519f5a8723c304fc1bb7db2b21d40c7f3d",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
