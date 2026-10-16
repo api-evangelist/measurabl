@@ -2,8 +2,13 @@
 kin_checks:
   slug: measurabl
   schema_version: 0.23.0
+<<<<<<<< HEAD:kin/checks-2026-10-09T213714.yml
   scored_at: '2026-10-09'
   run_ts: 2026-10-09T213714
+========
+  scored_at: '2026-10-11'
+  run_ts: 2026-10-11T110117
+>>>>>>>> @{u}:kin/checks-2026-10-11T110117.yml
   note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
     apply in `na`. Everything else in rubric/scoring-0.23.0.yml was earned; counts
     below let you verify that.

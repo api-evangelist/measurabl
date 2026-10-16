@@ -76,6 +76,7 @@ tags_raw:
 - proptech
 - utility-data
 - capital-markets
+- Real-Estate
 apis:
 - aid: measurabl:measurabl-buildings-api
   name: Measurabl Buildings API
@@ -772,8 +773,10 @@ apis:
   baseURL: https://api.measurabl.com/core/v0
   tags:
   - Spaces
+  - Space
   tags_raw:
   - Spaces
+  - Space
   properties:
   - type: OpenAPI
     url: openapi/measurabl-spaces-api-openapi.yml
