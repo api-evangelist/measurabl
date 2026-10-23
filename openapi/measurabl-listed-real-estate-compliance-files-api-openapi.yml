@@ -423,3 +423,9 @@ components:
         clientCredentials:
           tokenUrl: https://api.measurabl.com/token
           scopes: {}
+x-provenance:
+  method: harvested
+  publisher: Measurabl
+  source: https://api.measurabl.com/api-docs/esgx_securities_compliance_files/v0/swagger.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
